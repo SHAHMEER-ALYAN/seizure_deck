@@ -29,31 +29,4 @@ class NotificationService {
     return notificationsPlugin.show(
         id, title, body, await notificationDetails());
   }
-
-  Future<void> showOngoingNotification({
-    int id = 1,
-    String? title,
-    String? body,
-    String? payLoad,
-  }) async {
-    const NotificationDetails ongoingNotificationDetails =
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        'ongoingChannelId',
-        'ongoingChannelName',
-        importance: Importance.max,
-        ongoing: true,
-        icon: 'slogo',
-      ),
-    );
-
-    return notificationsPlugin.show(
-      id,
-      title,
-      body,
-      ongoingNotificationDetails,
-    );
-  }
-
 }
-

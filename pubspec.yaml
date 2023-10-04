@@ -28,62 +28,28 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-#  kotlin: 1.8.0
   flutter:
     sdk: flutter
-
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_local_notifications: ^16.3.0
-  sensors_plus: ^4.0.2
+  flutter_local_notifications: ^15.1.1
+  sensors_plus: ^3.0.3
   flutter_sensors: ^1.0.1
-#  shake: ^1.0.1
-#  flutter_background_service: ^5.0.1
-  shared_preferences: ^2.2.2
-#  workmanager: ^0.5.2
-  toggle_switch: ^2.1.0
-  provider: ^6.1.0
-  video_player: ^2.8.1
-  chewie: ^1.7.1
-  youtube_player_flutter: ^8.1.2
-  tflite_flutter: ^0.10.3
-  rxdart: ^0.27.7
-  android_alarm_manager_plus: ^3.0.4
-  flutter_phone_direct_caller: ^2.1.1
-  direct_sms: ^0.0.1
-#  permission_handler: ^11.1.0
-  geolocator: ^10.1.0
-  fluttertoast: ^8.2.4
-  material_design_icons_flutter: ^7.0.7296
-  file_picker: ^6.1.1
-  intl: ^0.19.0
-  flutter_native_splash: ^2.3.9
-  permission_handler: ^11.2.0
-  dio: ^5.4.0
-  map_launcher: ^3.1.0
-  flutter_rating_bar: ^4.0.1
-  flutter_map_math: ^0.1.7
-  webview_flutter: ^4.7.0
-  system_alert_window: ^2.0.0
-
-#  flutter_isolate: ^2.0.4
-#  tflite_flutter: ^0.10.3
-#  rxdart: ^0.27.7
+  shake: ^1.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  http:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -100,24 +66,6 @@ flutter:
   assets:
     - assets/LOGO.png
     - assets/slogo.png
-    - assets/rf_keras_model.tflite
-    - assets/rfNEW.tflite
-    - assets/svmNEW.tflite
-    - assets/knnNEW.tflite
-    - assets/dumbbells.jpg
-    - assets/martialarts.jpg
-    - assets/yoga.jpg
-#    - assets/body.jpg
-    - assets/body.png
-    - assets/shoulder.png
-    - assets/chest.png
-    - assets/abs.png
-    - assets/legs.png
-    - assets/arms_left.png
-    - assets/arms_right.png
-#    - assets/model_X.tflite
-#    - assets/model_y.tflite
-#    - assets/model_z.tflite
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

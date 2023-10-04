@@ -1,54 +1,114 @@
-
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:provider/provider.dart';
-import 'package:seizure_deck/Views/splashss.dart';
-import 'package:seizure_deck/providers/exercise_provider.dart';
-import 'package:seizure_deck/providers/user_provider.dart';
-import 'package:seizure_deck/Views/login.dart';
-import 'package:seizure_deck/services/SeizureDetectionModel.dart';
+import 'package:seizure_deck/home.dart';
 
-void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await AndroidAlarmManager.initialize();
-  await startSeizureDetection();
-  await startSeizureDetectionPred();
-  FlutterNativeSplash.remove();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => UserProvider()),
-      ChangeNotifierProvider(create: (context) => ExerciseProvider()),
-    ],
-    child: const MaterialApp(
-      home: Login(),
-    ),
+void main() {
+  runApp(const MaterialApp(
+    home: Login(),
   ));
 }
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-Future<void> startSeizureDetection() async {
-  // _startListening();
-  await AndroidAlarmManager.oneShot(
-    const Duration(seconds: 0), // Set the interval as needed
-    0,
-    // SEIZURE_DETECTION_ALARM_ID,
-    startListening,
-    exact: true,
-    wakeup: true,
-    // allowWhileIdle: true,
-  );
-}
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-Future<void> startSeizureDetectionPred() async {
-  // _startListening();
-  await AndroidAlarmManager.periodic(
-    const Duration(minutes: 30), // Set the interval as needed
-    1,
-    // SEIZURE_DETECTION_ALARM_ID,
-    startSeizureDetection,
-    exact: true,
-    wakeup: true,
-    // allowWhileIdle: true,
-  );
+
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
+
+  // Function to handle navigation
+  void _navigateToHome(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 45.0),
+                child: Image.asset(
+                  'assets/slogo.png',
+                  height: 300,
+                ),
+              ),
+              const Text(
+                "Username",
+                style: TextStyle(
+                    color: Color(0xFF454587),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: const BorderSide(
+                              width: 5, color: Color(0xFF454587))),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: const BorderSide(
+                              width: 5, color: Color(0xFF454587))),
+                      hintText: "Username"),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Text(
+                "Password",
+                style: TextStyle(
+                    color: Color(0xFF454587),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: const BorderSide(
+                            width: 5, color: Color(0xFF454587)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: const BorderSide(
+                              width: 5, color: Color(0xFF454587))),
+                      hintText: "Password"),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    // Call the function to handle navigation
+                    // _navigateToHome(context);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  Home()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF454587)),
+                  child: const Text("Login")),
+              const SizedBox(
+                height: 15,
+              ),
+              ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF454587)),
+                  child: const Text("Create Account")),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

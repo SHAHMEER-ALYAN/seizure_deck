@@ -1,11 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:seizure_deck/home.dart';
+import 'dart:async';
+import 'dart:ui';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:seizure_deck/home.dart';
+import 'package:seizure_deck/services/notification_services.dart';
+import 'package:shake/shake.dart';
+import 'package:seizure_deck/seizure.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await initializeService();
   runApp(const MaterialApp(
     home: Login(),
   ));
 }
+
+// Future<void> initializeService() async {
+//   final service = FlutterBackgroundService();
+//
+//   await service.configure(iosConfiguration: IosConfiguration(),
+//       androidConfiguration: AndroidConfiguration(
+//           onStart: onStart(), isForegroundMode: true));
+//
+//   service.startService();
+// }
+
+// onStart() {
+//   print("********************************************");
+//   ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () {
+//     NotificationService().showNotification(
+//         title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
+//   } );
+// }
+
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,7 +44,6 @@ class Login extends StatelessWidget {
   // Function to handle navigation
   void _navigateToHome(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-
   }
 
   @override
@@ -92,7 +122,8 @@ class Login extends StatelessWidget {
                   onPressed: () {
                     // Call the function to handle navigation
                     // _navigateToHome(context);
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  Home()));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Home()));
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF454587)),

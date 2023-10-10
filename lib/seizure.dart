@@ -6,6 +6,7 @@ import 'package:flutter_sensors/flutter_sensors.dart';
 import 'package:shake/shake.dart';
 
 class Seizure extends StatefulWidget {
+
   @override
   _SeizureState createState() => _SeizureState();
 }
@@ -16,6 +17,9 @@ class _SeizureState extends State<Seizure> {
   @override
   void initState() {
     super.initState();
+
+
+
     // accelerometerEvents.listen((AccelerometerEvent event) {
     //   if (event.x.abs() > 12 || event.y.abs() > 12 || event.z.abs() > 12) {
     //     setState(() {

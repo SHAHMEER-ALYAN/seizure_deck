@@ -11,32 +11,28 @@ import 'package:shake/shake.dart';
 import 'package:seizure_deck/seizure.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+late ShakeDetector checker;
+
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await initializeService();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeService();
   runApp(const MaterialApp(
     home: Login(),
   ));
 }
 
-// Future<void> initializeService() async {
-//   final service = FlutterBackgroundService();
-//
-//   await service.configure(iosConfiguration: IosConfiguration(),
-//       androidConfiguration: AndroidConfiguration(
-//           onStart: onStart(), isForegroundMode: true));
-//
-//   service.startService();
-// }
+Future<void> initializeService() async {
+  final service = FlutterBackgroundService();
 
-// onStart() {
-//   print("********************************************");
-//   ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () {
-//     NotificationService().showNotification(
-//         title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
-//   } );
-// }
+  await service.configure(
+      iosConfiguration: IosConfiguration(),
+      androidConfiguration: AndroidConfiguration(
+          onStart: onStart,
+          isForegroundMode: false,
+          autoStart: true,
 
+          ));
+}
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -142,4 +138,23 @@ class Login extends StatelessWidget {
       ),
     );
   }
+}
+
+@pragma('vm:entry-point')
+void onStart(ServiceInstance service) async {
+  print("Background service started");
+
+  // Initialize shake detection
+  checker = ShakeDetector.autoStart(
+    onPhoneShake: () {
+
+      // Handle shake event in the background
+      print("Shake detected in the background!");
+
+      // You can add code here to show a local notification
+      NotificationService().showNotification(
+          title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
+      // showNotification();
+    },
+  );
 }

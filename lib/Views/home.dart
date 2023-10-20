@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:seizure_deck/seizure.dart';
+import 'package:seizure_deck/Views/seizure.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);

@@ -41,6 +41,7 @@ dependencies:
   shake: ^1.0.1
   flutter_background_service: ^5.0.1
   shared_preferences: ^2.2.1
+  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:

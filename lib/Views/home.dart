@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/seizure.dart';
 
 class Home extends StatelessWidget {
@@ -56,73 +57,6 @@ class Home extends StatelessWidget {
         ),
       );
     }
-
-
-    return MaterialApp(
-      theme: ThemeData(
-          iconTheme: const IconThemeData(
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF454587),
-                  padding: EdgeInsets.all(35),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  )
-              ))),
-      home: WillPopScope(
-        onWillPop: showExitPopup,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFF454587),
-            // backgroundColor:  Color(0xFF00C8DD),
-            centerTitle: true,
-            title: Text("Homepage"),
-          ),
-          body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(0.0),
-                    child: Image.asset(
-                      'assets/slogo.png',
-                      height: 170,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      seizureDiaryButton(),
-                      medicationButton(),
-                    ],
-                  ),
-                  SizedBox(height: 15,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      exerciseButton(),
-                      communityButton()
-                    ],
-                  ),
-                  SizedBox(height: 15,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      popularHospitalButton(),
-                      firstAidButton()
-                    ],
-                  ),
-                ],
-              )),
-        ),
-      ),
-    );
-
-  }
-
-
-
     SizedBox medicationButton() {
       return SizedBox(
         width: buttonWidth,
@@ -147,7 +81,9 @@ class Home extends StatelessWidget {
         width: buttonWidth,
         height: buttonHeight,
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => exercise()));
+            },
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
@@ -213,12 +149,73 @@ class Home extends StatelessWidget {
                 Icon(Icons.medical_information, size: 40,
                   color: Color(0xFF00C8DD),),
                 SizedBox(height: 5),
-                Text("Popular Hospitals", textAlign: TextAlign.center,)
+                Text("First Aid Instructions", textAlign: TextAlign.center,)
               ],
             )),
       );
     }
 
+    return MaterialApp(
+      theme: ThemeData(
+          iconTheme: const IconThemeData(
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF454587),
+                  padding: EdgeInsets.all(35),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  )
+              ))),
+      home: WillPopScope(
+        onWillPop: showExitPopup,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(0xFF454587),
+            // backgroundColor:  Color(0xFF00C8DD),
+            centerTitle: true,
+            title: Text("Homepage"),
+          ),
+          body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(0.0),
+                    child: Image.asset(
+                      'assets/slogo.png',
+                      height: 170,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      seizureDiaryButton(),
+                      medicationButton(),
+                    ],
+                  ),
+                  SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      exerciseButton(),
+                      communityButton()
+                    ],
+                  ),
+                  SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      popularHospitalButton(),
+                      firstAidButton()
+                    ],
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
 }
 
 

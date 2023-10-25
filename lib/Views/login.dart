@@ -1,38 +1,6 @@
-import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:seizure_deck/Views/home.dart';
-import 'package:seizure_deck/services/notification_services.dart';
-import 'package:shake/shake.dart';
-import 'package:seizure_deck/Views//seizure.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-late ShakeDetector checker;
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeService();
-  runApp(const MaterialApp(
-    home: Login(),
-  ));
-}
-
-Future<void> initializeService() async {
-  final service = FlutterBackgroundService();
-
-  await service.configure(
-      iosConfiguration: IosConfiguration(),
-      androidConfiguration: AndroidConfiguration(
-          onStart: onStart,
-          isForegroundMode: false,
-          autoStart: true,
-
-          ));
-}
+import 'package:seizure_deck/Views//home.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -138,23 +106,4 @@ class Login extends StatelessWidget {
       ),
     );
   }
-}
-
-@pragma('vm:entry-point')
-void onStart(ServiceInstance service) async {
-  print("Background service started");
-
-  // Initialize shake detection
-  checker = ShakeDetector.autoStart(
-    onPhoneShake: () {
-
-      // Handle shake event in the background
-      print("Shake detected in the background!");
-
-      // You can add code here to show a local notification
-      NotificationService().showNotification(
-          title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
-      // showNotification();
-    },
-  );
 }

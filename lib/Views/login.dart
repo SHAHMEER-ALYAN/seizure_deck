@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views//home.dart';
+import 'package:seizure_deck/Views/create_account.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -96,7 +97,10 @@ class Login extends StatelessWidget {
                 height: 15,
               ),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => create_account()));
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF454587)),
                   child: const Text("Create Account")),

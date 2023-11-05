@@ -1,10 +1,29 @@
-
 import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views//home.dart';
 import 'package:seizure_deck/Views/create_account.dart';
+import 'package:seizure_deck/database/loginDB.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+
+  late TextEditingController email;
+  late TextEditingController password;
+  bool isLoading = false;
+  bool passwordVisible = false;
+
+  @override
+  void initState() {
+    email = TextEditingController();
+    password = TextEditingController();
+  }
+
+  late bool logincheck;
 
   // Function to handle navigation
   void _navigateToHome(BuildContext context) {
@@ -16,98 +35,169 @@ class Login extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 45.0),
-                child: Image.asset(
-                  'assets/slogo.png',
-                  height: 300,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Scrollable(viewportBuilder: AxisDirection.down),
+                Padding(
+                  padding: const EdgeInsets.only(top: 45.0),
+                  child: Image.asset(
+                    'assets/slogo.png',
+                    height: 300,
+                  ),
                 ),
-              ),
-              const Text(
-                "Username",
-                style: TextStyle(
-                    color: Color(0xFF454587),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
+                const Text(
+                  "Email",
+                  style: TextStyle(
+                      color: Color(0xFF454587),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: TextField(
+                    controller: email,
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
+                                width: 5, color: Color(0xFF454587))),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
+                                width: 5, color: Color(0xFF454587))),
+                        hintText: "Email"),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  "Password",
+                  style: TextStyle(
+                      color: Color(0xFF454587),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: TextField(
+                    controller: password,
+                    obscureText: !passwordVisible,
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                           borderSide: const BorderSide(
-                              width: 5, color: Color(0xFF454587))),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(
-                              width: 5, color: Color(0xFF454587))),
-                      hintText: "Username"),
+                              width: 5, color: Color(0xFF454587)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
+                                width: 5, color: Color(0xFF454587))),
+                        hintText: "Password"),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                "Password",
-                style: TextStyle(
-                    color: Color(0xFF454587),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: const BorderSide(
-                            width: 5, color: Color(0xFF454587)),
+                const SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // Center the content horizontally
+                    children: [
+                      Checkbox(
+                        value: passwordVisible,
+                        onChanged: (newValue) {
+                          setState(() {
+                            passwordVisible = !passwordVisible;
+                          });
+                        },
                       ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(
-                              width: 5, color: Color(0xFF454587))),
-                      hintText: "Password"),
+                      Text("Show Password"),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    // Call the function to handle navigation
-                    // _navigateToHome(context);
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Home()));
+
+
+
+                ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true; // Set loading state to true before API call
+                    });
+
+                    bool logincheck = await loginDBCheck(email, password);
+                    print(logincheck);
+
+                    if (logincheck == true) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Home()));
+                    } else {
+                      showLoginResultDialog(logincheck);
+                    }
+
+                    setState(() {
+                      isLoading = false; // Set loading state to false after the API call
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF454587)),
-                  child: const Text("Login")),
-              const SizedBox(
-                height: 15,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => create_account()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF454587)),
-                  child: const Text("Create Account")),
-            ],
+                  child: isLoading
+                      ? CircularProgressIndicator()
+                      : Text("Login"),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context) => create_account()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF454587)),
+                    child: const Text("Create Account")),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  Future<void> showLoginResultDialog(bool logincheck) async {
+    String message;
+    if (logincheck == true) {
+      message = "Login successful";
+    } else {
+      message = "Wrong password or email not found";
+    }
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Login Result"),
+          content: Text(message),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }

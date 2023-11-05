@@ -27,40 +27,40 @@ void main() async {
     home: Login(),
   ));
 }
-
-Future<void> initializeService() async {
-  final service = FlutterBackgroundService();
-
-  await service.configure(
-      iosConfiguration: IosConfiguration(),
-      androidConfiguration: AndroidConfiguration(
-          onStart: onStart,
-          isForegroundMode: false,
-          autoStart: true,
-
-          ));
-}
-
-
-
-@pragma('vm:entry-point')
-void onStart(ServiceInstance service) async {
-  print("Background service started");
-
-  // Initialize shake detection
-  checker = ShakeDetector.autoStart(
-    onPhoneShake: () {
-
-      // Handle shake event in the background
-      print("Shake detected in the background!");
-
-      // You can add code here to show a local notification
-      NotificationService().showNotification(
-          title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
-      // showNotification();
-    },
-  );
-}
+//
+// Future<void> initializeService() async {
+//   final service = FlutterBackgroundService();
+//
+//   await service.configure(
+//       iosConfiguration: IosConfiguration(),
+//       androidConfiguration: AndroidConfiguration(
+//           onStart: onStart,
+//           isForegroundMode: false,
+//           autoStart: true,
+//
+//           ));
+// }
+//
+//
+//
+// @pragma('vm:entry-point')
+// void onStart(ServiceInstance service) async {
+//   print("Background service started");
+//
+//   // Initialize shake detection
+//   checker = ShakeDetector.autoStart(
+//     onPhoneShake: () {
+//
+//       // Handle shake event in the background
+//       print("Shake detected in the background!");
+//
+//       // You can add code here to show a local notification
+//       NotificationService().showNotification(
+//           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
+//       // showNotification();
+//     },
+//   );
+// }
 
 // @pragma('vm:entry-point')
 // void callbackDispatcher(){

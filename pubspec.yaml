@@ -42,6 +42,7 @@ dependencies:
   flutter_background_service: ^5.0.1
   shared_preferences: ^2.2.1
   workmanager: ^0.5.1
+  toggle_switch: ^2.1.0
 
 dev_dependencies:
   flutter_test:

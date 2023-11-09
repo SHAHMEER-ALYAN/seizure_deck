@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'generate_exercise_plan.dart';
 
 class exercise extends StatefulWidget {
   @override
@@ -8,10 +9,15 @@ class exercise extends StatefulWidget {
 class _exerciseState extends State<exercise> {
   @override
   Widget build(BuildContext context) {
-    return const Material(
-      child: Scaffold(
-        body: Center(child: Text("ZINDA HO")),
+    return  MaterialApp(home: Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => generate_exercise_plan()));
+          },child: const Text("Generate Exercise Plan"),
+        ),
       ),
+    ),
     );
   }
 }

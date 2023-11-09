@@ -1,30 +1,28 @@
 class Exercise {
-  final int eid;
+  final String eid;
   final String eName;
-  final String type;
   final String difficulty;
-  final int time;
-  final String link;
+  final String timeRequired;
+  final String spaceRequired;
+  final String equipment;
 
   Exercise({
     required this.eid,
     required this.eName,
-    required this.type,
     required this.difficulty,
-    required this.time,
-    required this.link,
+    required this.timeRequired,
+    required this.spaceRequired,
+    required this.equipment,
   });
-  // "eid":1,"e_name":"Marching in
-  // Place","Type":"Cardio","difficulty":"Easy","time":2
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
-      eid: int.parse(json['eid']),
-      eName: json['eName'],
-      type: json['type'],
+      eid: json['eid'],
+      eName: json['e_name'],
       difficulty: json['difficulty'],
-      time: int.parse(json['time']),
-      link: json['link']
+      timeRequired: json['time_required'],
+      spaceRequired: json['space_required'],
+      equipment: json['equipment'],
     );
   }
 }
@@ -40,4 +38,3 @@ class ExerciseList {
     );
   }
 }
-

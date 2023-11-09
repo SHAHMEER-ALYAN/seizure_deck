@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:seizure_deck/data/exercise_data.dart';
 
-void main() {
-  generateExercise("moderate", 60, 1, 0);
-}
+late var exerciseList;
 
 Future<void> generateExercise(
     String difficultySelect, int timeSelect, int spaceSelect, int equipmentSelect) async {
@@ -14,8 +13,15 @@ Future<void> generateExercise(
   );
 
   if (response.statusCode == 200) {
+    // final responseBody = json.decode(response.body);
+    // print(responseBody);
     final responseBody = json.decode(response.body);
+    exerciseList = ExerciseList.fromJson(responseBody);
+    print(exerciseList.runtimeType);
+
+// Access the parsed data
     print(responseBody);
+
   } else {
     print("Failed to connect to the server. Status Code: ${response.statusCode}");
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seizure_deck/Views/exercise.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,10 +13,12 @@ class generate_exercise_plan extends StatefulWidget {
 }
 
 class _generate_exercise_plan extends State<generate_exercise_plan> {
-  int time_select = 15;
-  int space_select = 0;
-  int equipment_select = 0;
-  String difficulty_select = "easy";
+  late int time_select;
+  late int space_select;
+  late int equipment_select;
+  late String difficulty_select;
+  bool loading = false;
+
 
 
   @override
@@ -96,7 +99,12 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
               activeFgColor: const Color(0xFF00c8dd),
               totalSwitches: 2,
               labels: const ['No Space', 'Space Available'],
-              onToggle: (space_select) {
+              onToggle: (valuespace) {
+                if(valuespace==0){
+                  space_select=0;
+                }else if(valuespace==1){
+                  space_select =1;
+                }
                 print("Space Status: $space_select");
               },
             ),
@@ -113,15 +121,42 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
               activeFgColor: const Color(0xFF00c8dd),
               totalSwitches: 2,
               labels: const ['No Equipment', 'Equipment Available'],
-              onToggle: (equipment_select) {
+              onToggle: (valuedemo) {
+                if(valuedemo==0){
+                  equipment_select = 0;
+                }else if(valuedemo == 1){
+                  equipment_select = 1;
+                }
                 print("Equipment Status: $equipment_select");
               },
             ),
             SizedBox(height: 20),
-            ElevatedButton(onPressed: () {
-              print("$difficulty_select $time_select $space_select , $equipment_select");
-              generateExercise(difficulty_select,time_select,space_select,equipment_select);
-            }, child: const Text("Create Exercise Plan")),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  loading = true;
+                });
+
+                print("$difficulty_select $time_select $space_select , $equipment_select");
+                await generateExercise(difficulty_select, time_select, space_select, equipment_select);
+
+
+                setState(() {
+                  loading = false;
+                }
+                );
+                if(loading == false){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => exercise()));
+                }
+              },
+              child: const Text("Create Exercise Plan"),
+            ),
+            if (loading) CircularProgressIndicator(),
+            // ElevatedButton(onPressed: () async {
+            //   print("$difficulty_select $time_select $space_select , $equipment_select");
+            //   await generateExercise(difficulty_select,time_select,space_select,equipment_select);
+            // }, child: const Text("Create Exercise Plan")),
           ],
         )),
       ),

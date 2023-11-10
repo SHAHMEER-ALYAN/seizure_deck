@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<void> addToExercisePlan(int? uid, int? eid) async {
+Future<void> addToExercisePlan(int? uid, String eid) async {
   if(uid == null || eid == null){
     return;
   }
@@ -11,7 +11,7 @@ Future<void> addToExercisePlan(int? uid, int? eid) async {
     Uri.parse(url),
     body: {
       'uid': uid.toString(),
-      'eid': eid.toString(),
+      'eid': eid,
     },
   );
 

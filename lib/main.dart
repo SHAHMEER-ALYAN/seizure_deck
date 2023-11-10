@@ -1,12 +1,16 @@
 import 'dart:async';
+// import 'dart:js';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 import 'package:seizure_deck/Views/home.dart';
 import 'package:seizure_deck/main.dart';
+import 'package:seizure_deck/providers/exercise_provider.dart';
+import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 import 'package:shake/shake.dart';
 import 'package:seizure_deck/Views//seizure.dart';
@@ -23,8 +27,14 @@ void main() async {
   // Workmanager().registerOneOffTask("Seizure-Detector", "Shake-Detector");
   // WidgetsFlutterBinding.ensureInitialized();
   // await initializeService();
-  runApp(const MaterialApp(
-    home: Login(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context)=> UserProvider()),
+      ChangeNotifierProvider(create: (context) => ExerciseProvider())
+    ],
+    child: MaterialApp(
+      home: Login(),
+    ),
   ));
 }
 //

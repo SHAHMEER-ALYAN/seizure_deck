@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:seizure_deck/Views//home.dart';
 import 'package:seizure_deck/Views/create_account.dart';
+import 'package:seizure_deck/data/user_data.dart';
 import 'package:seizure_deck/database/loginDB.dart';
+import 'package:seizure_deck/providers/user_provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -133,10 +136,13 @@ class _LoginState extends State<Login> {
                       isLoading = true; // Set loading state to true before API call
                     });
 
-                    bool logincheck = await loginDBCheck(email, password);
-                    print(logincheck);
+                    int? num;
+                    num = await loginDBCheck(email, password);
+                    // print(logincheck);
 
-                    if (logincheck == true) {
+                    if (num != null) {
+                      User user = User(uid: num);
+                      Provider.of<UserProvider>(context,listen: false).setUser(user);
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => Home()));
                     } else {

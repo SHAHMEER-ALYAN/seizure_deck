@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views/exercise.dart';
+import 'package:seizure_deck/Views/exercise_list.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -146,8 +147,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                       });
 
                       print("$mode_select $diff_select $exercise_count");
-                      // await generateExercise(context, mode_select, time_select,
-                      //     space_select, equipment_select);
+                      await generateExercise(context,mode_select, diff_select);
 
                       setState(() {
                         loading = false;
@@ -156,7 +156,8 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => exercise()));
+                                builder: (context) => const exerciseList()));
+                        print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
                       }
                     },
                     child: const Text("Create Exercise Plan"),

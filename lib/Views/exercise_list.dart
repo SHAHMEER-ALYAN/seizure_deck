@@ -26,50 +26,63 @@ class _exerciseList extends State<exerciseList> {
 
     UserProvider userProvider = Provider.of<UserProvider>(
         context, listen: false);
+    // print(exerciseProvider.exercises);
 
     return MaterialApp(
         home: Scaffold(
-        body: Column(
+        body:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        ListView.builder(
-        itemCount: exerciseProvider.exercises.length,
-        itemBuilder: (context, index)
+          const Text("Exercise List",style: TextStyle(
+              color: Color(0xFF454587),
+              fontWeight: FontWeight.bold,
+              fontSize: 20)),
+        SizedBox(
+          height: MediaQuery.of(context).size.height/1.3,
+          child: ListView.builder(
+          itemCount: exerciseProvider.exercises.length,
+          itemBuilder: (context, index)
     {
       Exercise exercise = exerciseProvider.exercises[index];
       bool isSelected = selectedExerciseIds.contains(exercise.eid);
-      return ListTile(
-          title: Center(child: Text('Exercise ID: ${exercise.eid}')),
-          subtitle: Text(
-              'Exercise Name: ${exercise.eName} \n'
-                  'Time Required: ${exercise.timeRequired} \n'
-                  'Space Required: ${exercise.spaceRequired}'),
-        trailing: IconButton(
-          icon: isSelected
-              ? Icon(Icons.check_box)
-              : Icon(Icons.check_box_outline_blank),
-          onPressed: () {
-            setState(() {
-              if (isSelected) {
-                selectedExerciseIds.remove(exercise.eid);
-              } else {
-                selectedExerciseIds.add(exercise.eid as int);
-              }
-            });
-          },
-        ),
+      return Center(
+          child: ListTile(
+              title: Center(child: Text('Exercise Name: ${exercise.eName}')),
+              subtitle: Text(
+                  'Exercise ID: ${exercise.eid} \n'
+                      'Time Required: ${exercise.time} minutes\n'),
+            trailing: IconButton(
+              icon: isSelected
+                  ? Icon(Icons.check_box)
+                  : Icon(Icons.check_box_outline_blank),
+              onPressed: () {
+                setState(() {
+                  if (isSelected) {
+                    selectedExerciseIds.remove(exercise.eid);
+                    print(selectedExerciseIds);
+                  } else {
+                    selectedExerciseIds.add(exercise.eid as int);
+                    print(selectedExerciseIds);
+                  }
+                });
+              },
+            ),
+          ),
       );
     },
+          ),
         ),
 
-    SizedBox(height: 20),
-    ElevatedButton(
-    onPressed: () {
-    for (int i = 0; i < exerciseProvider.exercises.length; i++) {
-    addToExercisePlan(userProvider.uid, exerciseProvider.exercises[i].eid);
-    }
-    },
-    child: Text("Upload Exercise Plan"),
-    ),
+    // SizedBox(height: 20),
+    // ElevatedButton(
+    // onPressed: () {
+    // for (int i = 0; i < exerciseProvider.exercises.length; i++) {
+    // addToExercisePlan(userProvider.uid, exerciseProvider.exercises[i].eid);
+    // }
+    // },
+    // child: Text("Upload Exercise Plan"),
+    // ),
     ],
     ),
     ),

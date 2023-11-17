@@ -8,20 +8,23 @@ import '../data/exercise_data.dart';
 import '../providers/exercise_provider.dart';
 
 Future<void> generateExercise(
-    BuildContext context, // Add this parameter
+    BuildContext context,
+    String type, // Add this parameter
     String difficultySelect,
-    int timeSelect,
-    int spaceSelect,
-    int equipmentSelect,
     ) async {
   ExerciseProvider exerciseProvider =
   Provider.of<ExerciseProvider>(context, listen: false);
 
-  const url = 'https://seizure-deck.000webhostapp.com/generate_exercise.php';
+  const url = 'https://seizure-deck.000webhostapp.com/get_all_exercises.php';
 
-  final response = await http.get(
-    Uri.parse(
-        '$url?difficulty=$difficultySelect&time_required=$timeSelect&space_required=$spaceSelect&equipment=$equipmentSelect'),
+  // final response = await http.get(
+  //   Uri.parse(
+  //       '$url?difficulty=$difficultySelect'),
+  // );
+  final response = await http.post(
+    Uri.parse(url),
+    body: {'type': type,
+  'difficulty': difficultySelect},
   );
 
   if (response.statusCode == 200) {

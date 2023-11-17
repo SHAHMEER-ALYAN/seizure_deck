@@ -1,28 +1,27 @@
 class Exercise {
-  final String eid;
+  final int eid;
   final String eName;
+  final String type;
   final String difficulty;
-  final String timeRequired;
-  final String spaceRequired;
-  final String equipment;
+  final int time;
 
   Exercise({
     required this.eid,
     required this.eName,
+    required this.type,
     required this.difficulty,
-    required this.timeRequired,
-    required this.spaceRequired,
-    required this.equipment,
+    required this.time,
   });
+  // "eid":1,"e_name":"Marching in
+  // Place","Type":"Cardio","difficulty":"Easy","time":2
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
-      eid: json['eid'],
+      eid: int.parse(json['eid']),
       eName: json['e_name'],
+      type: json['Type'],
       difficulty: json['difficulty'],
-      timeRequired: json['time_required'],
-      spaceRequired: json['space_required'],
-      equipment: json['equipment'],
+      time: int.parse(json['time']),
     );
   }
 }

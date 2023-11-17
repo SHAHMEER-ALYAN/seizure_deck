@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/providers/exercise_provider.dart'; // Adjust the import based on your project structure
 
+import '../data/count_Data.dart';
 import '../database/generate_exerciseDB.dart';
 
 class generate_exercise_plan extends StatefulWidget {
@@ -22,6 +23,10 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
   bool diff_lock = false;
   bool loading = false;
 
+  int getExerCount(){
+    return exercise_count;
+  }
+
   final GlobalKey toggleSwitchKey = GlobalKey();
 
   @override
@@ -36,7 +41,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
       theme: ThemeData(
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF454587),
+                  backgroundColor: Color(0xFF454587),
                   minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
                       MediaQuery.of(context).size.width / 10)
               ))
@@ -157,11 +162,12 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                         loading = false;
                       });
                       if (loading == false) {
+                        count(Exercount: exercise_count);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const exerciseList()));
-                        print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+                        // print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
                       }
                     },
                     child: const Text("Create Exercise Plan"),

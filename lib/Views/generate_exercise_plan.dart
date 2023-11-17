@@ -147,6 +147,10 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                       });
 
                       print("$mode_select $diff_select $exercise_count");
+                      if(mode_select == "Tai Chi"){
+                        print("Tai Chi is Selected");
+                        diff_select = "Easy";
+                      }
                       await generateExercise(context,mode_select, diff_select);
 
                       setState(() {

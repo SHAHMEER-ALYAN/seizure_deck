@@ -74,15 +74,17 @@ class _exerciseList extends State<exerciseList> {
           ),
         ),
 
-    // SizedBox(height: 20),
-    // ElevatedButton(
-    // onPressed: () {
-    // for (int i = 0; i < exerciseProvider.exercises.length; i++) {
-    // addToExercisePlan(userProvider.uid, exerciseProvider.exercises[i].eid);
-    // }
-    // },
-    // child: Text("Upload Exercise Plan"),
-    // ),
+    SizedBox(height: 20),
+    ElevatedButton(
+    onPressed: () {
+    for (int i = 0; i < exerciseProvider.exercises.length; i++) {
+    addToExercisePlan(userProvider.uid, exerciseProvider.exercises[i].eid);
+    }
+    },
+      style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF454587)),
+    child: Text("Upload Exercise Plan"),
+    ),
     ],
     ),
     ),

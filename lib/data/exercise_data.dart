@@ -4,6 +4,7 @@ class Exercise {
   final String type;
   final String difficulty;
   final int time;
+  final String link;
 
   Exercise({
     required this.eid,
@@ -11,6 +12,7 @@ class Exercise {
     required this.type,
     required this.difficulty,
     required this.time,
+    required this.link,
   });
   // "eid":1,"e_name":"Marching in
   // Place","Type":"Cardio","difficulty":"Easy","time":2
@@ -22,6 +24,7 @@ class Exercise {
       type: json['Type'],
       difficulty: json['difficulty'],
       time: int.parse(json['time']),
+      link: json['link']
     );
   }
 }
@@ -37,3 +40,4 @@ class ExerciseList {
     );
   }
 }
+

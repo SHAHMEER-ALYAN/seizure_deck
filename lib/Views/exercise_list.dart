@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seizure_deck/data/count_Data.dart';
 import 'package:seizure_deck/providers/exercise_provider.dart';
+import 'package:seizure_deck/Views/generate_exercise_plan.dart';
+import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../data/exercise_data.dart';
 import '../database/save_exerciseDB.dart';
@@ -18,7 +23,30 @@ class exerciseList extends StatefulWidget {
 class _exerciseList extends State<exerciseList> {
 
   List<int> selectedExerciseIds = [];
+  // List<int> selectedExerciseIds = [];
+  late VideoPlayerController _videoPlayerController;
+  late ChewieController _chewieController;
 
+  @override
+  void initState() {
+    super.initState();
+    _videoPlayerController = VideoPlayerController.network(
+        'https://www.example.com/sample-video.mp4');
+    late VideoPlayerController _controller123;
+// Replace with actual video URL
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      autoPlay: false,
+      looping: false,
+    );
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +77,32 @@ class _exerciseList extends State<exerciseList> {
       return Center(
           child: ListTile(
               title: Center(child: Text('Exercise Name: ${exercise.eName}')),
-              subtitle: Text(
-                  'Exercise ID: ${exercise.eid} \n'
-                      'Time Required: ${exercise.time} minutes\n'),
+              subtitle:
+              Column(
+                children: [
+                  exercise.link.isEmpty
+                      ? const Text("No Video")
+                      : YoutubePlayer(
+                    controller: YoutubePlayerController(
+                      initialVideoId:
+                      YoutubePlayer.convertUrlToId(exercise.link) ??
+                          '',
+                      flags: const YoutubePlayerFlags(
+                        autoPlay: false,
+                        mute: false,
+                      ),
+                    ),
+                    showVideoProgressIndicator: true,
+                    progressIndicatorColor: Colors.blueAccent,
+                  ),
+                  Text(
+                    'Exercise ID: ${exercise.eid} \n'
+                        'Time Required: ${exercise.time} minutes\n',
+                  ),
+                ],
+              ),
+              // Text('Exercise ID: ${exercise.eid} \n'
+              //         'Time Required: ${exercise.time} minutes\n'),
             trailing: IconButton(
               icon: isSelected
                   ? Icon(Icons.check_box)

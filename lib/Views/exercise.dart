@@ -16,52 +16,48 @@ class _exerciseState extends State<exercise> {
   @override
   Widget build(BuildContext context) {
     ExerciseProvider exerciseProvider = Provider.of<ExerciseProvider>(context);
-    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
 
     return MaterialApp(
+      theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF454587),
+                  minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
+                      MediaQuery.of(context).size.width / 11)))),
       home: Scaffold(
-        body: exerciseProvider.exercises.isEmpty
-            ? Center(
-              child: ElevatedButton(
-          onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => generate_exercise_plan()));
-          },
-          child: const Text("Generate Exercise Plan"),
-        ),
-            )
-            : Column(
+          body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: exerciseProvider.exercises.length,
-                itemBuilder: (context, index) {
-                  Exercise exercise = exerciseProvider.exercises[index];
-                  return ListTile(
-                    title: Center(child: Text('Exercise ID: ${exercise.eid}')),
-                    subtitle: Text(
-                        'Exercise Name: ${exercise.eName} \n'
-                            'Time Required: ${exercise.timeRequired} \n'
-                            'Space Required: ${exercise.spaceRequired}'),
-                    // Add other fields as needed
-                  );
-                },
-              ),
+            Image.asset('assets/slogo.png'),
+            SizedBox(
+              height: 10,
             ),
-            SizedBox(height: 20),
+            Text("Exercise Plan",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
-              onPressed: () {
-                for (int i = 0; i < exerciseProvider.exercises.length; i++) {
-                  addToExercisePlan(userProvider.uid, exerciseProvider.exercises[i].eid);
-                }
-              },
-              child: Text("Upload Exercise Plan"),
+              onPressed: () {},
+              child: const Text("Repeat Last Exercise"),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => generate_exercise_plan()));
+                },
+                child: const Text("Generate Exercise Plan"))
           ],
         ),
-      ),
+      )),
     );
   }
 }

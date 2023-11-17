@@ -1,105 +1,78 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:seizure_deck/data/exercise_data.dart';
-import 'package:seizure_deck/providers/user_provider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:seizure_deck/providers/exercise_provider.dart';
 
-import '../database/exercise_listDB.dart';
+import '../data/exercise_data.dart';
+import '../database/save_exerciseDB.dart';
+import '../providers/user_provider.dart';
 
-class ExerciseListScreen extends StatelessWidget {
-  const ExerciseListScreen({super.key});
+
+class exerciseList extends StatefulWidget {
+  const exerciseList({Key? key}) : super(key: key);
+
+  @override
+  State<exerciseList> createState() => _exerciseList();
+}
+
+class _exerciseList extends State<exerciseList> {
+
+  List<int> selectedExerciseIds = [];
 
 
   @override
   Widget build(BuildContext context) {
+    ExerciseProvider exerciseProvider = Provider.of<ExerciseProvider>(context);
+
+    UserProvider userProvider = Provider.of<UserProvider>(
+        context, listen: false);
+
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF454587),
-          centerTitle: true,
-          title: const Text("Exercise List",style: TextStyle(color: Colors.white),),
+        home: Scaffold(
+        body: Column(
+        children: [
+        ListView.builder(
+        itemCount: exerciseProvider.exercises.length,
+        itemBuilder: (context, index)
+    {
+      Exercise exercise = exerciseProvider.exercises[index];
+      bool isSelected = selectedExerciseIds.contains(exercise.eid);
+      return ListTile(
+          title: Center(child: Text('Exercise ID: ${exercise.eid}')),
+          subtitle: Text(
+              'Exercise Name: ${exercise.eName} \n'
+                  'Time Required: ${exercise.timeRequired} \n'
+                  'Space Required: ${exercise.spaceRequired}'),
+        trailing: IconButton(
+          icon: isSelected
+              ? Icon(Icons.check_box)
+              : Icon(Icons.check_box_outline_blank),
+          onPressed: () {
+            setState(() {
+              if (isSelected) {
+                selectedExerciseIds.remove(exercise.eid);
+              } else {
+                selectedExerciseIds.add(exercise.eid as int);
+              }
+            });
+          },
         ),
-        body: _buildExerciseList(context),
-      ),
-    );
-  }
-
-  Widget _buildExerciseList(BuildContext context) {
-    UserProvider userProvider = Provider.of(context, listen: false);
-    return FutureBuilder<List<Exercise>>(
-      future: ExerciseService.getExercisesForUser(userProvider.uid!),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No exercises found for the user'));
-        } else {
-          List<Exercise> userExercises = snapshot.data!;
-          return _buildExerciseListView(context, userExercises);
-        }
-      },
-    );
-  }
-
-  Widget _buildExerciseListView(BuildContext context, List<Exercise> userExercises) {
-    UserProvider userProvider = Provider.of(context,listen: false);
-    int? uid = userProvider.uid;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 1.3,
-          child:
-          ListView.builder(
-            itemCount: userExercises.length,
-            itemBuilder: (context, index) {
-              Exercise exercise = userExercises[index];
-              return _buildExerciseTile(context, exercise);
-            },
-          ),
+      );
+    },
         ),
-      ],
-    );
-  }
 
-  Widget _buildExerciseTile(BuildContext context, Exercise exercise) {
-    return Center(
-      child: ListTile(
-        title: Center(child: Text('Exercise Name: ${exercise.eName}',
-          style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)),
-        subtitle: Column(
-          children: [
-            _buildExerciseVideo(exercise.link),
-            Text(
-              'Exercise ID: ${exercise.eid} \n'
-                  'Time Required: ${exercise.time} minutes\n',
-            ),
-            const Divider(),
-          ],
-        ),
-      ),
+    SizedBox(height: 20),
+    ElevatedButton(
+    onPressed: () {
+    for (int i = 0; i < exerciseProvider.exercises.length; i++) {
+    addToExercisePlan(userProvider.uid, exerciseProvider.exercises[i].eid);
+    }
+    },
+    child: Text("Upload Exercise Plan"),
+    ),
+    ],
+    ),
+    ),
     );
+    }
   }
-
-  Widget _buildExerciseVideo(String link) {
-    return link.isEmpty
-        ? const Text("No Video")
-        : Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4.0),
-          child: YoutubePlayer(
-                controller: YoutubePlayerController(
-          initialVideoId: YoutubePlayer.convertUrlToId(link) ?? '',
-          flags: const YoutubePlayerFlags(
-            autoPlay: false,
-            mute: false,
-          ),
-                ),
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.blueAccent,
-                aspectRatio: 16 / 9,
-              ),
-        );
-  }
-}

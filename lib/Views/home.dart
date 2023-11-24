@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/seizure.dart';
+import 'package:seizure_deck/Views/seizure_new.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -16,19 +17,19 @@ class Home extends StatelessWidget {
         context: context,
         builder: (context) =>
             AlertDialog(
-              title: Text('Exit App'),
-              content: Text('Do you want to exit an App?'),
+              title: const Text('Exit App'),
+              content: const Text('Do you want to exit an App?'),
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(false),
                   //return false when click on "NO"
-                  child: Text('No'),
+                  child: const Text('No'),
                 ),
 
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(true),
                   //return true when click on "Yes"
-                  child: Text('Yes'),
+                  child: const Text('Yes'),
                 ),
 
               ],
@@ -42,12 +43,12 @@ class Home extends StatelessWidget {
         height: buttonHeight,
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Seizure()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => seizureNew()));
           },
           // style: ElevatedButton.styleFrom(
           //   padding: EdgeInsets.all(35.0)
           // ),
-          child: Column(
+          child: const Column(
             children: [
               Icon(Icons.book, size: 40, color: Color(0xFF00C8DD)),
               SizedBox(height: 5),
@@ -66,7 +67,7 @@ class Home extends StatelessWidget {
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(Icons.medication, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
@@ -87,7 +88,7 @@ class Home extends StatelessWidget {
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(Icons.fitness_center, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
@@ -106,7 +107,7 @@ class Home extends StatelessWidget {
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(Icons.chat_bubble, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
@@ -119,13 +120,13 @@ class Home extends StatelessWidget {
     SizedBox popularHospitalButton() {
       return SizedBox(
         width: buttonWidth,
-        height: buttonHeight,
+        height: buttonHeight+5,
         child: ElevatedButton(
             onPressed: () {},
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(Icons.local_hospital, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
@@ -138,13 +139,13 @@ class Home extends StatelessWidget {
     SizedBox firstAidButton() {
       return SizedBox(
         width: buttonWidth,
-        height: buttonHeight,
+        height: buttonHeight+5,
         child: ElevatedButton(
             onPressed: () {},
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
-            child: Column(
+            child: const Column(
               children: [
                 Icon(Icons.medical_information, size: 40,
                   color: Color(0xFF00C8DD),),
@@ -161,8 +162,8 @@ class Home extends StatelessWidget {
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF454587),
-                  padding: EdgeInsets.all(35),
+                  backgroundColor: const Color(0xFF454587),
+                  padding: const EdgeInsets.all(35),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                   )
@@ -171,46 +172,48 @@ class Home extends StatelessWidget {
         onWillPop: showExitPopup,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFF454587),
+            backgroundColor: const Color(0xFF454587),
             // backgroundColor:  Color(0xFF00C8DD),
             centerTitle: true,
-            title: Text("Homepage"),
+            title: const Text("Homepage"),
           ),
           body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(0.0),
-                    child: Image.asset(
-                      'assets/slogo.png',
-                      height: 170,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Image.asset(
+                        'assets/slogo.png',
+                        height: 170,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      seizureDiaryButton(),
-                      medicationButton(),
-                    ],
-                  ),
-                  SizedBox(height: 15,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      exerciseButton(),
-                      communityButton()
-                    ],
-                  ),
-                  SizedBox(height: 15,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      popularHospitalButton(),
-                      firstAidButton()
-                    ],
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        seizureDiaryButton(),
+                        medicationButton(),
+                      ],
+                    ),
+                    const SizedBox(height: 15,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        exerciseButton(),
+                        communityButton()
+                      ],
+                    ),
+                    const SizedBox(height: 15,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        popularHospitalButton(),
+                        firstAidButton()
+                      ],
+                    ),
+                  ],
+                ),
               )),
         ),
       ),

@@ -44,7 +44,8 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                   backgroundColor: Color(0xFF454587),
                   minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
                       MediaQuery.of(context).size.width / 10)
-              ))
+              )),
+              textTheme: TextTheme(subtitle1: TextStyle(color: Colors.white))
       ),
       home: Scaffold(
         body: ChangeNotifierProvider(
@@ -86,7 +87,6 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                         // Locker(false);
                       }
                     },
-
                   ),
                   const SizedBox(height: 20),
                   const Text(
@@ -156,7 +156,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                         print("Tai Chi is Selected");
                         diff_select = "Easy";
                       }
-                      await generateExercise(context,mode_select, diff_select);
+                      // await generateExercise(context,mode_select, diff_select);
 
                       setState(() {
                         loading = false;

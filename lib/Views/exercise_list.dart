@@ -134,7 +134,7 @@ class _exerciseList extends State<exerciseList> {
     },
       style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF454587)),
-    child: Text("Upload Exercise Plan"),
+    child: const Text("Upload Exercise Plan",style: TextStyle(color: Colors.white),),
     ),
     ],
     ),

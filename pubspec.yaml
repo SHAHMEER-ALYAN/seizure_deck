@@ -47,6 +47,10 @@ dependencies:
   video_player: ^2.8.1
   chewie: ^1.7.1
   youtube_player_flutter: ^8.1.2
+  tflite_flutter: ^0.10.3
+  rxdart: ^0.27.7
+#  tflite_flutter: ^0.10.3
+#  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +79,10 @@ flutter:
   assets:
     - assets/LOGO.png
     - assets/slogo.png
+    - assets/rf_keras_model.tflite
+#    - assets/model_X.tflite
+#    - assets/model_y.tflite
+#    - assets/model_z.tflite
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

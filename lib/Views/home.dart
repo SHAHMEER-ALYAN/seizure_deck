@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
         height: buttonHeight,
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => seizureNew()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SeizureNew()));
           },
           // style: ElevatedButton.styleFrom(
           //   padding: EdgeInsets.all(35.0)

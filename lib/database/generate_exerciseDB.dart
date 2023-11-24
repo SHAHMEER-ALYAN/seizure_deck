@@ -7,15 +7,30 @@ import 'package:provider/provider.dart';
 import '../data/exercise_data.dart';
 import '../providers/exercise_provider.dart';
 
+
+import '../providers/user_provider.dart';
+
+
+// String gender= 'MALE';
+// String experience = "Beginner";
+// int duration = 12;
+
+
 Future<void> generateExercise(
     BuildContext context,
-    String type, // Add this parameter
-    String difficultySelect,
-    ) async {
-  ExerciseProvider exerciseProvider =
-  Provider.of<ExerciseProvider>(context, listen: false);
+    String type,
+    String experience,
+    int duration) async {
 
-  const url = 'https://seizure-deck.000webhostapp.com/get_all_exercises.php';
+  ExerciseProvider exerciseProvider =
+      Provider.of<ExerciseProvider>(context, listen: false);
+
+  UserProvider userProvider = Provider.of(context,listen: false);
+  int? uid = userProvider.uid;
+
+  const url = 'https://seizure-deck.000webhostapp.com/generate_exercise_new.php';
+
+  print('$uid $type $experience $duration');
 
   // final response = await http.get(
   //   Uri.parse(
@@ -23,9 +38,14 @@ Future<void> generateExercise(
   // );
   final response = await http.post(
     Uri.parse(url),
-    body: {'type': type,
-  'difficulty': difficultySelect},
+    body: {
+      'uid': uid.toString(),
+      'type': type,
+      'experience': experience,
+      'duration': duration.toString()
+    },
   );
+  print(response.body);
 
   if (response.statusCode == 200) {
     final dynamic responseData = json.decode(response.body);
@@ -33,7 +53,7 @@ Future<void> generateExercise(
     if (responseData is List) {
       // Convert the dynamic list to a list of Exercise
       List<Exercise> exercises =
-      responseData.map((data) => Exercise.fromJson(data)).toList();
+          responseData.map((data) => Exercise.fromJson(data)).toList();
 
       exerciseProvider.setExercises(exercises);
     } else if (responseData is Map && responseData.containsKey('message')) {
@@ -47,6 +67,7 @@ Future<void> generateExercise(
       );
     }
   } else {
-    print("Failed to connect to the server. Status Code: ${response.statusCode}");
+    print(
+        "Failed to connect to the server. Status Code: ${response.statusCode}");
   }
 }

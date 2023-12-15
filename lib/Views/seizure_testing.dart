@@ -10,7 +10,7 @@ class SeizureTest extends StatefulWidget {
 }
 
 class _SeizureTestState extends State<SeizureTest> {
-  SeizureDetectionModel model = SeizureDetectionModel();
+  // SeizureDetectionModel model = SeizureDetectionModel();
 
   @override
   void initState() {

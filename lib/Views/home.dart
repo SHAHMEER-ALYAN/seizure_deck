@@ -3,6 +3,8 @@ import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/seizure.dart';
 import 'package:seizure_deck/Views/seizure_new.dart';
 
+import 'SeizureWith.dart';
+
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
@@ -43,7 +45,7 @@ class Home extends StatelessWidget {
         height: buttonHeight,
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SeizureNew()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SeizureNewWith()));
           },
           // style: ElevatedButton.styleFrom(
           //   padding: EdgeInsets.all(35.0)

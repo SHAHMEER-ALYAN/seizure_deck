@@ -1,35 +1,30 @@
+// prediction_model.dart
 import 'dart:typed_data';
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
-class SeizureDetectionModel {
-  Interpreter? interpreter;
-
-  SeizureDetectionModel() {
-    loadModel();
-  }
+class PredictionModel {
+  late Interpreter _interpreter;
 
   Future<void> loadModel() async {
-    interpreter = await Interpreter.fromAsset('assets/rf_keras_model.tflite');
+    final interpreterOptions = InterpreterOptions()..threads = 2;
+    _interpreter = await Interpreter.fromAsset('assets/rf_keras_model.tflite', options: interpreterOptions);
   }
 
-  Future<int> predict(List<double> accelerometerData) async {
-    if (interpreter == null) {
-      throw Exception('Model not loaded');
-    }
+  Float32List prepareInputData(List<double> xData, List<double> yData, List<double> zData) {
+    // Concatenate the three arrays
+    List<double> inputData = [];
+    inputData.addAll(xData);
+    inputData.addAll(yData);
+    inputData.addAll(zData);
+    return Float32List.fromList(inputData);
+  }
 
-    // Perform any necessary pre-processing on the accelerometer data
-    // ...
+  List<double> predict(List<double> xData, List<double> yData, List<double> zData) {
+    final inputData = prepareInputData(xData, yData, zData);
+    final outputData = List<double>.from(_interpreter.getOutputTensor(0).data);
 
-    // Run inference
-    final input = Float32List.fromList(accelerometerData);
-    final output = List<List<double>>.generate(1, (index) => List<double>.filled(1, 0));
+    _interpreter.run([inputData],outputData);
 
-    interpreter!.run(input, output);
-
-    // Perform any necessary post-processing on the inference result
-    // ...
-
-    return output[0][0].round();
+    return outputData;
   }
 }

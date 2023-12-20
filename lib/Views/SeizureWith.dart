@@ -44,32 +44,32 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     );
   }
 
-  // void _startListening() {
-  //   accelerometerEvents
-  //       .debounceTime(const Duration(milliseconds: 60)) // Capture around 16 values per second
-  //       .listen((AccelerometerEvent event) {
-  //     setState(() {
-  //       array1.add(event.x);
-  //       array2.add(event.y);
-  //       array3.add(event.z);
-  //
-  //       if (array1.length == 206) {
-  //         _makePrediction();
-  //         // Clear the arrays after making the prediction
-  //         array1.clear();
-  //         array2.clear();
-  //         array3.clear();
-  //       }else if(array1.length > 206){
-  //         array1 = [];
-  //         array2 = [];
-  //         array3 = [];
-  //         array1.clear();
-  //         array2.clear();
-  //         array3.clear();
-  //       }
-  //     });
-  //   });
-  // }
+  void _startListening() {
+    accelerometerEvents
+        .debounceTime(const Duration(milliseconds: 60)) // Capture around 16 values per second
+        .listen((AccelerometerEvent event) {
+      setState(() {
+        array1.add(event.x);
+        array2.add(event.y);
+        array3.add(event.z);
+
+        if (array1.length == 206) {
+          _makePrediction();
+          // Clear the arrays after making the prediction
+          array1.clear();
+          array2.clear();
+          array3.clear();
+        }else if(array1.length > 206){
+          array1 = [];
+          array2 = [];
+          array3 = [];
+          array1.clear();
+          array2.clear();
+          array3.clear();
+        }
+      });
+    });
+  }
 
   // void _startListening() {
   //   accelerometerEvents
@@ -166,7 +166,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   // }
 
   void acceFunction(){
-    accelerometerEvents.throttleTime(Duration(microseconds: 65)).listen((event) {
+    accelerometerEvents.throttleTime(const Duration(microseconds: 35)).listen((event) {
       array1.add(event as double);
       array2.add(event as double);
       array3.add(event as double);
@@ -188,20 +188,20 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     });
   }
 
-  void _startListening() async {
-    // Create and start the isolate
-    _isolate = await FlutterIsolate.spawn((message){acceFunction();}, _processAccelerometerData(inputArray));
-    // _isolate = await FlutterIsolate.spawn(_accelerometerIsolate, onReceive: _processAccelerometerData);
-
-    // Listen for accelerometer events
-    accelerometerEvents
-        .throttleTime(const Duration(microseconds: 50))
-        .listen((AccelerometerEvent event) {
-          // _isolate.s
-      _isolate.controlPort!;
-      // _isolate.send(event);
-    });
-  }
+  // void _startListening() async {
+  //   // Create and start the isolate
+  //   _isolate = await FlutterIsolate.spawn((message){acceFunction();}, _processAccelerometerData(inputArray));
+  //   // _isolate = await FlutterIsolate.spawn(_accelerometerIsolate, onReceive: _processAccelerometerData);
+  //
+  //   // Listen for accelerometer events
+  //   accelerometerEvents
+  //       .throttleTime(const Duration(microseconds: 50))
+  //       .listen((AccelerometerEvent event) {
+  //         // _isolate.s
+  //     _isolate.controlPort!;
+  //     // _isolate.send(event);
+  //   });
+  // }
 
     void _processAccelerometerData(List<double> data) {
       // Process accelerometer data here

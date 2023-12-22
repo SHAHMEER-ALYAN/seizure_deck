@@ -34,12 +34,17 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   // late FlutterIsolate _isolate;
 
   late tfl.Interpreter _interpreter;
+  late tfl.Interpreter rfInterpreter;
+  late tfl.Interpreter knnInterpreter;
+  late tfl.Interpreter svmInterpreter;
 
   @override
   void initState() {
     super.initState();
     _startListening();
     _loadModel();
+    loadknn();
+    // loadsvm();
 
     printTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       print("Array1 Length: ${array1.length}");
@@ -49,34 +54,46 @@ class _SeizureNewWith extends State<SeizureNewWith> {
 
   Future<void> _loadModel() async {
     // final interpreterOptions = tfl.InterpreterOptions()..threads = 2;
+    // _interpreter = await tfl.ListShape.
     _interpreter = await tfl.Interpreter.fromAsset(
       'assets/rf_keras_model.tflite',
       options: tfl.InterpreterOptions(),
     );
+
+    rfInterpreter = await tfl.Interpreter.fromAsset('assets/rfNEW.tflite',options: tfl.InterpreterOptions());
   }
+  Future<void> loadknn() async {
+    knnInterpreter = await tfl.Interpreter.fromAsset('assets/knnNEW.tflite',options: tfl.InterpreterOptions());
+  }
+  // Future<void> loadsvm() async {
+  //   svmInterpreter = await tfl.Interpreter.fromAsset('assets/svnNEW.tflite',options: tfl.InterpreterOptions());
+  // }
 
   void _startListening() {
-    int modify = 0;
+    double modify_x = 1.0;
+    double modify_y = 0.5;
+    double modify_z = 0.5;
+    double gravity = 9.80665;
     accelerometerEvents
         .throttleTime(const Duration(milliseconds: 50)) // Capture around 16 values per second
         .listen((AccelerometerEvent event) {
       setState(() {
         if(event.x<0){
-          array1.add((event.x-modify)/ 9.80665);
+          array1.add((event.x-modify_x)/ gravity);
         }else{
-        array1.add((event.x+modify)/ 9.80665);
+        array1.add((event.x+modify_x)/ gravity);
         }
         if(event.y < 0){
           // print("____________________");
-          array2.add((event.y-modify)/ 9.80665);
+          array2.add((event.y-modify_y)/ gravity);
         }else{
           // print("!!!!!!!!!!!!!!!!!!!!!!!!!");
-        array2.add((event.y+modify)/ 9.80665);
+        array2.add((event.y+modify_y)/ gravity);
         }
         if(event.z<0){
-          array3.add((event.y-modify)/ 9.80665);
+          array3.add((event.z-modify_z)/ gravity);
         }else{
-        array3.add((event.z+modify)/ 9.80665);
+        array3.add((event.z+modify_z)/ gravity);
         }
         setState(() {
           progress = array1.length;
@@ -272,16 +289,29 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     List<List<double>> reshapedInput3 = [inputArray3];
 
     // Make prediction
-    // List<List<double>> output = List.filled(1, List.filled(4, 0.0));
-    //
-    // List<List<double>> output2 = List.filled(1, List.filled(4, 0.0));
-    // List<List<double>> output3 = List.filled(1, List.filled(4, 0.0));
+    List<List<double>> outputRFNEW = List.filled(1, List.filled(4, 0.0));
+
+    List<List<double>> outputKNNNEW = List.filled(1, List.filled(4, 0.0));
+    List<List<double>> outputSVMNEW = List.filled(1, List.filled(4, 0.0));
 
     print(array1);
+    print(array2);
+    print(array3);
 
     _interpreter.run(reshapedInput, output);
     _interpreter.run(reshapedInput2,output2);
     _interpreter.run(reshapedInput3,output3);
+
+    rfInterpreter.run(inputArray, outputRFNEW);
+    print("Prediction of New RF: ${outputRFNEW[0]}");
+
+    // knnInterpreter.invoke();
+
+    knnInterpreter.run(inputArray, outputKNNNEW);
+    print("Prediction of New KNNNew: ${outputKNNNEW[0]}");
+
+    // svmInterpreter.run(inputArray, outputSVMNEW);
+    // print("Prediction of New SVM: ${outputSVMNEW[0]}");
 
     // Handle the prediction output
     print("Prediction Output 1: ${output[0]}");
@@ -349,6 +379,11 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     inputArray2 = [];
     inputArray3 = [];
     _interpreter.close();
+    rfInterpreter.close();
+    knnInterpreter.close();
+    // svmInterpreter.close();
+    loadknn();
+    // loadsvm();
     _loadModel();
   }
 
@@ -415,6 +450,10 @@ class _SeizureNewWith extends State<SeizureNewWith> {
               },
               child: const Text('Not Used'),
             ),
+            ElevatedButton(onPressed: () {
+              NotificationService().showNotification(title: "SHAKE DETECTED",
+                  body: "You might be experiencing Seizure");
+            }, child: const Text("Notification")),
           ],
         ),
       ),

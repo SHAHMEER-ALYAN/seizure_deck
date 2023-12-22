@@ -81,6 +81,9 @@ flutter:
     - assets/LOGO.png
     - assets/slogo.png
     - assets/rf_keras_model.tflite
+    - assets/rfNEW.tflite
+    - assets/svmNEW.tflite
+    - assets/knnNEW.tflite
 #    - assets/model_X.tflite
 #    - assets/model_y.tflite
 #    - assets/model_z.tflite

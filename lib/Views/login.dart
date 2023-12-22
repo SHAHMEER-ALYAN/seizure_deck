@@ -136,16 +136,34 @@ class _LoginState extends State<Login> {
                       isLoading = true; // Set loading state to true before API call
                     });
 
-                    int? num;
+                    dynamic? num;
                     num = await loginDBCheck(email, password);
-                    // print(logincheck);
-
+                    // print(num);
+                    if(num.runtimeType == int){
                     if (num != null) {
                       User user = User(uid: num);
                       Provider.of<UserProvider>(context,listen: false).setUser(user);
-                      Navigator.pushReplacement(context,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Home()));
+                      setState(() {
+                        isLoading = false; // Set loading state to true before API call
+                      });
+                      dispose();
+                    }
                     } else {
+                      setState(() {
+                        isLoading = false;
+                      });
+                      const snackBartest = SnackBar(
+                        content: Text('Yay! A SnackBar!'),
+                      );
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(snackBartest
+                      //   ),
+                      // );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBartest);
+
                       showLoginResultDialog(logincheck);
                     }
 

@@ -49,6 +49,7 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   tflite_flutter: ^0.10.3
   rxdart: ^0.27.7
+  android_alarm_manager_plus: ^3.0.4
 #  flutter_isolate: ^2.0.4
 #  tflite_flutter: ^0.10.3
 #  rxdart: ^0.27.7

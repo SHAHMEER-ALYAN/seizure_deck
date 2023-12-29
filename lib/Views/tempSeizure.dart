@@ -4,15 +4,13 @@ import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'dart:async';
-// import 'package:workmanager/workmanager.dart';
+import 'package:workmanager/workmanager.dart';
 // import 'dart:isolate';
 // import 'package:flutter_isolate/flutter_isolate.dart';
 
 
 
 class SeizureNewWith extends StatefulWidget {
-  const SeizureNewWith({super.key});
-
   @override
   _SeizureNewWith createState() => _SeizureNewWith();
 }
@@ -47,7 +45,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
 
   @override
   void initState() {
-    // Workmanager().cancelAll();
+    Workmanager().cancelAll();
     super.initState();
     _startListening();
     _loadModel();
@@ -62,18 +60,18 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   }
 
   Future<void> _startBackgroundDetection() async {
-    // await Workmanager().initialize(callbackDispatcher);
+    await Workmanager().initialize(callbackDispatcher);
   }
 
-  // @pragma('vm:entry-point')
-  // void callbackDispatcher() {
-  //   // Workmanager().registerPeriodicTask(
-  //   //   'seizure_detection_task',
-  //   //   'seizureDetectionTask',
-  //   //   initialDelay: Duration(seconds: 1),
-  //   //   frequency: Duration(seconds: 1),
-  //   // );
-  // }
+  @pragma('vm:entry-point')
+  void callbackDispatcher() {
+    Workmanager().registerPeriodicTask(
+      'seizure_detection_task',
+      'seizureDetectionTask',
+      initialDelay: Duration(seconds: 1),
+      frequency: Duration(seconds: 1),
+    );
+  }
 
   // void seizureDetectionTask() async {
   //   // _isolate ??= await FlutterIsolate.spawn(_accelerometerIsolate, _processAccelerometerData);
@@ -96,30 +94,30 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   }
 
   void _startListening() {
-    double modifyX = 1.0;
-    double modifyY = 0.5;
-    double modifyZ = 0.5;
+    double modify_x = 1.0;
+    double modify_y = 0.5;
+    double modify_z = 0.5;
     double gravity = 9.80665;
     accelerometerEvents
         .throttleTime(const Duration(milliseconds: 50)) // Capture around 16 values per second
         .listen((AccelerometerEvent event) {
       setState(() {
         if(event.x<0){
-          array1.add((event.x-modifyX)/ gravity);
+          array1.add((event.x-modify_x)/ gravity);
         }else{
-          array1.add((event.x+modifyX)/ gravity);
+          array1.add((event.x+modify_x)/ gravity);
         }
         if(event.y < 0){
           // print("____________________");
-          array2.add((event.y-modifyY)/ gravity);
+          array2.add((event.y-modify_y)/ gravity);
         }else{
           // print("!!!!!!!!!!!!!!!!!!!!!!!!!");
-          array2.add((event.y+modifyY)/ gravity);
+          array2.add((event.y+modify_y)/ gravity);
         }
         if(event.z<0){
-          array3.add((event.z-modifyZ)/ gravity);
+          array3.add((event.z-modify_z)/ gravity);
         }else{
-          array3.add((event.z+modifyZ)/ gravity);
+          array3.add((event.z+modify_z)/ gravity);
         }
         setState(() {
           progress = array1.length;
@@ -463,10 +461,10 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   @override
   Widget build(BuildContext context) {
     // int progress =0;
-    Text progressIndicator = Text("Progress: $progress");
-    Text array1Prediction = Text("Array1: $output");
-    Text array2Prediction = Text("Array2: $output2");
-    Text array3Prediction = Text("Array3: $output3");
+    Text progressIndicator = Text("Progress: "+progress.toString());
+    Text array1Prediction = Text("Array1: " + output.toString());
+    Text array2Prediction = Text("Array2: " + output2.toString());
+    Text array3Prediction = Text("Array3: " + output3.toString());
 
     return Scaffold(
 

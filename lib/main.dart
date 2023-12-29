@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 // import 'package:flutter_background_service_android/flutter_background_service_android.dart';
@@ -26,11 +27,17 @@ import 'package:seizure_deck/Views/SeizureWith.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(
-    callbackDispatcher,
-    isInDebugMode: true,
-  );
-  Workmanager().registerPeriodicTask("SeizureDetector", task);
+
+  await AndroidAlarmManager.initialize();
+  await startSeizureDetection();
+
+  // Workmanager().initialize(
+  //   callbackDispatcher,
+  //   isInDebugMode: true,
+  // );
+  // Workmanager().registerPeriodicTask("SeizureDetector", task);
+  // Workmanager().cancelAll();
+
 
   runApp(MultiProvider(
     providers: [

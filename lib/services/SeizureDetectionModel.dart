@@ -1,14 +1,21 @@
 import 'dart:async';
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:workmanager/workmanager.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 
+
+const int SEIZURE_DETECTION_ALARM_ID = 0;
+
 late tfl.Interpreter _interpreter;
 late tfl.Interpreter rfInterpreter;
 late tfl.Interpreter knnInterpreter;
+
+
 
 const task = 'firstTask';
 List<double> inputArray = []; // Concatenated array of 3 input arrays
@@ -27,7 +34,9 @@ int progress = 0;
 String hi = "abc";
 late Timer printTimer;
 
-void _startListening() {
+Future<void> _startListening() async {
+
+  _loadModel();
   print("Seizure detection is active.");
   // NotificationService().showNotification(
   //   title: "MONITORING MOTION",
@@ -50,6 +59,7 @@ void _startListening() {
       const Duration(milliseconds: 50)) // Capture around 16 values per second
       .listen((AccelerometerEvent event) {
     print('Accelerometer Event Array Length: ${array1.length}');
+    // debugPrint('Accelerometer Event Array Length: ${array1.length}');
     if (event.x < 0) {
       array1.add((event.x - modify_x) / gravity);
     } else {
@@ -71,6 +81,7 @@ void _startListening() {
     progress = array1.length;
 
     if (array1.length == 206) {
+      _loadModel();
       _makePrediction();
       // Clear the arrays after making the prediction
       // array1.clear();
@@ -79,6 +90,7 @@ void _startListening() {
       array1 = [];
       array2 = [];
       array3 = [];
+      // return true;
     } else if (array1.length > 206) {
       print("Excceed Length Not good");
       array1 = [];
@@ -119,6 +131,8 @@ Future<void> _makePrediction() async {
   print(array1);
   print(array2);
   print(array3);
+
+  // _interpreter.invoke();
 
   _interpreter.run(reshapedInput, output);
   _interpreter.run(reshapedInput2, output2);
@@ -196,20 +210,44 @@ Future<void> _makePrediction() async {
 }
 
 Future<void> _loadModel() async {
-  // ... (unchanged)
+  _interpreter = await tfl.Interpreter.fromAsset(
+    'assets/rf_keras_model.tflite',
+    options: tfl.InterpreterOptions(),
+  );
+
+  rfInterpreter = await tfl.Interpreter.fromAsset('assets/rfNEW.tflite',
+      options: tfl.InterpreterOptions());
 }
 
-@pragma('vm:entry-point')
-void callbackDispatcher() {
-  Workmanager().executeTask((taskName, inputData) {
-    switch (task) {
-      case 'firstTask':
-        NotificationService().showOngoingNotification(id: 1,
-            title: "Detecting Motion",
-            body: "Analyzing Motion Data");
-        _startListening();
-        break;
-    }
-    return Future.value(true);
-  });
+Future<void> startSeizureDetection() async {
+  await AndroidAlarmManager.periodic(
+    const Duration(seconds: 45), // Set the interval as needed
+    SEIZURE_DETECTION_ALARM_ID,
+    _startListening,
+    exact: true,
+    wakeup: true,
+  );
 }
+
+// @pragma('vm:entry-point')
+// void callbackDispatcher() {
+//   Workmanager().executeTask((TaskName, inputData) async {
+//
+//     switch (task) {
+//       case 'SeizureDetector':
+//         print("SEE IDIOT");
+//         break;
+//       case 'firstTask':
+//         NotificationService().showOngoingNotification(id: 1,
+//             title: "Detecting Motion",
+//             body: "Analyzing Motion Data");
+//         print(task);
+//           _startListening();
+//         break;
+//
+//     }
+//     return Future.value(true);
+//   });
+// }
+
+

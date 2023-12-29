@@ -4,8 +4,9 @@ import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'dart:async';
+import 'package:workmanager/workmanager.dart';
 // import 'dart:isolate';
-import 'package:flutter_isolate/flutter_isolate.dart';
+// import 'package:flutter_isolate/flutter_isolate.dart';
 
 
 
@@ -15,6 +16,7 @@ class SeizureNewWith extends StatefulWidget {
 }
 
 class _SeizureNewWith extends State<SeizureNewWith> {
+  // FlutterIsolate? _isolate;
   List<double> inputArray = [];// Concatenated array of 3 input arrays
   List<double> inputArray2 = [];
   List<double> inputArray3 = [];
@@ -45,12 +47,33 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     _loadModel();
     loadknn();
     // loadsvm();
+    _startBackgroundDetection();
 
     printTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       print("Array1 Length: ${array1.length}");
     });
 
   }
+
+  Future<void> _startBackgroundDetection() async {
+    await Workmanager().initialize(callbackDispatcher);
+  }
+
+  @pragma('vm:entry-point')
+  void callbackDispatcher() {
+    Workmanager().registerPeriodicTask(
+      'seizure_detection_task',
+      'seizureDetectionTask',
+      initialDelay: Duration(seconds: 1),
+      frequency: Duration(seconds: 1),
+    );
+  }
+
+  // void seizureDetectionTask() async {
+  //   // _isolate ??= await FlutterIsolate.spawn(_accelerometerIsolate, _processAccelerometerData);
+  //   // ... other isolate logic
+  //   _isolate ??= await FlutterIsolate.spawn((message) {_startListening();}, _processAccelerometerData);
+  // }
 
   Future<void> _loadModel() async {
     // final interpreterOptions = tfl.InterpreterOptions()..threads = 2;
@@ -65,9 +88,6 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   Future<void> loadknn() async {
     knnInterpreter = await tfl.Interpreter.fromAsset('assets/knnNEW.tflite',options: tfl.InterpreterOptions());
   }
-  // Future<void> loadsvm() async {
-  //   svmInterpreter = await tfl.Interpreter.fromAsset('assets/svnNEW.tflite',options: tfl.InterpreterOptions());
-  // }
 
   void _startListening() {
     double modify_x = 1.0;

@@ -30,6 +30,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Add the Google Maps API key meta-data here -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBHnxeatKfSFNjxGyy9FDGLL-SYUZaOcQo" />
+            
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/slogo" />

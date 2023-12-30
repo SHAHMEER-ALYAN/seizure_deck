@@ -44,12 +44,13 @@ dependencies:
   workmanager: ^0.5.1
   toggle_switch: ^2.1.0
   provider: ^6.1.0
-  video_player: ^2.8.1
+  # video_player: ^2.8.1
   chewie: ^1.7.1
   youtube_player_flutter: ^8.1.2
   tflite_flutter: ^0.10.3
   rxdart: ^0.27.7
   flutter_isolate: ^2.0.4
+  google_maps_flutter: ^2.5.0
 #  tflite_flutter: ^0.10.3
 #  rxdart: ^0.27.7
 

@@ -198,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0+1"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: b068ffc46f82a55844acfa4fdbb61fad72fa2aef0905548419d97f0f95c456da
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.17"
   flutter_sensors:
     dependency: "direct main"
     description:
@@ -216,6 +224,54 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  google_maps:
+    dependency: transitive
+    description:
+      name: google_maps
+      sha256: "555d5d736339b0478e821167ac521c810d7b51c3b2734e6802a9f046b64ea37a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.0"
+  google_maps_flutter:
+    dependency: "direct main"
+    description:
+      name: google_maps_flutter
+      sha256: d4914cb38b3dcb62c39c085d968d434de0f8050f00f4d9f5ba4a7c7e004934cb
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
+  google_maps_flutter_android:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_android
+      sha256: "4279a338b79288fad5c8b03e5ae6ec30888bff210e0bab10b1f31f31e5a90558"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.6.0"
+  google_maps_flutter_ios:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_ios
+      sha256: "6ad65362aeeeda44b7c2c807e36bf578ef4b1c163882e085bdb040bf2934b246"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
+  google_maps_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_platform_interface
+      sha256: a3e9e6896501e566d902c6c69f010834d410ef4b7b5c18b90c77e871c86b7907
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  google_maps_flutter_web:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_web
+      sha256: "05067c5aa762ebee44b7ef4902a311ed8cf891ef655e2798bae063aa3050c8d9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.4+1"
   html:
     dependency: transitive
     description:
@@ -248,6 +304,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  js_wrapping:
+    dependency: transitive
+    description:
+      name: js_wrapping
+      sha256: e385980f7c76a8c1c9a560dfb623b890975841542471eade630b2871d243851c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.4"
   lints:
     dependency: transitive
     description:
@@ -384,6 +448,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  sanitize_html:
+    dependency: transitive
+    description:
+      name: sanitize_html
+      sha256: "12669c4a913688a26555323fb9cec373d8f9fbe091f2d01c40c723b33caa8989"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   sensors:
     dependency: transitive
     description:
@@ -501,6 +573,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  stream_transform:
+    dependency: transitive
+    description:
+      name: stream_transform
+      sha256: "14a00e794c7c11aa145a170587321aedce29769c08d7f58b1d141da75e3b1c6f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   string_scanner:
     dependency: transitive
     description:
@@ -574,13 +654,13 @@ packages:
     source: hosted
     version: "2.1.4"
   video_player:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: video_player
-      sha256: e16f0a83601a78d165dabc17e4dac50997604eb9e4cc76e10fa219046b70cef3
+      sha256: "74b86e63529cf5885130c639d74cd2f9232e7c8a66cbecbddd1dcb9dbd060d1e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.1"
+    version: "2.7.2"
   video_player_android:
     dependency: transitive
     description:
@@ -593,10 +673,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: bc923884640d6dc403050586eb40713cdb8d1d84e6886d8aca50ab04c59124c2
+      sha256: bf1a1322bf68bccd349982ba1f5a41314a3880861fb9a93d25d6d0a2345845f0
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.2"
+    version: "2.4.11"
   video_player_platform_interface:
     dependency: transitive
     description:
@@ -609,10 +689,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: ab7a462b07d9ca80bed579e30fb3bce372468f1b78642e0911b10600f2c5cb5b
+      sha256: "9c34a243785feca23148bfcd772dbb803d63c9304488177ec4f3f4463802fcb7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.0.17"
   wakelock_plus:
     dependency: transitive
     description:
@@ -679,4 +759,4 @@ packages:
     version: "8.1.2"
 sdks:
   dart: ">=3.2.0-194.0.dev <4.0.0"
-  flutter: ">=3.13.0"
+  flutter: ">=3.10.0"

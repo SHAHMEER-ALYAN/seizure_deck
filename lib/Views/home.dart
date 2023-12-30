@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views/exercise.dart';
+import 'package:seizure_deck/Views/mapView/mapViewAll.dart';
 import 'package:seizure_deck/Views/seizure.dart';
 import 'package:seizure_deck/Views/seizure_new.dart';
 
@@ -124,7 +125,12 @@ class Home extends StatelessWidget {
         width: buttonWidth,
         height: buttonHeight+5,
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MapViewAll()));
+            },
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/Views//home.dart';
 import 'package:seizure_deck/Views/create_account.dart';
+import 'package:seizure_deck/data/theme.dart';
 import 'package:seizure_deck/data/user_data.dart';
 import 'package:seizure_deck/database/loginDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,29 +15,44 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
-
+class _LoginState extends State<Login>  {
   late TextEditingController email;
   late TextEditingController password;
   bool isLoading = false;
   bool passwordVisible = false;
+  bool rememberME = false;
+  late SharedPreferences prefs;
+
+
 
   @override
   void initState() {
     email = TextEditingController();
     password = TextEditingController();
+    checkRememberMe();
   }
 
   late bool logincheck;
 
   // Function to handle navigation
   void _navigateToHome(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
+  Future<void> checkRememberMe()async {
+    prefs = await SharedPreferences.getInstance();
+    int? storedID = prefs.getInt("RememberMe");
+    if(storedID!=null){
+      User user = User(uid: storedID);
+      _navigateToHome(context);
+      // dispose();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeManager.lightTheme,
       home: Scaffold(
         body: Center(
           child: SingleChildScrollView(
@@ -95,6 +112,15 @@ class _LoginState extends State<Login> {
                     controller: password,
                     obscureText: !passwordVisible,
                     decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                            onTap: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                            child: passwordVisible
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility)),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                           borderSide: const BorderSide(
@@ -113,76 +139,78 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center, // Center the content horizontally
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // Center the content horizontally
                     children: [
                       Checkbox(
-                        value: passwordVisible,
+                        value: rememberME,
                         onChanged: (newValue) {
                           setState(() {
-                            passwordVisible = !passwordVisible;
+                            rememberME = !rememberME;
                           });
+                          print(rememberME);
                         },
                       ),
-                      Text("Show Password"),
+                      Text("Remember Me"),
                     ],
                   ),
                 ),
 
-
-
                 ElevatedButton(
                   onPressed: () async {
                     setState(() {
-                      isLoading = true; // Set loading state to true before API call
+                      isLoading =
+                          true; // Set loading state to true before API call
                     });
-
+                    prefs = await SharedPreferences.getInstance();
                     dynamic? num;
                     num = await loginDBCheck(email, password);
                     // print(num);
-                    if(num.runtimeType == int){
-                    if (num != null) {
-                      User user = User(uid: num);
-                      Provider.of<UserProvider>(context,listen: false).setUser(user);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Home()));
-                      setState(() {
-                        isLoading = false; // Set loading state to true before API call
-                      });
-                      dispose();
-                    }
+                    if (num.runtimeType == int) {
+                      if (num != null) {
+                        User user = User(uid: num);
+                        Provider.of<UserProvider>(context, listen: false)
+                            .setUser(user);
+                        if(rememberME == true) {
+                          prefs.setInt("RememberMe", user.uid);
+                          print("Shared Preferences Working ? ${prefs.getInt(
+                              "RememberMe")}");
+                        }
+                        setState(() {
+                          isLoading =
+                          false; // Set loading state to true before API call
+                        });
+                        _navigateToHome(context);
+                        // setState(() {
+                        //   isLoading =
+                        //       false; // Set loading state to true before API call
+                        // });
+                        // dispose();
+                      }
                     } else {
-                      setState(() {
-                        isLoading = false;
-                      });
-                      const snackBartest = SnackBar(
-                        content: Text('Yay! A SnackBar!'),
-                      );
-
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   SnackBar(snackBartest
-                      //   ),
-                      // );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBartest);
-
+                      // setState(() {
+                      //   isLoading = false;
+                      // });
                       showLoginResultDialog(logincheck);
                     }
-
                     setState(() {
-                      isLoading = false; // Set loading state to false after the API call
+                      isLoading = false;
                     });
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF454587)),
                   child: isLoading
                       ? CircularProgressIndicator()
-                      : const Text("Login",style: TextStyle(color: Colors.white)),
+                      : const Text("Login",
+                          style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(context,
+                      Navigator.push(
+                          context,
                           MaterialPageRoute(
                               builder: (context) => create_account()));
                     },
@@ -223,5 +251,4 @@ class _LoginState extends State<Login> {
       },
     );
   }
-
 }

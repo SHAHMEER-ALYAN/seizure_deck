@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
@@ -38,10 +39,10 @@ Future<void> _startListening() async {
 
   _loadModel();
   print("Seizure detection is active.");
-  // NotificationService().showNotification(
-  //   title: "MONITORING MOTION",
-  //   body: "HI READING ACCELEROMETER DATA",
-  // );
+  NotificationService().showOngoingNotification(
+    title: "MONITORING MOTION",
+    body: "HI READING ACCELEROMETER DATA",
+  );
 
   // accelerometerEvents
   //     .throttleTime(const Duration(milliseconds: 50))
@@ -83,6 +84,7 @@ Future<void> _startListening() async {
     if (array1.length == 206) {
       _loadModel();
       _makePrediction();
+
       // Clear the arrays after making the prediction
       // array1.clear();
       // array2.clear();
@@ -153,12 +155,7 @@ Future<void> _makePrediction() async {
       output[0][0] > output[0][2] &&
       output[0][0] > output[0][3]) {
     print("Seizure Detected!");
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     content: Text('Seizure Detected!'),
-    //     duration: Duration(seconds: 3),
-    //   ),
-    // );
+    _callNumber();
     NotificationService().showNotification(title: "SHAKE DETECTED",
         body: "You might be experiencing Seizure");
   } else {
@@ -169,12 +166,7 @@ Future<void> _makePrediction() async {
       output2[0][0] > output2[0][2] &&
       output2[0][0] > output2[0][3]) {
     print("Seizure Detected!");
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     content: Text('Seizure Detected!'),
-    //     duration: Duration(seconds: 3),
-    //   ),
-    // );
+    _callNumber();
     NotificationService().showNotification(title: "SHAKE DETECTED",
         body: "You might be experiencing Seizure");
   } else {
@@ -185,12 +177,7 @@ Future<void> _makePrediction() async {
       output3[0][0] > output3[0][2] &&
       output3[0][0] > output3[0][3]) {
     print("Seizure Detected!");
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     content: Text('Seizure Detected!'),
-    //     duration: Duration(seconds: 3),
-    //   ),
-    // );
+    _callNumber();
     NotificationService().showNotification(title: "SHAKE DETECTED",
         body: "You might be experiencing Seizure");
   } else {
@@ -209,6 +196,11 @@ Future<void> _makePrediction() async {
   _loadModel();
 }
 
+_callNumber() async{
+  const number = '0333123123'; //set the number here
+  bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+}
+
 Future<void> _loadModel() async {
   _interpreter = await tfl.Interpreter.fromAsset(
     'assets/rf_keras_model.tflite',
@@ -221,8 +213,9 @@ Future<void> _loadModel() async {
 
 Future<void> startSeizureDetection() async {
   await AndroidAlarmManager.periodic(
-    const Duration(seconds: 45), // Set the interval as needed
-    SEIZURE_DETECTION_ALARM_ID,
+    const Duration(seconds: 0), // Set the interval as needed
+    0,
+    // SEIZURE_DETECTION_ALARM_ID,
     _startListening,
     exact: true,
     wakeup: true,

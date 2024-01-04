@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -230,7 +231,9 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     if (output[0][0] > output[0][1] &&
         output[0][0] > output[0][2] &&
         output[0][0] > output[0][3]) {
+
       print("Seizure Detected!");
+      _callNumber();
       NotificationService().showNotification(
           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
     } else {
@@ -241,7 +244,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output2[0][0] > output2[0][2] &&
         output2[0][0] > output2[0][3]) {
       print("Seizure Detected!");
-
+      _callNumber();
       NotificationService().showNotification(
           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
     } else {
@@ -252,7 +255,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output3[0][0] > output3[0][2] &&
         output3[0][0] > output3[0][3]) {
       print("Seizure Detected!");
-
+      _callNumber();
       NotificationService().showNotification(
           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
     } else {
@@ -334,12 +337,17 @@ class _SeizureNewWith extends State<SeizureNewWith> {
                   NotificationService().showNotification(
                       title: "SHAKE DETECTED",
                       body: "You might be experiencing Seizure");
+                      _callNumber();
                 },
                 child: const Text("Notification")),
           ],
         ),
       ),
     );
+  }
+  _callNumber() async{
+    const number = '0333123123'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
   @override

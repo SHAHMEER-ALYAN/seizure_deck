@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:seizure_deck/Views/exercise_list.dart';
+import 'package:seizure_deck/data/theme.dart';
 import 'package:seizure_deck/database/save_exerciseDB.dart';
 import '../data/exercise_data.dart';
 import '../providers/exercise_provider.dart';
@@ -21,12 +23,12 @@ class _exerciseState extends State<exercise> {
         Provider.of<UserProvider>(context, listen: false);
 
     return MaterialApp(
-      theme: ThemeData(
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF454587),
-                  minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
-                      MediaQuery.of(context).size.width / 11)))),
+      theme: ThemeManager.lightTheme,
+          // elevatedButtonTheme: ElevatedButtonThemeData(
+          //     style: ElevatedButton.styleFrom(
+          //         primary: Color(0xFF454587),
+          //         minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
+          //             MediaQuery.of(context).size.width / 11))),
       home: Scaffold(
           body: Center(
         child: Column(
@@ -42,13 +44,26 @@ class _exerciseState extends State<exercise> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF454587),
+                    minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
+                        MediaQuery.of(context).size.width / 11)),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => exerciseList()));
+              },
               child: const Text("Repeat Last Exercise"),
             ),
             SizedBox(
               height: 20,
             ),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF454587),
+                    minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
+                        MediaQuery.of(context).size.width / 11)),
                 onPressed: () {
                   Navigator.push(
                       context,

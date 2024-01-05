@@ -51,6 +51,9 @@ dependencies:
   rxdart: ^0.27.7
   android_alarm_manager_plus: ^3.0.4
   flutter_phone_direct_caller: ^2.1.1
+  direct_sms: ^0.0.1
+#  permission_handler: ^11.1.0
+  geolocator: ^10.1.0
 #  flutter_isolate: ^2.0.4
 #  tflite_flutter: ^0.10.3
 #  rxdart: ^0.27.7

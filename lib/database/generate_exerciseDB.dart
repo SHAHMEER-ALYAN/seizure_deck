@@ -20,7 +20,8 @@ Future<void> generateExercise(
     BuildContext context,
     String type,
     String experience,
-    int duration) async {
+    int duration,
+    int numOfExercises) async {
 
   ExerciseProvider exerciseProvider =
       Provider.of<ExerciseProvider>(context, listen: false);
@@ -28,9 +29,9 @@ Future<void> generateExercise(
   UserProvider userProvider = Provider.of(context,listen: false);
   int? uid = userProvider.uid;
 
-  const url = 'https://seizure-deck.000webhostapp.com/generate_exercise_new.php';
+  const url = 'https://seizure-deck.000webhostapp.com/yoga.php';
 
-  print('$uid $type $experience $duration');
+  print('${uid.runtimeType} $type $experience $duration');
 
   // final response = await http.get(
   //   Uri.parse(
@@ -40,9 +41,10 @@ Future<void> generateExercise(
     Uri.parse(url),
     body: {
       'uid': uid.toString(),
-      'type': type,
+      // 'type': type,
       'experience': experience,
-      'duration': duration.toString()
+      'timeAvailable': duration.toString(),
+      'numExercises' : numOfExercises.toString()
     },
   );
   print(response.body);

@@ -27,6 +27,7 @@ class _LoginState extends State<Login>  {
 
   @override
   void initState() {
+    super.initState();
     email = TextEditingController();
     password = TextEditingController();
     checkRememberMe();
@@ -44,6 +45,7 @@ class _LoginState extends State<Login>  {
     int? storedID = prefs.getInt("RememberMe");
     if(storedID!=null){
       User user = User(uid: storedID);
+      Provider.of<UserProvider>(context, listen: false).setUser(user);
       _navigateToHome(context);
       // dispose();
     }

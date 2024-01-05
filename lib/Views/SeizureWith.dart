@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:seizure_deck/database/seizureDB.dart';
+import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'dart:async';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:direct_sms/direct_sms.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 // import 'package:workmanager/workmanager.dart';
 
@@ -47,6 +53,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   late tfl.Interpreter knnInterpreter;
   // late tfl.Interpreter svmInterpreter;
 
+  late Position position;
   @override
   void initState() {
     AndroidAlarmManager.cancel(0);
@@ -233,6 +240,9 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output[0][0] > output[0][3]) {
 
       print("Seizure Detected!");
+      SeizureService.storeSeizureData();
+
+      _sendSms();
       _callNumber();
       NotificationService().showNotification(
           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
@@ -244,6 +254,9 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output2[0][0] > output2[0][2] &&
         output2[0][0] > output2[0][3]) {
       print("Seizure Detected!");
+      SeizureService.storeSeizureData();
+
+      _sendSms();
       _callNumber();
       NotificationService().showNotification(
           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
@@ -255,6 +268,9 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output3[0][0] > output3[0][2] &&
         output3[0][0] > output3[0][3]) {
       print("Seizure Detected!");
+      SeizureService.storeSeizureData();
+
+      _sendSms();
       _callNumber();
       NotificationService().showNotification(
           title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
@@ -333,11 +349,21 @@ class _SeizureNewWith extends State<SeizureNewWith> {
               child: const Text('Not Used'),
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  position = await Geolocator.getCurrentPosition(
+                  desiredAccuracy: LocationAccuracy.high);
+
                   NotificationService().showNotification(
                       title: "SHAKE DETECTED",
                       body: "You might be experiencing Seizure");
+
+                      _sendSms();
                       _callNumber();
+                  UserProvider userProvider = Provider.of(context,listen: false);
+                  int? uid = userProvider.uid;
+                  // print(uid);
+                  // print(DateTime.now());
+                  SeizureService.storeSeizureData();
                 },
                 child: const Text("Notification")),
           ],
@@ -346,8 +372,20 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     );
   }
   _callNumber() async{
-    const number = '0333123123'; //set the number here
+    const number = '0333333333'; //set the number here
     bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  _sendSms() async {
+    const number = '0333333333';
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+
+    // final permission = Permission.sms.request();
+    // if (await permission.isGranted) {
+      DirectSms().sendSms(phone: number, message: "Latitude: ${position.latitude} Longitude: ${position.longitude}");
+      // directSms.sendSms(message: message, phone: number);
+
   }
 
   @override

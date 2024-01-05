@@ -1,12 +1,12 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/login.dart';
 import 'package:seizure_deck/Views/seizure.dart';
 import 'package:seizure_deck/Views/seizure_new.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'SeizureWith.dart';
 
 class Home extends StatefulWidget {
@@ -17,8 +17,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  double buttonWidth = 175.0;
 
+  double buttonWidth = 175.0;
   double buttonHeight = 150.0;
 
   @override
@@ -198,23 +198,6 @@ class _HomeState extends State<Home> {
 
     return MaterialApp(
       theme: ThemeManager.lightTheme,
-      // theme: ThemeData(
-      //   // textTheme: TextTheme(button: TextStyle(color: Colors.white)),
-      //   iconTheme: const IconThemeData(),
-      //   backgroundColor: Colors.grey,
-      //   elevatedButtonTheme: ElevatedButtonThemeData(
-      //     style: ElevatedButton.styleFrom(
-      //       foregroundColor: const Color(0xFFFFFFFF),
-      //       backgroundColor:  const Color(0xFF454587),
-      //       textStyle: TextStyle(color: Colors.white),
-      //       // backgroundColor: Colors.white,
-      //       padding: const EdgeInsets.all(35),
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(10),
-      //       ), // Set the text color to white
-      //     ),
-      //   ),
-      // ),
       home: WillPopScope(
         onWillPop: showExitPopup,
         child: Scaffold(
@@ -264,4 +247,5 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
 }

@@ -16,19 +16,22 @@ class _generate_exercise_plan extends State<generate_exercise_plan_new> {
       home: Scaffold(
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: () {
-
-              } , child: const Text("Cardio")),
-              const SizedBox(height: 15,),
+              ElevatedButton(onPressed: () {}, child: const Text("Cardio")),
+              const SizedBox(
+                height: 15,
+              ),
               ElevatedButton(onPressed: () {}, child: const Text("Tai Chi")),
-              const SizedBox(height: 15,),
-              ElevatedButton(onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Yoga()));
-              }, child: const Text("Yoga"))
+              const SizedBox(
+                height: 15,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Yoga()));
+                  },
+                  child: const Text("Yoga"))
             ],
           ),
         ),

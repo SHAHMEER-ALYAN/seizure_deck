@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:seizure_deck/Views/exercise_list.dart';
-import 'package:seizure_deck/database/generate_taichiDB.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class Taichi extends StatefulWidget {
-  const Taichi({super.key});
+  const Taichi({Key? key}) : super(key: key);
 
   @override
   State<Taichi> createState() => _Taichi();
@@ -13,7 +11,6 @@ class Taichi extends StatefulWidget {
 class _Taichi extends State<Taichi> {
 
   String difficulty = "Easy";
-  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,7 @@ class _Taichi extends State<Taichi> {
                 activeBgColor: const [Color(0xFF454587)],
                 activeFgColor: const Color(0xFF00c8dd),
                 totalSwitches: 3,
-                labels: const ["EASY", "MODERATE","HARD"],
+                labels: ["EASY", "MODERATE","HARD"],
                 onToggle: (value1) {
                   if(value1==0){
                     difficulty = 'Easy';
@@ -46,28 +43,6 @@ class _Taichi extends State<Taichi> {
                     difficulty = 'Hard';
                   }
                 },
-              ),
-              const SizedBox(height: 20,),
-              ElevatedButton(onPressed: () async {
-                setState(() {
-                  loading = true;
-                });
-                await generateTaichiExercise(context,difficulty);
-                setState(() {
-                  loading = false;
-                });
-                if (loading == false) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ExerciseListScreen(),
-                    ),
-                  );
-                }
-              } ,
-                  child: loading
-                      ? const CircularProgressIndicator()
-                      : const Text("Generate Tai Chi Plan"),
               )
             ],
           ),

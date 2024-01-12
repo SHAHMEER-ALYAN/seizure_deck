@@ -166,7 +166,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => exerciseList()));
+                                builder: (context) => ExerciseListScreen()));
                         // print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
                       }
                     },

@@ -205,7 +205,7 @@ class _HomeState extends State<Home> {
             backgroundColor: const Color(0xFF454587),
             // backgroundColor:  Color(0xFF00C8DD),
             centerTitle: true,
-            title: const Text("Homepage"),
+            title: const Text("Homepage",style: TextStyle(color: Colors.white),),
           ),
           body: Center(
               child: SingleChildScrollView(

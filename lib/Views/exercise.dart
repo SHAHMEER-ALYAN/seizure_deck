@@ -7,6 +7,7 @@ import '../data/exercise_data.dart';
 import '../providers/exercise_provider.dart';
 import '../providers/user_provider.dart';
 import 'generate_exercise_new.dart';
+import 'package:seizure_deck/Views/exercise_list.dart';
 import 'generate_exercise_plan.dart';
 import '../database/generate_exerciseDB.dart';
 
@@ -52,7 +53,7 @@ class _exerciseState extends State<exercise> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => exerciseList()));
+                        builder: (context) => ExerciseListScreen()));
               },
               child: const Text("Repeat Last Exercise"),
             ),
@@ -68,7 +69,7 @@ class _exerciseState extends State<exercise> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => generate_exercise_plan_new()));
+                          builder: (context) => const generate_exercise_plan_new()));
                 },
                 child: const Text("Generate Exercise Plan"))
           ],

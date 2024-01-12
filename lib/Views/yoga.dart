@@ -14,8 +14,8 @@ class Yoga extends StatefulWidget {
 
 class _YogaState extends State<Yoga> {
   String gender = 'MALE';
-  String experience = "Beginner";
-  int duration = 15;
+  String experience = "Easy";
+  int duration = 3;
   int numOfExercises = 4;
   bool loading = false;
 
@@ -62,10 +62,10 @@ class _YogaState extends State<Yoga> {
                 labels: const ["Beginner", "Intermediate", "Advanced"],
                 onToggle: (value2) {
                   experience = value2 == 0
-                      ? "Beginner"
+                      ? "Easy"
                       : value2 == 1
-                      ? "Intermediate"
-                      : "Advanced";
+                      ? "Moderate"
+                      : "Hard";
                 },
               ),
               const SizedBox(height: 20),
@@ -119,8 +119,10 @@ class _YogaState extends State<Yoga> {
                   setState(() {
                     loading = true;
                   });
+                  print(experience);
                   await generateExercise(
                       context, "Yoga", experience, duration, numOfExercises);
+                  print('yo');
                   setState(() {
                     loading = false;
                   });
@@ -128,7 +130,7 @@ class _YogaState extends State<Yoga> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => exerciseList(),
+                        builder: (context) => ExerciseListScreen(),
                       ),
                     );
                   }

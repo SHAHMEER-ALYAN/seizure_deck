@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- For apps with targetSDK=31 (Android 12) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+<!--    <uses-feature android:name="android.hardware.camera" />-->
+<!--    <uses-permission android:name="android.permission.CAMERA" />-->
 
     <application
 

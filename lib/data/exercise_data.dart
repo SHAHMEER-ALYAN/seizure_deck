@@ -20,8 +20,8 @@ class Exercise {
   factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
       eid: int.parse(json['eid']),
-      eName: json['e_name'],
-      type: json['Type'],
+      eName: json['eName'],
+      type: json['type'],
       difficulty: json['difficulty'],
       time: int.parse(json['time']),
       link: json['link']

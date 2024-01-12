@@ -9,22 +9,23 @@ import '../providers/user_provider.dart';
 // String experience = "Beginner";
 // int duration = 12;
 
-Future<void> generateExercise(
+Future<void> generateTaichiExercise(
     BuildContext context,
-    String type,
+    // String type,
     String experience,
-    int duration,
-    int numOfExercises) async {
+    // int duration,
+    // int numOfExercises
+    ) async {
 
   ExerciseProvider exerciseProvider =
-      Provider.of<ExerciseProvider>(context, listen: false);
+  Provider.of<ExerciseProvider>(context, listen: false);
 
   UserProvider userProvider = Provider.of(context,listen: false);
   int? uid = userProvider.uid;
 
-  const url = 'https://seizuredeck.000webhostapp.com/yoga.php';
+  const url = 'https://seizuredeck.000webhostapp.com/taichi.php';
 
-  print('uid: ${uid.runtimeType} type: $type experience: $experience duration: $duration');
+  print('uid: ${uid.runtimeType} experience: $experience');
 
   // final response = await http.get(
   //   Uri.parse(
@@ -36,8 +37,8 @@ Future<void> generateExercise(
       'uid': uid.toString(),
       // 'type': type,
       'experience': experience,
-      'timeAvailable': duration.toString(),
-      'numExercises' : numOfExercises.toString()
+      // 'timeAvailable': duration.toString(),
+      // 'numExercises' : numOfExercises.toString()
     },
   );
   print(response.body);
@@ -48,7 +49,7 @@ Future<void> generateExercise(
     if (responseData is List) {
       // Convert the dynamic list to a list of Exercise
       List<Exercise> exercises =
-          responseData.map((data) => Exercise.fromJson(data)).toList();
+      responseData.map((data) => Exercise.fromJson(data)).toList();
 
       exerciseProvider.setExercises(exercises);
     } else if (responseData is Map && responseData.containsKey('message')) {

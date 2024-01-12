@@ -29,9 +29,9 @@ Future<void> generateExercise(
   UserProvider userProvider = Provider.of(context,listen: false);
   int? uid = userProvider.uid;
 
-  const url = 'https://seizure-deck.000webhostapp.com/yoga.php';
+  const url = 'https://seizuredeck.000webhostapp.com/yoga.php';
 
-  print('${uid.runtimeType} $type $experience $duration');
+  print('uid: ${uid.runtimeType} type: $type experience: $experience duration: $duration');
 
   // final response = await http.get(
   //   Uri.parse(
@@ -62,11 +62,11 @@ Future<void> generateExercise(
       // Handle the case when no exercises are found
       print(responseData['message']);
       // You can display the message as needed, for example, show a SnackBar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(responseData['message']),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(responseData['message']),
+      //   ),
+      // );
     }
   } else {
     print(

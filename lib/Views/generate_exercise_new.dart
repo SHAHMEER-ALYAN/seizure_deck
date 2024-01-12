@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:seizure_deck/Views/taichi.dart';
 import 'package:seizure_deck/Views/yoga.dart';
 
 class generate_exercise_plan_new extends StatefulWidget {
@@ -22,7 +23,10 @@ class _generate_exercise_plan extends State<generate_exercise_plan_new> {
               const SizedBox(
                 height: 15,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text("Tai Chi")),
+              ElevatedButton(onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Taichi()));
+              }, child: const Text("Tai Chi")),
               const SizedBox(
                 height: 15,
               ),

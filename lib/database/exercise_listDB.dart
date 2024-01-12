@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../data/exercise_data.dart';
 
 class ExerciseService {
-  static const String apiUrl = 'https://seizuredeck.000webhostapp.com/get_yoga.php';
+  static const String apiUrl = 'https://seizuredeck.000webhostapp.com/get_exercise.php';
 
   static Future<List<Exercise>> getExercisesForUser(int uid) async {
     try {
@@ -16,6 +16,7 @@ class ExerciseService {
         final dynamic responseData = json.decode(response.body);
 
         if (responseData is List) {
+          print(responseData);
           return responseData.map((data) => Exercise.fromJson(data)).toList();
         } else {
           // Handle other response scenarios if needed

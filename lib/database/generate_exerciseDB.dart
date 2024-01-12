@@ -1,20 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
 import '../data/exercise_data.dart';
 import '../providers/exercise_provider.dart';
-
-
 import '../providers/user_provider.dart';
-
-
 // String gender= 'MALE';
 // String experience = "Beginner";
 // int duration = 12;
-
 
 Future<void> generateExercise(
     BuildContext context,

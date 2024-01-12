@@ -89,6 +89,9 @@ flutter:
     - assets/rfNEW.tflite
     - assets/svmNEW.tflite
     - assets/knnNEW.tflite
+    - assets/dumbbells.jpg
+    - assets/martialarts.jpg
+    - assets/yoga.jpg
 #    - assets/model_X.tflite
 #    - assets/model_y.tflite
 #    - assets/model_z.tflite

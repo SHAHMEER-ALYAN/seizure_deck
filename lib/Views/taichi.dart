@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:seizure_deck/Views/exercise_list.dart';
+import 'package:seizure_deck/database/generate_taichiDB.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class Taichi extends StatefulWidget {
@@ -11,6 +13,7 @@ class Taichi extends StatefulWidget {
 class _Taichi extends State<Taichi> {
 
   String difficulty = "Easy";
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,28 @@ class _Taichi extends State<Taichi> {
                     difficulty = 'Hard';
                   }
                 },
+              ),
+              SizedBox(height: 20,),
+              ElevatedButton(onPressed: () async {
+                setState(() {
+                  loading = true;
+                });
+                await generateTaichiExercise(context,difficulty);
+                setState(() {
+                  loading = false;
+                });
+                if (loading == false) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExerciseListScreen(),
+                    ),
+                  );
+                }
+              } ,
+                  child: loading
+                      ? const CircularProgressIndicator()
+                      : const Text("Generate Yoga Plan"),
               )
             ],
           ),

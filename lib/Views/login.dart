@@ -121,8 +121,8 @@ class _LoginState extends State<Login>  {
                               });
                             },
                             child: passwordVisible
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility)),
+                                ? const Icon(Icons.visibility_off)
+                                : const Icon(Icons.visibility)),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                           borderSide: const BorderSide(
@@ -153,7 +153,7 @@ class _LoginState extends State<Login>  {
                           print(rememberME);
                         },
                       ),
-                      Text("Remember Me"),
+                      const Text("Remember Me"),
                     ],
                   ),
                 ),
@@ -173,6 +173,7 @@ class _LoginState extends State<Login>  {
                         User user = User(uid: num);
                         Provider.of<UserProvider>(context, listen: false)
                             .setUser(user);
+                        prefs.setInt("uid", user.uid);
                         if(rememberME == true) {
                           prefs.setInt("RememberMe", user.uid);
                           print("Shared Preferences Working ? ${prefs.getInt(
@@ -190,19 +191,47 @@ class _LoginState extends State<Login>  {
                         // dispose();
                       }
                     } else {
+                      print(num.toString());
+                      showDialog(context: context, builder: (BuildContext context){
+                        return SimpleDialog(
+                          backgroundColor: Color(0xFF454587),
+                          title: const Center(child:  Text("Error",style: TextStyle(color: Colors.white),)),
+                          contentPadding:  const EdgeInsets.all(10),
+                          children: [Center(child: Text(num.toString(),style: const TextStyle(color: Colors.white),))],
+                        );
+                       });
+                      setState(() {
+                        isLoading = false;
+                      });
+                      // isLoading = false;
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //     return AlertDialog(
+                      //     title: Text('Incorrect Password'),
+                      //     content: Text('The entered password is incorrect. Please try again.'),
+                      //     actions: [
+                      //     TextButton(
+                      //     onPressed: () {
+                      //     Navigator.pop(context); // Close the AlertDialog
+                      //     },
+                      //     child: Text('OK'),
+                      //     ),
+                      //     ],
+                      //     );
                       // setState(() {
                       //   isLoading = false;
                       // });
-                      showLoginResultDialog(logincheck);
+                      // showLoginResultDialog(logincheck);
                     }
-                    setState(() {
-                      isLoading = false;
-                    });
+                    // setState(() {
+                    //   isLoading = false;
+                    // });
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF454587)),
                   child: isLoading
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : const Text("Login",
                           style: TextStyle(color: Colors.white)),
                 ),
@@ -214,7 +243,7 @@ class _LoginState extends State<Login>  {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => create_account()));
+                              builder: (context) => const create_account()));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF454587)),
@@ -239,14 +268,14 @@ class _LoginState extends State<Login>  {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Login Result"),
+          title: const Text("Login Result"),
           content: Text(message),
           actions: <Widget>[
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("OK"),
+              child: const Text("OK"),
             ),
           ],
         );

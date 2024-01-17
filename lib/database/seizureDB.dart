@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../providers/user_provider.dart';
 
@@ -8,20 +9,37 @@ class SeizureService {
   static const String apiUrl = 'https://seizuredeck.000webhostapp.com/seizure.php';
 
 
-  static Future<void> storeSeizureData() async {
-    int? uid = UserProvider().uid;
+  static Future<void> storeSeizureData(String uid) async {
+    // UserProvider userProvider = Provider.of(context,listen: false);
+    // int? uid = userProvider.uid;
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     try {
+      print("UID is : ${uid.toString()}");
+      // Uri.parse('$apiUrl?uid=$uid');
+      String date = DateTime.now().toString();
+      print(date.substring(0,19));
       final response = await http.post(
         Uri.parse(apiUrl),
         body: {
-          'uid': uid.toString(),
-          'date': DateTime.now(),
+          'uid': uid,
+          // 'type': type,
+          'date': date.substring(0,19),
           'longitude': position.longitude.toString(),
-          'latitude': position.latitude.toString()
+          'latitude' : position.latitude.toString(),
         },
       );
+
+      // final response = await http.post(
+      //   Uri.parse(apiUrl),
+      //   // headers: headers,
+      //   body: {
+      //     'uid': uid.toString(),
+      //     'date': DateTime.now().toString(),
+      //     'longitude': position.longitude.toString(),
+      //     'latitude': position.latitude.toString(),
+      //   },
+      // );
 
       if (response.statusCode == 200) {
         final dynamic responseData = json.decode(response.body);

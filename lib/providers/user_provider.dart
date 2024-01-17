@@ -15,5 +15,10 @@ class UserProvider with ChangeNotifier{
     _user = user;
     notifyListeners();
   }
+  static UserProvider? _instance;
+
+  static UserProvider? getInstance() {
+    return _instance;
+  }
 
 }

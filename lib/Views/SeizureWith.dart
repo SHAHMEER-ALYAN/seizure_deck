@@ -26,15 +26,17 @@ List<double> array1 = [];
 List<double> array2 = [];
 List<double> array3 = [];
 
+
 class _SeizureNewWith extends State<SeizureNewWith> {
 
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
+  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+  int? uid;
 
   // FlutterIsolate? _isolate;
   List<double> inputArray = []; // Concatenated array of 3 input arrays
   List<double> inputArray2 = [];
   List<double> inputArray3 = [];
-
 
   List<List<double>> output = List.filled(1, List.filled(4, 0.0));
 
@@ -114,11 +116,24 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     double modify_x = 1.0;
     double modify_y = 0.5;
     double modify_z = 0.5;
+    // double modify_x = 0.0;
+    // double modify_y = 0.0;
+    // double modify_z = 0.0;
     double gravity = 9.80665;
-    _accelerometerSubscription = accelerometerEvents
-        .throttleTime(const Duration(
-            milliseconds: 50)) // Capture around 16 values per second
-        .listen((AccelerometerEvent event) {
+    // accelerometerEvents().listen((event) { });
+
+    // _streamSubscriptions.add(
+    //     accelerometerEventStream(samplingPeriod: sensorInterval).listen(
+    //             (AccelerometerEvent event) {
+    Duration dd = Duration(milliseconds: 60);
+    _accelerometerSubscription = accelerometerEventStream().debounceTime(dd).listen((event) {
+
+    // });
+
+    // _accelerometerSubscription = accelerometerEvents
+    //     .debounceTime(const Duration(
+    //         milliseconds: 70)) // Capture around 16 values per second
+    //     .listen((AccelerometerEvent event) {
       setState(() {
         if (event.x < 0) {
           array1.add((event.x - modify_x) / gravity);
@@ -144,9 +159,12 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         if (array1.length == 206) {
           _makePrediction();
           // Clear the arrays after making the prediction
-          // array1.clear();
-          // array2.clear();
-          // array3.clear();
+          array1.clear();
+          array2.clear();
+          array3.clear();
+          inputArray.clear();
+          inputArray2.clear();
+          inputArray3.clear();
           // array1 = [];
           // array2 = [];
           // array3 = [];
@@ -194,11 +212,17 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     inputArray3.addAll(array2);
     inputArray3.addAll(array1);
 
+    // inputArray3.addAll(array3);
+    // inputArray3.addAll(array1);
+    // inputArray3.addAll(array2);
+
+    //
     // Reshape the input to match the expected shape [1, 4]
     List<List<double>> reshapedInput = [inputArray];
 
     List<List<double>> reshapedInput2 = [inputArray2];
     List<List<double>> reshapedInput3 = [inputArray3];
+
 
     // Make prediction
     List<List<double>> outputRFNEW = List.filled(1, List.filled(4, 0.0));
@@ -240,7 +264,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output[0][0] > output[0][3]) {
 
       print("Seizure Detected!");
-      SeizureService.storeSeizureData();
+      SeizureService.storeSeizureData(uid.toString());
 
       _sendSms();
       _callNumber();
@@ -254,7 +278,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output2[0][0] > output2[0][2] &&
         output2[0][0] > output2[0][3]) {
       print("Seizure Detected!");
-      SeizureService.storeSeizureData();
+      SeizureService.storeSeizureData(uid.toString());
 
       _sendSms();
       _callNumber();
@@ -268,7 +292,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output3[0][0] > output3[0][2] &&
         output3[0][0] > output3[0][3]) {
       print("Seizure Detected!");
-      SeizureService.storeSeizureData();
+      SeizureService.storeSeizureData(uid.toString());
 
       _sendSms();
       _callNumber();
@@ -279,17 +303,6 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     }
 
 
-    List<double> TempArray1 = array1.sublist(50);
-    List<double> TempArray2 = array2.sublist(50);
-    List<double> TempArray3 = array3.sublist(50);
-
-    // print("Value Compare ${TempArray1[0]} and ${array1[50]}");
-
-// Assign the new lists back to array1, array2, and array3
-//     array1 = TempArray1;
-//     array2 = TempArray2;
-//     array3 = TempArray3;
-
     array1.clear();
     array2.clear();
     array3.clear();
@@ -297,8 +310,6 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     print(array1.length);
     print(array2.length);
     print(array3.length);
-
-
 
     inputArray = [];
     inputArray2 = [];
@@ -357,13 +368,14 @@ class _SeizureNewWith extends State<SeizureNewWith> {
                       title: "SHAKE DETECTED",
                       body: "You might be experiencing Seizure");
 
-                      _sendSms();
-                      _callNumber();
+                      // _sendSms();
+                      // _callNumber();
                   UserProvider userProvider = Provider.of(context,listen: false);
-                  int? uid = userProvider.uid;
+                  // int? uid = userProvider.uid;
+                  uid = userProvider.uid;
                   // print(uid);
                   // print(DateTime.now());
-                  SeizureService.storeSeizureData();
+                  SeizureService.storeSeizureData(uid.toString());
                 },
                 child: const Text("Notification")),
           ],

@@ -8,10 +8,14 @@ import 'package:rxdart/rxdart.dart';
 import 'package:seizure_deck/database/seizureDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:seizure_deck/services/notification_services.dart';
 
 const int SEIZURE_DETECTION_ALARM_ID = 0;
+
+final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+
 
 late tfl.Interpreter _interpreter;
 late tfl.Interpreter rfInterpreter;
@@ -34,7 +38,13 @@ int progress = 0;
 String hi = "abc";
 late Timer printTimer;
 
+// late SharedPreferences prefs;
+
+@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 Future<void> _startListening() async {
+  // prefs = await SharedPreferences.getInstance();
+  // int? uid = prefs.getInt("uid");
+  // print("user id is : $uid");
   _loadModel();
   print("Seizure detection is active.");
   NotificationService().showOngoingNotification(
@@ -53,10 +63,14 @@ Future<void> _startListening() async {
   double modify_y = 0.5;
   double modify_z = 0.5;
   double gravity = 9.80665;
-  accelerometerEvents
-      .throttleTime(const Duration(
-          milliseconds: 50)) // Capture around 16 values per second
-      .listen((AccelerometerEvent event) {
+  Duration dd = Duration(milliseconds: 60);
+  _streamSubscriptions.add(
+
+  accelerometerEventStream().debounceTime(dd).listen((event) {
+  // accelerometerEvents
+  //     .throttleTime(const Duration(
+  //         milliseconds: 50)) // Capture around 16 values per second
+  //     .listen((AccelerometerEvent event) {
     print('Accelerometer Event Array Length: ${array1.length}');
     // debugPrint('Accelerometer Event Array Length: ${array1.length}');
     if (event.x < 0) {
@@ -84,26 +98,33 @@ Future<void> _startListening() async {
       _makePrediction();
 
       // Clear the arrays after making the prediction
-      // array1.clear();
-      // array2.clear();
-      // array3.clear();
-      array1 = [];
-      array2 = [];
-      array3 = [];
+      array1.clear();
+      array2.clear();
+      array3.clear();
+
+      // array1 = [];
+      // array2 = [];
+      // array3 = [];
       // return true;
     } else if (array1.length > 206) {
       print("Excceed Length Not good");
       array1 = [];
       array2 = [];
       array3 = [];
+
       // array1.clear();
       // array2.clear();
       // array3.clear();
     }
-  });
+  })
+  );
+  // for (final subscription in _streamSubscriptions) {
+  //   subscription.cancel();
+  // }
 }
 
 Future<void> _makePrediction() async {
+
   // int? uid = UserProvider().uid;
   // Position position = await Geolocator.getCurrentPosition(
   //     desiredAccuracy: LocationAccuracy.high);
@@ -152,12 +173,14 @@ Future<void> _makePrediction() async {
   output;
   output2;
   output3;
+  // prefs = await SharedPreferences.getInstance();
+  // int? uid = prefs.getInt("uid");
 
   if (output[0][0] > output[0][1] &&
       output[0][0] > output[0][2] &&
       output[0][0] > output[0][3]) {
     print("Seizure Detected!");
-    SeizureService.storeSeizureData();
+    // SeizureService.storeSeizureData(uid.toString());
     // SeizureService.storeSeizureData(uid!, DateTime.now().toString(),
     //     position.longitude.toString(), position.latitude.toString());
     _sendSms();
@@ -172,7 +195,7 @@ Future<void> _makePrediction() async {
       output2[0][0] > output2[0][2] &&
       output2[0][0] > output2[0][3]) {
     print("Seizure Detected!");
-    SeizureService.storeSeizureData();
+    // SeizureService.storeSeizureData(uid.toString());
     // SeizureService.storeSeizureData(uid!, DateTime.now().toString(),
     //     position.longitude.toString(), position.latitude.toString());
     _sendSms();
@@ -187,7 +210,7 @@ Future<void> _makePrediction() async {
       output3[0][0] > output3[0][2] &&
       output3[0][0] > output3[0][3]) {
     print("Seizure Detected!");
-    SeizureService.storeSeizureData();
+    // SeizureService.storeSeizureData(uid.toString());
     _sendSms();
     _callNumber();
     NotificationService().showNotification(
@@ -200,6 +223,28 @@ Future<void> _makePrediction() async {
   inputArray2 = [];
   inputArray3 = [];
   _interpreter.close();
+
+  for (final subscription in _streamSubscriptions) {
+    subscription.cancel();
+  }
+  print("CANCEL +++ ");
+  AndroidAlarmManager.cancel(0);
+  AndroidAlarmManager.oneShot(
+    const Duration(minutes: 0), // Set the interval as needed
+    0,
+    // SEIZURE_DETECTION_ALARM_ID,
+    _startListening,
+    // startAt: Added,
+    exact: true,
+    wakeup: true,
+    allowWhileIdle: true,
+  );
+
+
+  // _startListening().
+
+  // startSeizureDetection();
+
   // rfInterpreter.close();
   // knnInterpreter.close();
   // svmInterpreter.close();
@@ -237,14 +282,17 @@ Future<void> _loadModel() async {
       options: tfl.InterpreterOptions());
 }
 
+@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 Future<void> startSeizureDetection() async {
-  await AndroidAlarmManager.periodic(
+  // _startListening();
+  await AndroidAlarmManager.oneShot(
     const Duration(seconds: 0), // Set the interval as needed
     0,
     // SEIZURE_DETECTION_ALARM_ID,
     _startListening,
     exact: true,
     wakeup: true,
+    // allowWhileIdle: true,
   );
 }
 

@@ -4,7 +4,7 @@ import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'dart:async';
-import 'package:workmanager/workmanager.dart';
+// import 'package:workmanager/workmanager.dart';
 // import 'dart:isolate';
 // import 'package:flutter_isolate/flutter_isolate.dart';
 
@@ -45,7 +45,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
 
   @override
   void initState() {
-    Workmanager().cancelAll();
+    // Workmanager().cancelAll();
     super.initState();
     _startListening();
     _loadModel();
@@ -60,17 +60,17 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   }
 
   Future<void> _startBackgroundDetection() async {
-    await Workmanager().initialize(callbackDispatcher);
+    // await Workmanager().initialize(callbackDispatcher);
   }
 
   @pragma('vm:entry-point')
   void callbackDispatcher() {
-    Workmanager().registerPeriodicTask(
-      'seizure_detection_task',
-      'seizureDetectionTask',
-      initialDelay: Duration(seconds: 1),
-      frequency: Duration(seconds: 1),
-    );
+    // Workmanager().registerPeriodicTask(
+    //   'seizure_detection_task',
+    //   'seizureDetectionTask',
+    //   initialDelay: Duration(seconds: 1),
+    //   frequency: Duration(seconds: 1),
+    // );
   }
 
   // void seizureDetectionTask() async {

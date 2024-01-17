@@ -5,6 +5,8 @@ import 'package:direct_sms/direct_sms.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:seizure_deck/database/seizureDB.dart';
+import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:seizure_deck/services/notification_services.dart';
@@ -47,9 +49,9 @@ Future<void> _startListening() async {
   // });
   // NotificationService().showNotification(
   //   title: "MONITORING MOTION", body: "HI READING ACCELEROMETER DATA",);
-  double modifyX = 1.0;
-  double modifyY = 0.5;
-  double modifyZ = 0.5;
+  double modify_x = 1.0;
+  double modify_y = 0.5;
+  double modify_z = 0.5;
   double gravity = 9.80665;
   accelerometerEvents
       .throttleTime(const Duration(
@@ -58,21 +60,21 @@ Future<void> _startListening() async {
     print('Accelerometer Event Array Length: ${array1.length}');
     // debugPrint('Accelerometer Event Array Length: ${array1.length}');
     if (event.x < 0) {
-      array1.add((event.x - modifyX) / gravity);
+      array1.add((event.x - modify_x) / gravity);
     } else {
-      array1.add((event.x + modifyX) / gravity);
+      array1.add((event.x + modify_x) / gravity);
     }
     if (event.y < 0) {
       // print("____________________");
-      array2.add((event.y - modifyY) / gravity);
+      array2.add((event.y - modify_y) / gravity);
     } else {
       // print("!!!!!!!!!!!!!!!!!!!!!!!!!");
-      array2.add((event.y + modifyY) / gravity);
+      array2.add((event.y + modify_y) / gravity);
     }
     if (event.z < 0) {
-      array3.add((event.z - modifyZ) / gravity);
+      array3.add((event.z - modify_z) / gravity);
     } else {
-      array3.add((event.z + modifyZ) / gravity);
+      array3.add((event.z + modify_z) / gravity);
     }
 
     progress = array1.length;
@@ -247,3 +249,23 @@ Future<void> startSeizureDetectionold() async {
   );
 }
 
+// @pragma('vm:entry-point')
+// void callbackDispatcher() {
+//   Workmanager().executeTask((TaskName, inputData) async {
+//
+//     switch (task) {
+//       case 'SeizureDetector':
+//         print("SEE IDIOT");
+//         break;
+//       case 'firstTask':
+//         NotificationService().showOngoingNotification(id: 1,
+//             title: "Detecting Motion",
+//             body: "Analyzing Motion Data");
+//         print(task);
+//           _startListening();
+//         break;
+//
+//     }
+//     return Future.value(true);
+//   });
+// }

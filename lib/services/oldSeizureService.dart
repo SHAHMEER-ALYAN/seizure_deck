@@ -249,23 +249,3 @@ Future<void> startSeizureDetectionold() async {
   );
 }
 
-// @pragma('vm:entry-point')
-// void callbackDispatcher() {
-//   Workmanager().executeTask((TaskName, inputData) async {
-//
-//     switch (task) {
-//       case 'SeizureDetector':
-//         print("SEE IDIOT");
-//         break;
-//       case 'firstTask':
-//         NotificationService().showOngoingNotification(id: 1,
-//             title: "Detecting Motion",
-//             body: "Analyzing Motion Data");
-//         print(task);
-//           _startListening();
-//         break;
-//
-//     }
-//     return Future.value(true);
-//   });
-// }

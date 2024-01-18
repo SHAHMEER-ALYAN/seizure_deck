@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AndroidAlarmManager.initialize();
   // await startSeizureDetection();
-  await startSeizureDetectionold();
+  // await startSeizureDetectionold();
   // await startSeizureDetectionNEW();
 
   // Workmanager().initialize(

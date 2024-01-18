@@ -92,6 +92,14 @@ flutter:
     - assets/dumbbells.jpg
     - assets/martialarts.jpg
     - assets/yoga.jpg
+#    - assets/body.jpg
+    - assets/body.png
+    - assets/shoulder.png
+    - assets/chest.png
+    - assets/abs.png
+    - assets/legs.png
+    - assets/arms_left.png
+    - assets/arms_right.png
 #    - assets/model_X.tflite
 #    - assets/model_y.tflite
 #    - assets/model_z.tflite

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:seizure_deck/Views/body_select.dart';
 import 'package:seizure_deck/Views/taichi.dart';
 import 'package:seizure_deck/Views/yoga.dart';
 
@@ -56,6 +57,8 @@ class _generate_exercise_plan extends State<generate_exercise_plan_new> {
                   ),
 
                   onTap:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => bodySelect()));
                 print("you clicked me");
               }
               ),

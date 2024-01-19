@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/Views/exercise_list.dart';
 import 'package:seizure_deck/data/theme.dart';
-import 'package:seizure_deck/database/save_exerciseDB.dart';
-import '../data/exercise_data.dart';
 import '../providers/exercise_provider.dart';
 import '../providers/user_provider.dart';
 import 'generate_exercise_new.dart';
-import 'package:seizure_deck/Views/exercise_list.dart';
-import 'generate_exercise_plan.dart';
-import '../database/generate_exerciseDB.dart';
 
 class exercise extends StatefulWidget {
+  const exercise({super.key});
+
   @override
   State<StatefulWidget> createState() => _exerciseState();
 }
@@ -36,33 +33,33 @@ class _exerciseState extends State<exercise> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/slogo.png'),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text("Exercise Plan",
+            const Text("Exercise Plan",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF454587),
+                    backgroundColor: const Color(0xFF454587),
                     minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
                         MediaQuery.of(context).size.width / 11)),
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ExerciseListScreen()));
+                        builder: (context) => const ExerciseListScreen()));
               },
               child: const Text("Repeat Last Exercise"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF454587),
+                    backgroundColor: const Color(0xFF454587),
                     minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
                         MediaQuery.of(context).size.width / 11)),
                 onPressed: () {

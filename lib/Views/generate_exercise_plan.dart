@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/exercise_list.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/providers/exercise_provider.dart'; // Adjust the import based on your project structure
 
 import '../data/count_Data.dart';
-import '../database/generate_exerciseDB.dart';
 
 class generate_exercise_plan extends StatefulWidget {
-  const generate_exercise_plan({Key? key}) : super(key: key);
+  const generate_exercise_plan({super.key});
 
   @override
   State<generate_exercise_plan> createState() => _generate_exercise_plan();
@@ -41,11 +38,11 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
       theme: ThemeData(
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF454587),
+                  backgroundColor: const Color(0xFF454587),
                   minimumSize: Size(MediaQuery.of(context).size.width / 1.5,
                       MediaQuery.of(context).size.width / 10)
               )),
-              textTheme: TextTheme(subtitle1: TextStyle(color: Colors.white))
+              textTheme: const TextTheme(titleMedium: TextStyle(color: Colors.white))
       ),
       home: Scaffold(
         body: ChangeNotifierProvider(
@@ -71,7 +68,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                     activeBgColor: const [Color(0xFF454587)],
                     activeFgColor: const Color(0xFF00c8dd),
                     totalSwitches: 3,
-                    labels: ["Cardio", "Tai Chi", "Yoga"],
+                    labels: const ["Cardio", "Tai Chi", "Yoga"],
                     onToggle: (value1) {
                       if (value1 == 0) {
                         mode_select = "Cardio";
@@ -133,7 +130,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                     activeBgColor: const [Color(0xFF454587)],
                     activeFgColor: const Color(0xFF00c8dd),
                     totalSwitches: 3,
-                    labels: ["3","4","5"],
+                    labels: const ["3","4","5"],
                     onToggle: (value2) {
                     if(value2 == 0){
                       exercise_count = 3;
@@ -144,7 +141,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                     }
                     },
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -166,13 +163,13 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ExerciseListScreen()));
+                                builder: (context) => const ExerciseListScreen()));
                         // print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
                       }
                     },
                     child: const Text("Create Exercise Plan"),
                   ),
-                  if (loading) CircularProgressIndicator(),
+                  if (loading) const CircularProgressIndicator(),
                   // ElevatedButton(onPressed: () async {
                   //   print("$difficulty_select $time_select $space_select , $equipment_select");
                   //   await generateExercise(difficulty_select,time_select,space_select,equipment_select);
@@ -195,7 +192,7 @@ class _generate_exercise_plan extends State<generate_exercise_plan> {
     return Container(
       child: Column(
         children: [
-          Text("Select Difficulty",
+          const Text("Select Difficulty",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           ToggleSwitch(
             minWidth: MediaQuery.of(context).size.width,

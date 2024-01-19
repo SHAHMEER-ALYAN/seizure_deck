@@ -3,10 +3,9 @@ import 'package:seizure_deck/Views/exercise_list.dart';
 import 'package:seizure_deck/database/generate_exerciseDB.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../data/exercise_data.dart';
 
 class Yoga extends StatefulWidget {
-  const Yoga({Key? key}) : super(key: key);
+  const Yoga({super.key});
 
   @override
   State<Yoga> createState() => _YogaState();
@@ -40,7 +39,7 @@ class _YogaState extends State<Yoga> {
                 activeBgColor: const [Color(0xFF454587)],
                 activeFgColor: const Color(0xFF00c8dd),
                 totalSwitches: 2,
-                labels: ["MALE", "FEMALE"],
+                labels: const ["MALE", "FEMALE"],
                 onToggle: (value1) {
                   gender = value1 == 0 ? "MALE" : "FEMALE";
                 },
@@ -130,7 +129,7 @@ class _YogaState extends State<Yoga> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ExerciseListScreen(),
+                        builder: (context) => const ExerciseListScreen(),
                       ),
                     );
                   }

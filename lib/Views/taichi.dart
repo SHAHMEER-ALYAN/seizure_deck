@@ -4,7 +4,7 @@ import 'package:seizure_deck/database/generate_taichiDB.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class Taichi extends StatefulWidget {
-  const Taichi({Key? key}) : super(key: key);
+  const Taichi({super.key});
 
   @override
   State<Taichi> createState() => _Taichi();
@@ -36,7 +36,7 @@ class _Taichi extends State<Taichi> {
                 activeBgColor: const [Color(0xFF454587)],
                 activeFgColor: const Color(0xFF00c8dd),
                 totalSwitches: 3,
-                labels: ["EASY", "MODERATE","HARD"],
+                labels: const ["EASY", "MODERATE","HARD"],
                 onToggle: (value1) {
                   if(value1==0){
                     difficulty = 'Easy';
@@ -47,7 +47,7 @@ class _Taichi extends State<Taichi> {
                   }
                 },
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               ElevatedButton(onPressed: () async {
                 setState(() {
                   loading = true;
@@ -60,7 +60,7 @@ class _Taichi extends State<Taichi> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ExerciseListScreen(),
+                      builder: (context) => const ExerciseListScreen(),
                     ),
                   );
                 }

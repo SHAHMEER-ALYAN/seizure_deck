@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 class AlarmSetupPage extends StatefulWidget {
-  const AlarmSetupPage({Key? key}) : super(key: key);
+  const AlarmSetupPage({super.key});
 
   @override
   _AlarmSetupPageState createState() => _AlarmSetupPageState();
@@ -75,11 +75,11 @@ class _AlarmSetupPageState extends State<AlarmSetupPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Set Alarm Time',
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 final TimeOfDay? pickedTime = await showTimePicker(
@@ -94,17 +94,17 @@ class _AlarmSetupPageState extends State<AlarmSetupPage> {
               },
               child: const Text('Select Time'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _setAlarm,
               child: const Text('Set Alarm'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _setRingtone,
               child: const Text('Select Ringtone'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text('Selected Ringtone: $selectedRingtone'),
           ],
         ),

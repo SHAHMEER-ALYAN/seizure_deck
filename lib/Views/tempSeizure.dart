@@ -11,6 +11,8 @@ import 'dart:async';
 
 
 class SeizureNewWith extends StatefulWidget {
+  const SeizureNewWith({super.key});
+
   @override
   _SeizureNewWith createState() => _SeizureNewWith();
 }
@@ -94,30 +96,30 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   }
 
   void _startListening() {
-    double modify_x = 1.0;
-    double modify_y = 0.5;
-    double modify_z = 0.5;
+    double modifyX = 1.0;
+    double modifyY = 0.5;
+    double modifyZ = 0.5;
     double gravity = 9.80665;
     accelerometerEvents
         .throttleTime(const Duration(milliseconds: 50)) // Capture around 16 values per second
         .listen((AccelerometerEvent event) {
       setState(() {
         if(event.x<0){
-          array1.add((event.x-modify_x)/ gravity);
+          array1.add((event.x-modifyX)/ gravity);
         }else{
-          array1.add((event.x+modify_x)/ gravity);
+          array1.add((event.x+modifyX)/ gravity);
         }
         if(event.y < 0){
           // print("____________________");
-          array2.add((event.y-modify_y)/ gravity);
+          array2.add((event.y-modifyY)/ gravity);
         }else{
           // print("!!!!!!!!!!!!!!!!!!!!!!!!!");
-          array2.add((event.y+modify_y)/ gravity);
+          array2.add((event.y+modifyY)/ gravity);
         }
         if(event.z<0){
-          array3.add((event.z-modify_z)/ gravity);
+          array3.add((event.z-modifyZ)/ gravity);
         }else{
-          array3.add((event.z+modify_z)/ gravity);
+          array3.add((event.z+modifyZ)/ gravity);
         }
         setState(() {
           progress = array1.length;
@@ -461,10 +463,10 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   @override
   Widget build(BuildContext context) {
     // int progress =0;
-    Text progressIndicator = Text("Progress: "+progress.toString());
-    Text array1Prediction = Text("Array1: " + output.toString());
-    Text array2Prediction = Text("Array2: " + output2.toString());
-    Text array3Prediction = Text("Array3: " + output3.toString());
+    Text progressIndicator = Text("Progress: $progress");
+    Text array1Prediction = Text("Array1: $output");
+    Text array2Prediction = Text("Array2: $output2");
+    Text array3Prediction = Text("Array3: $output3");
 
     return Scaffold(
 

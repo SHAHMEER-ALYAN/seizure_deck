@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:seizure_deck/Views//home.dart';
 import 'package:seizure_deck/Views/create_account.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:seizure_deck/data/user_data.dart';
@@ -9,8 +8,10 @@ import 'package:seizure_deck/database/loginDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home.dart';
+
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -24,8 +25,6 @@ class _LoginState extends State<Login>  {
   bool rememberME = false;
   late SharedPreferences prefs;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -36,9 +35,8 @@ class _LoginState extends State<Login>  {
 
   late bool logincheck;
 
-  // Function to handle navigation
   void _navigateToHome(BuildContext context) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home()));
   }
 
   Future<void> checkRememberMe()async {
@@ -48,10 +46,9 @@ class _LoginState extends State<Login>  {
       User user = User(uid: storedID);
       Provider.of<UserProvider>(context, listen: false).setUser(user);
       _navigateToHome(context);
-      // dispose();
+      
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -62,7 +59,6 @@ class _LoginState extends State<Login>  {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Scrollable(viewportBuilder: AxisDirection.down),
                 Padding(
                   padding: const EdgeInsets.only(top: 45.0),
                   child: Image.asset(
@@ -143,7 +139,7 @@ class _LoginState extends State<Login>  {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    // Center the content horizontally
+                    
                     children: [
                       Checkbox(
                         value: rememberME,
@@ -163,12 +159,12 @@ class _LoginState extends State<Login>  {
                   onPressed: () async {
                     setState(() {
                       isLoading =
-                          true; // Set loading state to true before API call
+                          true; 
                     });
                     prefs = await SharedPreferences.getInstance();
-                    dynamic? num;
+                    dynamic num;
                     num = await loginDBCheck(email, password);
-                    // print(num);
+                    
                     if (num.runtimeType == int) {
                       if (num != null) {
                         User user = User(uid: num);
@@ -182,25 +178,12 @@ class _LoginState extends State<Login>  {
                         }
                         setState(() {
                           isLoading =
-                          false; // Set loading state to true before API call
+                          false; 
                         });
                         _navigateToHome(context);
-                        // setState(() {
-                        //   isLoading =
-                        //       false; // Set loading state to true before API call
-                        // });
-                        // dispose();
                       }
                     } else {
                       print(num.toString());
-                      // showDialog(context: context, builder: (BuildContext context){
-                      //   return SimpleDialog(
-                      //     backgroundColor: Color(0xFF454587),
-                      //     title: const Center(child:  Text("Error",style: TextStyle(color: Colors.white),)),
-                      //     contentPadding:  const EdgeInsets.all(10),
-                      //     children: [Center(child: Text(num.toString(),style: const TextStyle(color: Colors.white),))],
-                      //   );
-                      //  });
                       Fluttertoast.showToast(
                           msg: num.toString(),
                           toastLength: Toast.LENGTH_SHORT,
@@ -213,30 +196,7 @@ class _LoginState extends State<Login>  {
                       setState(() {
                         isLoading = false;
                       });
-                      // isLoading = false;
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (BuildContext context) {
-                      //     return AlertDialog(
-                      //     title: Text('Incorrect Password'),
-                      //     content: Text('The entered password is incorrect. Please try again.'),
-                      //     actions: [
-                      //     TextButton(
-                      //     onPressed: () {
-                      //     Navigator.pop(context); // Close the AlertDialog
-                      //     },
-                      //     child: Text('OK'),
-                      //     ),
-                      //     ],
-                      //     );
-                      // setState(() {
-                      //   isLoading = false;
-                      // });
-                      // showLoginResultDialog(logincheck);
                     }
-                    // setState(() {
-                    //   isLoading = false;
-                    // });
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF454587)),

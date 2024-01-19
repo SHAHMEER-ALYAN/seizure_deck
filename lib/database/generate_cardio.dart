@@ -95,6 +95,7 @@ int boolToInt(bool abc){
   if(abc = true){
     return 1;
   }
-  else
+  else {
     return 0;
+  }
 }

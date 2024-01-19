@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:seizure_deck/services/notification_services.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'package:flutter_sensors/flutter_sensors.dart';
 // import 'package:shake/shake.dart';
 
 class Seizure extends StatefulWidget {
+  const Seizure({super.key});
+
 
   @override
   _SeizureState createState() => _SeizureState();

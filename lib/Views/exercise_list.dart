@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/data/exercise_data.dart';
-import 'package:seizure_deck/database/save_exerciseDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../database/exercise_listDB.dart';
 
 class ExerciseListScreen extends StatelessWidget {
+  const ExerciseListScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,6 @@ class ExerciseListScreen extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF454587),
-          // backgroundColor:  Color(0xFF00C8DD),
           centerTitle: true,
           title: const Text("Exercise List",style: TextStyle(color: Colors.white),),
         ),
@@ -32,11 +30,11 @@ class ExerciseListScreen extends StatelessWidget {
       future: ExerciseService.getExercisesForUser(userProvider.uid!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No exercises found for the user'));
+          return const Center(child: Text('No exercises found for the user'));
         } else {
           List<Exercise> userExercises = snapshot.data!;
           return _buildExerciseListView(context, userExercises);
@@ -70,7 +68,7 @@ class ExerciseListScreen extends StatelessWidget {
     return Center(
       child: ListTile(
         title: Center(child: Text('Exercise Name: ${exercise.eName}',
-          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)),
+          style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),)),
         subtitle: Column(
           children: [
             _buildExerciseVideo(exercise.link),

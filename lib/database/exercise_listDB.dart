@@ -13,22 +13,17 @@ class ExerciseService {
       );
       print(" RESPONSE IS ${response.body}");
 
-      if (response.body != null) {
-        final dynamic responseData = json.decode(response.body);
+      final dynamic responseData = json.decode(response.body);
 
-        if (responseData is List) {
-          print(responseData);
-          return responseData.map((data) => Exercise.fromJson(data)).toList();
-        } else {
-          // Handle other response scenarios if needed
-          print("Invalid JSON response");
-          return [];
-        }
+      if (responseData is List) {
+        print(responseData);
+        return responseData.map((data) => Exercise.fromJson(data)).toList();
       } else {
-        print("Response body is null");
+        // Handle other response scenarios if needed
+        print("Invalid JSON response");
         return [];
       }
-    } catch (e) {
+        } catch (e) {
       print("Exception: $e"); // Print the exception details
       print("here3");
 

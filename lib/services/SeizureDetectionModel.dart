@@ -5,10 +5,7 @@ import 'package:direct_sms/direct_sms.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:seizure_deck/database/seizureDB.dart';
-import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:seizure_deck/services/notification_services.dart';
 
@@ -59,11 +56,11 @@ Future<void> _startListening() async {
   // });
   // NotificationService().showNotification(
   //   title: "MONITORING MOTION", body: "HI READING ACCELEROMETER DATA",);
-  double modify_x = 1.0;
-  double modify_y = 0.5;
-  double modify_z = 0.5;
+  double modifyX = 1.0;
+  double modifyY = 0.5;
+  double modifyZ = 0.5;
   double gravity = 9.80665;
-  Duration dd = Duration(milliseconds: 60);
+  Duration dd = const Duration(milliseconds: 60);
   _streamSubscriptions.add(
 
   accelerometerEventStream().debounceTime(dd).listen((event) {
@@ -74,21 +71,21 @@ Future<void> _startListening() async {
     print('Accelerometer Event Array Length: ${array1.length}');
     // debugPrint('Accelerometer Event Array Length: ${array1.length}');
     if (event.x < 0) {
-      array1.add((event.x - modify_x) / gravity);
+      array1.add((event.x - modifyX) / gravity);
     } else {
-      array1.add((event.x + modify_x) / gravity);
+      array1.add((event.x + modifyX) / gravity);
     }
     if (event.y < 0) {
       // print("____________________");
-      array2.add((event.y - modify_y) / gravity);
+      array2.add((event.y - modifyY) / gravity);
     } else {
       // print("!!!!!!!!!!!!!!!!!!!!!!!!!");
-      array2.add((event.y + modify_y) / gravity);
+      array2.add((event.y + modifyY) / gravity);
     }
     if (event.z < 0) {
-      array3.add((event.z - modify_z) / gravity);
+      array3.add((event.z - modifyZ) / gravity);
     } else {
-      array3.add((event.z + modify_z) / gravity);
+      array3.add((event.z + modifyZ) / gravity);
     }
 
     progress = array1.length;

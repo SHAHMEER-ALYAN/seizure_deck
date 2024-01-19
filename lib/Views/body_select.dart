@@ -7,7 +7,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 import '../database/generate_cardio.dart';
 
 class bodySelect extends StatefulWidget {
-  const bodySelect({Key? key}) : super(key: key);
+  const bodySelect({super.key});
 
   @override
   State<bodySelect> createState() => _bodySelect();
@@ -31,12 +31,12 @@ class _bodySelect extends State<bodySelect> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // builder: FToastBuilder(),
+      
       theme: ThemeManager.lightTheme,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF454587),
-          // backgroundColor:  Color(0xFF00C8DD),
+          
           centerTitle: true,
           title: const Text(
             "Exercises Catalogue",
@@ -53,7 +53,7 @@ class _bodySelect extends State<bodySelect> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Body,
+                  
                   Column(
                     children: [
                       Body(),
@@ -61,42 +61,42 @@ class _bodySelect extends State<bodySelect> {
                   ),
                   Column(
                     children: [
-                      SizedBox(height: 00),
+                      const SizedBox(height: 00),
                       ElevatedButton(
                           onPressed: () {
                             setState(() {
                               shoulder = !shoulder;
                             });
                             print(shoulder);
-                            // chest = !chest;
+                            
                           },
-                          child: Text('Shoulders')),
+                          child: const Text('Shoulders')),
                       ElevatedButton(onPressed: () {
                         setState(() {
                           chest = !chest;
                         });
                         print(chest);
-                      }, child: Text('Chest')),
+                      }, child: const Text('Chest')),
                       ElevatedButton(onPressed: () {
                         setState(() {
                           back = !back;
                         });
                         print(back);
-                      }, child: Text('Back')),
-                      SizedBox(height: 10),
+                      }, child: const Text('Back')),
+                      const SizedBox(height: 10),
                       ElevatedButton(onPressed: () {
                         setState(() {
                           abs = !abs;
                         });
                         print(abs);
-                      }, child: Text('Abs')),
+                      }, child: const Text('Abs')),
                       ElevatedButton(onPressed: () {
                         setState(() {
                           arms = !arms;
                         });
                         print(arms);
-                      }, child: Text('Arms')),
-                      SizedBox(
+                      }, child: const Text('Arms')),
+                      const SizedBox(
                         height: 30,
                       ),
                       ElevatedButton(onPressed: () {
@@ -104,13 +104,13 @@ class _bodySelect extends State<bodySelect> {
                           legs = !legs;
                         });
                         print(legs);
-                      }, child: Text('Legs')),
+                      }, child: const Text('Legs')),
                     ],
                   )
                 ],
               ),
-              SizedBox(height: 10,),
-              Text('Select Number of Exercises'),
+              const SizedBox(height: 10,),
+              const Text('Select Number of Exercises'),
               ToggleSwitch(
                 minWidth: MediaQuery.of(context).size.width/3,
                 minHeight: MediaQuery.of(context).size.height / 18,
@@ -136,8 +136,8 @@ class _bodySelect extends State<bodySelect> {
                   }
                 },
               ),
-              SizedBox(height: 10,),
-              Text('Select Difficulty of Exercises'),
+              const SizedBox(height: 10,),
+              const Text('Select Difficulty of Exercises'),
               ToggleSwitch(
                 minWidth: MediaQuery.of(context).size.width/3,
                 minHeight: MediaQuery.of(context).size.height / 18,
@@ -163,13 +163,13 @@ class _bodySelect extends State<bodySelect> {
                   }
                 },
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               ElevatedButton(onPressed: () async {
               if(shoulder==true || chest == true || back == true || arms == true || abs == true || legs == true)
               {
               await generateCardioExercise(context,shoulder,chest,back,arms,abs,legs,numOfExercise,difficulty);
               print('CHECK');
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ExerciseListScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExerciseListScreen()));
               }
               else{
                 Fluttertoast.showToast(
@@ -182,11 +182,11 @@ class _bodySelect extends State<bodySelect> {
                     fontSize: 16.0
                 );
               }
-              }, child: Text("Generate Exercise Plan"))
+              }, child: const Text("Generate Exercise Plan"))
             ],
           ),
           ),
-        // ),
+        
       ),
     );
   }
@@ -195,7 +195,7 @@ class _bodySelect extends State<bodySelect> {
     return Container(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ColorFiltered(
@@ -210,7 +210,7 @@ class _bodySelect extends State<bodySelect> {
               child: Image.asset(
                 'assets/shoulder.png',
                 height: 80,
-                // fit: BoxFit.scaleDown,
+                
               ),
             ),
           ),
@@ -227,14 +227,14 @@ class _bodySelect extends State<bodySelect> {
                 'assets/chest.png',
                 height: 65,
                 width: 190,
-                // fit: BoxFit.scaleDown,
+                
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 3, 0, 0),
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.,
+              
               children: [
                 ColorFiltered(
                   colorFilter: arms
@@ -246,8 +246,8 @@ class _bodySelect extends State<bodySelect> {
                   child: Image.asset(
                     'assets/arms_left.png',
                     height: 90,
-                    // width: 80,
-                    // fit: BoxFit.scaleDown,
+                    
+                    
                   ),
                 ),
                 ColorFiltered(
@@ -260,8 +260,8 @@ class _bodySelect extends State<bodySelect> {
                   child: Image.asset(
                     'assets/abs.png',
                     height: 90,
-                    // width: 0,
-                    // fit: BoxFit.scaleDown,
+                    
+                    
                   ),
                 ),
                 ColorFiltered(
@@ -275,7 +275,7 @@ class _bodySelect extends State<bodySelect> {
                     'assets/arms_right.png',
                     height: 90,
                     width: 40,
-                    // fit: BoxFit.scaleDown,
+                    
                   ),
                 ),
               ],

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:rxdart/rxdart.dart';
 
-import '../services/SeizureDetectionModel.dart';
 
 class SeizureTest extends StatefulWidget {
+  const SeizureTest({super.key});
+
   @override
   _SeizureTestState createState() => _SeizureTestState();
 }
@@ -58,9 +57,9 @@ class _SeizureTestState extends State<SeizureTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Seizure Detection Test'),
+        title: const Text('Seizure Detection Test'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Simulating accelerometer data for testing...'),
       ),
     );

@@ -1,9 +1,5 @@
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 import 'package:seizure_deck/database/create.dart';
 
 class create_account extends StatefulWidget {
@@ -16,18 +12,12 @@ class create_account extends StatefulWidget {
 
 class _create_accountState extends State<create_account> {
 
-  DateTime selectedDate = DateTime.now(); // Initialize with the current date
+  DateTime selectedDate = DateTime.now(); 
 
   late TextEditingController name;
-
-  // name.text = "";
-
   late TextEditingController password;
-
   late TextEditingController DOB;
-
   late TextEditingController email;
-
   late TextEditingController location;
 
   @override
@@ -43,7 +33,7 @@ class _create_accountState extends State<create_account> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(1900), // Adjust the range as needed
+      firstDate: DateTime(1900), 
       lastDate: DateTime.now(),
     );
 
@@ -55,8 +45,7 @@ class _create_accountState extends State<create_account> {
   }
 
   ButtonStyle customElevatedButtonStyle = ElevatedButton.styleFrom(
-    primary: const Color(0xFF454587), // Background color
-    onPrimary: Colors.white, // Text color
+    foregroundColor: Colors.white, backgroundColor: const Color(0xFF454587), 
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15.0),
       side: const BorderSide(width: 5, color: Color(0xFF454587)),
@@ -72,7 +61,7 @@ class _create_accountState extends State<create_account> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // `UID`, `Name`, `Password`, `DOB`, `Email`, `Location`, `PID`
+                
                 const Text(
                   "Enter Name",
                   style: TextStyle(
@@ -124,7 +113,7 @@ class _create_accountState extends State<create_account> {
                         hintText: "Password"),
                   ),
                 ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
                 const Text(
                   "Enter Date of Birth",
                   style: TextStyle(
@@ -140,7 +129,7 @@ class _create_accountState extends State<create_account> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF454587)),
                     child: const Text("Date of Birth")),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 const Text(
                   "Enter Email",
                   style: TextStyle(
@@ -166,7 +155,7 @@ class _create_accountState extends State<create_account> {
                         hintText: "Email"),
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 const Text(
                   "Enter Location",
                   style: TextStyle(
@@ -202,7 +191,7 @@ class _create_accountState extends State<create_account> {
                       print(email.text);
                       addUserToDatabase(
                           name, password, selectedDate, email, location);
-                      // addUserToDatabase();
+                      
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF454587)),
@@ -216,28 +205,28 @@ class _create_accountState extends State<create_account> {
     );
   }
 
-// Future<void> addUserToDatabase() async {
-//   const url = 'https://seizure-deck.000webhostapp.com/create.php'; // Replace with your server URL
-//
-//   final httpClient = HttpClient()..badCertificateCallback = (cert, host, port) => true;
-//
-//   final ioClient = IOClient(httpClient);
-//
-//   final response = await ioClient.post(
-//     Uri.parse(url),
-//     body: {
-//       'Name': name.text,
-//       'Password': password.text,
-//       'DOB': "${selectedDate.toLocal()}".split(' ')[0], // Format the date
-//       'Email': email.text,
-//       'Location': location.text,
-//     },
-//   );
-//
-//   if (response.statusCode == 200) {
-//     print("User added successfully!");
-//   } else {
-//     print("Failed to add user. Status code: ${response.statusCode}");
-//   }
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

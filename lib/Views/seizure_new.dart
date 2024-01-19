@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
 
 class SeizureNew extends StatefulWidget {
+  const SeizureNew({super.key});
+
   @override
   _SeizureNew createState() => _SeizureNew();
 }
@@ -163,7 +164,7 @@ class _SeizureNew extends State<SeizureNew> {
     if(myList[0][0]>myList[0][1] && myList[0][0]>myList[0][2] && myList[0][0]>myList[0][3]){
       print("WORKING");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Seizure Detected!'),
           duration: Duration(seconds: 3),
         ),
@@ -186,12 +187,12 @@ class _SeizureNew extends State<SeizureNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter TFLite Example'),
+        title: const Text('Flutter TFLite Example'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: makePrediction,
-          child: Text('Make Prediction'),
+          child: const Text('Make Prediction'),
         ),
       ),
     );

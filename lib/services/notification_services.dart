@@ -36,7 +36,7 @@ class NotificationService {
     String? body,
     String? payLoad,
   }) async {
-    final NotificationDetails ongoingNotificationDetails =
+    const NotificationDetails ongoingNotificationDetails =
     NotificationDetails(
       android: AndroidNotificationDetails(
         'ongoingChannelId',

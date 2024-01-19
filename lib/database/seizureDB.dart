@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
-import '../providers/user_provider.dart';
 
 class SeizureService {
   static const String apiUrl = 'https://seizuredeck.000webhostapp.com/seizure.php';

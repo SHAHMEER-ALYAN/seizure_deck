@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:seizure_deck/services/notification_services.dart';
-import 'package:flutter/services.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:intl/intl.dart';
@@ -12,7 +11,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 enum MedicineType { Syrup, Tablets, Syringe }
 
 class medicationReminder extends StatefulWidget {
-  const medicationReminder({Key? key}) : super(key: key);
+  const medicationReminder({super.key});
 
   @override
   _medicationReminderWidgetState createState() =>
@@ -31,14 +30,12 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
   ];
 
   String selectedOption = 'Everyday';
-
   var label = 'Notification';
-
   bool isSyrupSelected = false;
   bool isTabletSelected = false;
   bool isSyringeSelected = false;
 
-  MedicineType selectedMedicine = MedicineType.Syrup; // Default medicine type
+  MedicineType selectedMedicine = MedicineType.Syrup; 
 
   String getHintText() {
     switch (selectedMedicine) {
@@ -61,20 +58,16 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
 
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-
     tz.initializeTimeZones();
     var scheduledTimeZone = tz.local;
-
-    // Convert the DateTime object to a TZDateTime
     var scheduledDateTime = tz.TZDateTime.from(
       scheduledTime,
       scheduledTimeZone,
     );
-
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0, // Notification ID
-      'Reminder', // Title
-      "It's time to take your medicine!", // Body
+      0, 
+      'Reminder', 
+      "It's time to take your medicine!", 
       scheduledDateTime,
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
@@ -85,12 +78,10 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
   @override
   void initState() {
     super.initState();
-
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
-
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
     );
@@ -99,7 +90,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
   TextEditingController textController = TextEditingController();
   final TextEditingController medicineController = TextEditingController();
   final TextEditingController dosageController = TextEditingController();
-
   DateTime? datePicked1;
   DateTime? datePicked2;
 
@@ -107,7 +97,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Medication'),
+        title: const Text('Add New Medication'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -115,7 +105,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Medication Name input field
+              
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -133,7 +123,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                       height: 15,
                     ),
                     TextField(
-                      controller: medicineController, // Add the controller here
+                      controller: medicineController, 
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.0),
@@ -150,7 +140,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                 ),
               ),
 
-              // Dropdown for Frequency Reminder Options
+              
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -164,13 +154,13 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                         fontSize: 20,
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     DropdownButtonFormField<String>(
                       value: selectedOption,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             width: 2,
                           ),
                         ),
@@ -190,8 +180,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                   ],
                 ),
               ),
-
-              // IconButtons
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -205,7 +193,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                         color: Color(0xFF454587),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -226,7 +214,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                                   dosageController.clear();
                                 });
                               },
-                              iconSize: 30, // Set the icon size
+                              iconSize: 30, 
                             ),
                             const SizedBox(height: 10),
                             Text(
@@ -256,7 +244,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                                   dosageController.clear();
                                 });
                               },
-                              iconSize: 30, // Set the icon size
+                              iconSize: 30, 
                             ),
                             const SizedBox(height: 10),
                             Text(
@@ -286,7 +274,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                                   dosageController.clear();
                                 });
                               },
-                              iconSize: 30, // Set the icon size
+                              iconSize: 30, 
                             ),
                             const SizedBox(height: 10),
                             Text(
@@ -301,7 +289,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                         ),
                       ],
                     ),
-                    // Dosage Text Field
+                    
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Column(
@@ -322,7 +310,7 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                               hintText: getHintText(),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   width: 2,
                                   color: Color(0xFF454587),
                                 ),
@@ -335,8 +323,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                   ],
                 ),
               ),
-
-              // Select Date Button
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, right: 10.0),
                 child: Row(
@@ -350,7 +336,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2030),
                         );
-
                         if (date != null) {
                           setState(() {
                             datePicked1 = date;
@@ -358,13 +343,13 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                         }
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: Color(0xFF454587),
+                        backgroundColor: const Color(0xFF454587),
                         padding:
-                            EdgeInsets.symmetric(horizontal: 15.0), // Padding
+                            const EdgeInsets.symmetric(horizontal: 15.0), 
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                                BorderRadius.circular(15.0), // Button shape
-                            side: BorderSide(
+                                BorderRadius.circular(15.0), 
+                            side: const BorderSide(
                                 width: 2,
                                 color: Color.fromARGB(255, 255, 255, 255))),
                       ),
@@ -377,14 +362,12 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                       ),
                     ),
 
-                    // Select Time Button
                     TextButton(
                       onPressed: () async {
                         final selectedTime = await showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
                         );
-
                         if (selectedTime != null) {
                           final now = DateTime.now();
                           final scheduledDateTime = DateTime(
@@ -397,7 +380,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
 
                           await _scheduleNotification(scheduledDateTime);
                         }
-
                         if (selectedTime != null) {
                           setState(() {
                             datePicked2 = DateTime(
@@ -411,16 +393,16 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                         }
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: Color(0xFF454587),
+                        backgroundColor: const Color(0xFF454587),
                         padding:
-                            EdgeInsets.symmetric(horizontal: 15.0), // Padding
+                            const EdgeInsets.symmetric(horizontal: 15.0), 
                         shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.circular(15.0), // Button shape
-                          side: BorderSide(
+                              BorderRadius.circular(15.0), 
+                          side: const BorderSide(
                               width: 2,
                               color:
-                                  Color.fromARGB(255, 255, 255, 255)), // Border
+                                  Color.fromARGB(255, 255, 255, 255)), 
                         ),
                       ),
                       child: const Text(
@@ -434,8 +416,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                   ],
                 ),
               ),
-
-              // Toggle Switch for Reminder and Alarm
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -445,34 +425,30 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                       minWidth: 100.0,
                       minHeight: 36.0,
                       initialLabelIndex: 0,
-                      activeBgColor: [Color(0xFF454587)],
-                      labels: ['Notification', 'Alarm'],
+                      activeBgColor: const [Color(0xFF454587)],
+                      labels: const ['Notification', 'Alarm'],
                       onToggle: (index) {
                         setState(() {
                           if (index == 0) {
-                            // Notification is selected
                             ElevatedButton(
                               child: const Text('Set Notification'),
                               onPressed: () {
                                 if (datePicked1 != null) {
-                                  // Compare the selected date with the current date and time
+                                  
                                   final currentTime = DateTime.now();
                                   if (datePicked1!.isAfter(currentTime)) {
-                                    // Format the date and time
+                                    
                                     String formattedDate =
                                         DateFormat('dd/MM/yy')
                                             .format(datePicked1!);
                                     String formattedTime = DateFormat('HH:mm')
                                         .format(datePicked2!);
-
-                                    // The selected date is in the future, so set the notification
                                     NotificationService().showNotification(
                                       title: 'Notification',
                                       body:
                                           'Your Notification has been set for $formattedDate at $formattedTime',
                                     );
                                   } else {
-                                    // The selected date is in the past, show an error message
                                     showDialog(
                                       context: context,
                                       builder: (context) {
@@ -493,7 +469,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                                     );
                                   }
                                 } else {
-                                  // Handle the case where the date & time is not selected
                                   showDialog(
                                     context: context,
                                     builder: (context) {
@@ -516,7 +491,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                               },
                             );
                           } else {
-                            // Alarm is selected
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -530,8 +504,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                   ],
                 ),
               ),
-
-              // Save Button
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -539,42 +511,6 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // For Validation if clicked on Save button then Error or Next Page will Navigate
-                        // if (medicineController.text.isEmpty ||
-                        //     dosageController.text.isEmpty ||
-                        //     datePicked1 == null ||
-                        //     datePicked2 == null ||
-                        //     selectedMedicine == null ||
-                        //     selectedOption.isEmpty) {
-                        //   showDialog(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return AlertDialog(
-                        //         title: const Text('Error'),
-                        //         content: const Text('Please fill all the required fields to proceed.'),
-                        //         actions: [
-                        //           TextButton(
-                        //             onPressed: () {
-                        //               Navigator.pop(context);
-                        //             },
-                        //             child: const Text('OK'),
-                        //           ),
-                        //         ],
-                        //       );
-                        //     },
-                        //   );
-                        // } else {
-                        //   // Save data logic goes here
-                        //   // This section is reached when all required fields are filled
-                        //   // Save the data or proceed to the next step
-                        //   // For example, navigate to a new page with the collected data:
-                        //   // Navigator.push(
-                        //   //   context,
-                        //   //   MaterialPageRoute(
-                        //   //     builder: (context) => GenerateMedication(),
-                        //   //   ),
-                        //   // );
-                        // }
                       },
                       child: const Text('Save'),
                     ),

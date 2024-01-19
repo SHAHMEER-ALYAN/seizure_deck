@@ -1,19 +1,16 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views/Community.dart';
-// import 'package:permission_handler/permission_handler.dart';
+
 import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/login.dart';
 import 'package:seizure_deck/Views/medicationHomepage.dart';
-import 'package:seizure_deck/Views/medication_reminder.dart';
-import 'package:seizure_deck/Views/seizure.dart';
-import 'package:seizure_deck/Views/seizure_new.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SeizureWith.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -28,8 +25,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Future<bool> showExitPopup() async {
       return await showDialog(
-            //show confirm dialogue
-            //the return value will be from "Yes" or "No" options
             context: context,
             builder: (context) => AlertDialog(
               title: const Text('Exit App'),
@@ -37,7 +32,7 @@ class _HomeState extends State<Home> {
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  //return false when click on "NO"
+                  
                   child: const Text('No'),
                 ),
                 ElevatedButton(onPressed: () async {
@@ -45,20 +40,17 @@ class _HomeState extends State<Home> {
                   await pref.remove('RememberMe');
                   await pref.clear();
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Login()));
-                  // dispose();
-                  // Navigator.of(context).popAndPushNamed(MaterialPageRoute(builder: (context)=> Login()));
                 }, child: const Text('Logout')),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  //return true when click on "Yes"
+                  
                   child: const Text('Yes'),
                 ),
               ],
             ),
           ) ??
-          false; //if showDialouge had returned null, then return false
+          false; 
     }
-
     SizedBox seizureDiaryButton() {
       return SizedBox(
         width: buttonWidth,
@@ -69,11 +61,8 @@ class _HomeState extends State<Home> {
             print(" yo yo ${AndroidAlarmManager.channelName}");
 
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SeizureNewWith()));
+                MaterialPageRoute(builder: (context) => const SeizureNewWith()));
           },
-          // style: ElevatedButton.styleFrom(
-          //   padding: EdgeInsets.all(35.0)
-          // ),
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -85,7 +74,6 @@ class _HomeState extends State<Home> {
         ),
       );
     }
-
     SizedBox medicationButton() {
       return SizedBox(
         width: buttonWidth,
@@ -93,12 +81,8 @@ class _HomeState extends State<Home> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => medicationHomePage()));
-
+                  MaterialPageRoute(builder: (context) => const medicationHomePage()));
             },
-            // style: ElevatedButton.styleFrom(
-            //     padding: EdgeInsets.all(35.0)
-            // ),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -117,11 +101,8 @@ class _HomeState extends State<Home> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => exercise()));
+                  context, MaterialPageRoute(builder: (context) => const exercise()));
             },
-            // style: ElevatedButton.styleFrom(
-            //     padding: EdgeInsets.all(35.0)
-            // ),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -140,11 +121,8 @@ class _HomeState extends State<Home> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DiscussionScreen()));
+                  MaterialPageRoute(builder: (context) => const DiscussionScreen()));
             },
-            // style: ElevatedButton.styleFrom(
-            //     padding: EdgeInsets.all(35.0)
-            // ),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -162,9 +140,6 @@ class _HomeState extends State<Home> {
         height: buttonHeight + 5,
         child: ElevatedButton(
             onPressed: () {},
-            // style: ElevatedButton.styleFrom(
-            //     padding: EdgeInsets.all(35.0)
-            // ),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -178,16 +153,12 @@ class _HomeState extends State<Home> {
             )),
       );
     }
-
     SizedBox firstAidButton() {
       return SizedBox(
         width: buttonWidth,
         height: buttonHeight + 5,
         child: ElevatedButton(
             onPressed: () {},
-            // style: ElevatedButton.styleFrom(
-            //     padding: EdgeInsets.all(35.0)
-            // ),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -205,7 +176,6 @@ class _HomeState extends State<Home> {
             )),
       );
     }
-
     return MaterialApp(
       theme: ThemeManager.lightTheme,
       home: WillPopScope(
@@ -213,7 +183,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xFF454587),
-            // backgroundColor:  Color(0xFF00C8DD),
+            
             centerTitle: true,
             title: const Text("Homepage",style: TextStyle(color: Colors.white),),
           ),
@@ -257,5 +227,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
 }

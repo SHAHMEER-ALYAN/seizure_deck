@@ -11,6 +11,7 @@ class ExerciseService {
       final response = await http.get(
         Uri.parse('$apiUrl?uid=$uid'), // Pass uid as a query parameter
       );
+      print(" RESPONSE IS ${response.body}");
 
       if (response.body != null) {
         final dynamic responseData = json.decode(response.body);

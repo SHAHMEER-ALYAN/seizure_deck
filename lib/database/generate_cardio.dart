@@ -9,35 +9,59 @@ import '../providers/user_provider.dart';
 // String experience = "Beginner";
 // int duration = 12;
 
-Future<void> generateExercise(
+Future<void> generateCardioExercise(
     BuildContext context,
-    String type,
-    String experience,
-    int duration,
-    int numOfExercises) async {
+    bool shoulder,
+    bool chest,
+    bool back,
+    bool arms,
+    bool abs,
+    bool legs,
+    int numOfExercises,
+    String difficulty,
+    // int duration,
+    // int numOfExercises
+    ) async {
 
   ExerciseProvider exerciseProvider =
-      Provider.of<ExerciseProvider>(context, listen: false);
+  Provider.of<ExerciseProvider>(context, listen: false);
 
   UserProvider userProvider = Provider.of(context,listen: false);
   int? uid = userProvider.uid;
 
-  const url = 'https://seizuredeck.000webhostapp.com/yoga.php';
+  const url = 'https://seizuredeck.000webhostapp.com/cardio.php';
 
-  print('uid: ${uid} type: $type experience: $experience duration: $duration');
+  // print('uid: ${uid.runtimeType} experience: $experience');
 
   // final response = await http.get(
   //   Uri.parse(
   //       '$url?difficulty=$difficultySelect'),
   // );
+  // bool shoulder,
+  //     bool chest,
+  // bool back,
+  // bool arms,
+  // bool abs,
+  // bool legs,
+  // int numOfExercises,
+  // String difficulty,
+  // // 'timeAvailable': duration.toString(),
+  // 'numExercises' : numOfExercises.toString()
   final response = await http.post(
     Uri.parse(url),
     body: {
       'uid': uid.toString(),
       // 'type': type,
-      'experience': experience,
-      'timeAvailable': duration.toString(),
-      'numExercises' : numOfExercises.toString()
+      'shoulder': boolToInt(shoulder).toString(),
+      'chest' : boolToInt(chest).toString(),
+      'back' : boolToInt(back).toString(),
+      'arms' : boolToInt(arms).toString(),
+      'abs' : boolToInt(abs).toString(),
+      'legs' : boolToInt(legs).toString(),
+      'numExercises' : numOfExercises.toString(),
+      'difficulty' : difficulty
+      // 'timeAvailable': duration.toString(),
+      // 'numExercises' : numOfExercises.toString()
     },
   );
   print(response.body);
@@ -48,7 +72,7 @@ Future<void> generateExercise(
     if (responseData is List) {
       // Convert the dynamic list to a list of Exercise
       List<Exercise> exercises =
-          responseData.map((data) => Exercise.fromJson(data)).toList();
+      responseData.map((data) => Exercise.fromJson(data)).toList();
 
       exerciseProvider.setExercises(exercises);
     } else if (responseData is Map && responseData.containsKey('message')) {
@@ -65,4 +89,12 @@ Future<void> generateExercise(
     print(
         "Failed to connect to the server. Status Code: ${response.statusCode}");
   }
+}
+
+int boolToInt(bool abc){
+  if(abc = true){
+    return 1;
+  }
+  else
+    return 0;
 }

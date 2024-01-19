@@ -1,8 +1,11 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:seizure_deck/Views/Community.dart';
 // import 'package:permission_handler/permission_handler.dart';
 import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/login.dart';
+import 'package:seizure_deck/Views/medicationHomepage.dart';
+import 'package:seizure_deck/Views/medication_reminder.dart';
 import 'package:seizure_deck/Views/seizure.dart';
 import 'package:seizure_deck/Views/seizure_new.dart';
 import 'package:seizure_deck/data/theme.dart';
@@ -41,10 +44,10 @@ class _HomeState extends State<Home> {
                   SharedPreferences pref = await SharedPreferences.getInstance();
                   await pref.remove('RememberMe');
                   await pref.clear();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Login()));
                   // dispose();
                   // Navigator.of(context).popAndPushNamed(MaterialPageRoute(builder: (context)=> Login()));
-                }, child: Text('Logout')),
+                }, child: const Text('Logout')),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(true),
                   //return true when click on "Yes"
@@ -88,7 +91,11 @@ class _HomeState extends State<Home> {
         width: buttonWidth,
         height: buttonHeight,
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => medicationHomePage()));
+
+            },
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),
@@ -131,7 +138,10 @@ class _HomeState extends State<Home> {
         width: buttonWidth,
         height: buttonHeight,
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DiscussionScreen()));
+            },
             // style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.all(35.0)
             // ),

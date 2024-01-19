@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/Views//home.dart';
 import 'package:seizure_deck/Views/create_account.dart';
@@ -176,7 +177,7 @@ class _LoginState extends State<Login>  {
                         prefs.setInt("uid", user.uid);
                         if(rememberME == true) {
                           prefs.setInt("RememberMe", user.uid);
-                          print("Shared Preferences Working ? ${prefs.getInt(
+                          print("Shared Preferences Working : ${prefs.getInt(
                               "RememberMe")}");
                         }
                         setState(() {
@@ -192,14 +193,23 @@ class _LoginState extends State<Login>  {
                       }
                     } else {
                       print(num.toString());
-                      showDialog(context: context, builder: (BuildContext context){
-                        return SimpleDialog(
-                          backgroundColor: Color(0xFF454587),
-                          title: const Center(child:  Text("Error",style: TextStyle(color: Colors.white),)),
-                          contentPadding:  const EdgeInsets.all(10),
-                          children: [Center(child: Text(num.toString(),style: const TextStyle(color: Colors.white),))],
-                        );
-                       });
+                      // showDialog(context: context, builder: (BuildContext context){
+                      //   return SimpleDialog(
+                      //     backgroundColor: Color(0xFF454587),
+                      //     title: const Center(child:  Text("Error",style: TextStyle(color: Colors.white),)),
+                      //     contentPadding:  const EdgeInsets.all(10),
+                      //     children: [Center(child: Text(num.toString(),style: const TextStyle(color: Colors.white),))],
+                      //   );
+                      //  });
+                      Fluttertoast.showToast(
+                          msg: num.toString(),
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.purple.shade200,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                       setState(() {
                         isLoading = false;
                       });

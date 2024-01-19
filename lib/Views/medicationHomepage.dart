@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:seizure_deck/Views/medication_reminder.dart';
 
 class medicationHomePage extends StatelessWidget {
-  const medicationHomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // Remove app bar for this page
-        title: const Text('Medication Reminder'),
+        title: Text('Medication Reminder'),
       ),
       body: Center(
         child: Column(
@@ -20,7 +18,7 @@ class medicationHomePage extends StatelessWidget {
               'assets/LOGO.png',
               height: 175,
             ),
-            const Text(
+            Text(
               'Press + to add a Reminder!',
               style: TextStyle(
                   fontSize: 20, color: Color.fromARGB(255, 81, 81, 82)),
@@ -35,7 +33,7 @@ class medicationHomePage extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => const medicationReminder()));
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
     );
   }

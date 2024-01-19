@@ -24,7 +24,7 @@ Future<void> generateExercise(
 
   const url = 'https://seizuredeck.000webhostapp.com/yoga.php';
 
-  print('uid: ${uid.runtimeType} type: $type experience: $experience duration: $duration');
+  print('uid: ${uid} type: $type experience: $experience duration: $duration');
 
   // final response = await http.get(
   //   Uri.parse(

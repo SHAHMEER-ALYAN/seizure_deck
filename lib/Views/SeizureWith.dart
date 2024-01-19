@@ -30,7 +30,7 @@ List<double> array3 = [];
 class _SeizureNewWith extends State<SeizureNewWith> {
 
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
-  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+  // final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   int? uid;
 
   // FlutterIsolate? _isolate;

@@ -5,6 +5,7 @@ import 'package:seizure_deck/Views/Community.dart';
 import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/login.dart';
 import 'package:seizure_deck/Views/medicationHomepage.dart';
+import 'package:seizure_deck/Views/seizureList.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SeizureWith.dart';
@@ -17,7 +18,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   double buttonWidth = 175.0;
   double buttonHeight = 150.0;
 
@@ -32,25 +32,30 @@ class _HomeState extends State<Home> {
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  
                   child: const Text('No'),
                 ),
-                ElevatedButton(onPressed: () async {
-                  SharedPreferences pref = await SharedPreferences.getInstance();
-                  await pref.remove('RememberMe');
-                  await pref.clear();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Login()));
-                }, child: const Text('Logout')),
+                ElevatedButton(
+                    onPressed: () async {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      await pref.remove('RememberMe');
+                      await pref.clear();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()));
+                    },
+                    child: const Text('Logout')),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  
                   child: const Text('Yes'),
                 ),
               ],
             ),
           ) ??
-          false; 
+          false;
     }
+
     SizedBox seizureDiaryButton() {
       return SizedBox(
         width: buttonWidth,
@@ -59,9 +64,10 @@ class _HomeState extends State<Home> {
           onPressed: () async {
             await AndroidAlarmManager.cancel(0);
             print(" yo yo ${AndroidAlarmManager.channelName}");
-
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SeizureNewWith()));
+                MaterialPageRoute(builder: (context) => SeizureList()));
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => const SeizureNewWith()));
           },
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,14 +80,17 @@ class _HomeState extends State<Home> {
         ),
       );
     }
+
     SizedBox medicationButton() {
       return SizedBox(
         width: buttonWidth,
         height: buttonHeight,
         child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const medicationHomePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const medicationHomePage()));
             },
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -100,15 +109,17 @@ class _HomeState extends State<Home> {
         height: buttonHeight,
         child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const exercise()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const exercise()));
             },
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.fitness_center, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
-                Text("Exercise",)
+                Text(
+                  "Exercise",
+                )
               ],
             )),
       );
@@ -120,8 +131,10 @@ class _HomeState extends State<Home> {
         height: buttonHeight,
         child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const DiscussionScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DiscussionScreen()));
             },
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -153,6 +166,7 @@ class _HomeState extends State<Home> {
             )),
       );
     }
+
     SizedBox firstAidButton() {
       return SizedBox(
         width: buttonWidth,
@@ -176,6 +190,7 @@ class _HomeState extends State<Home> {
             )),
       );
     }
+
     return MaterialApp(
       theme: ThemeManager.lightTheme,
       home: WillPopScope(
@@ -183,9 +198,11 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xFF454587),
-            
             centerTitle: true,
-            title: const Text("Homepage",style: TextStyle(color: Colors.white),),
+            title: const Text(
+              "Homepage",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           body: Center(
               child: SingleChildScrollView(

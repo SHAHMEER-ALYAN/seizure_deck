@@ -185,7 +185,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output[0][0] > output[0][2] &&
         output[0][0] > output[0][3]) {
       print("Seizure Detected!");
-      // SeizureService.storeSeizureData(uid.toString());
+      SeizureService.storeSeizureData();
       _sendSms();
       _callNumber();
       NotificationService().showNotification(
@@ -197,7 +197,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output2[0][0] > output2[0][2] &&
         output2[0][0] > output2[0][3]) {
       print("Seizure Detected!");
-      // SeizureService.storeSeizureData(uid.toString());
+      SeizureService.storeSeizureData();
       _sendSms();
       _callNumber();
       NotificationService().showNotification(
@@ -209,7 +209,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output3[0][0] > output3[0][2] &&
         output3[0][0] > output3[0][3]) {
       print("Seizure Detected!");
-      // SeizureService.storeSeizureData(uid.toString());
+      SeizureService.storeSeizureData();
       _sendSms();
       _callNumber();
       NotificationService().showNotification(
@@ -275,10 +275,9 @@ class _SeizureNewWith extends State<SeizureNewWith> {
                   NotificationService().showNotification(
                       title: "SHAKE DETECTED",
                       body: "You might be experiencing Seizure");
-                  _callNumber();
                   UserProvider userProvider = Provider.of(context,listen: false);
                   uid = userProvider.uid;
-                  // SeizureService.storeSeizureData(uid.toString());
+                  SeizureService.storeSeizureData();
                 },
                 child: const Text("Notification")),
           ],

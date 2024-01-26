@@ -5,14 +5,16 @@ import 'package:direct_sms/direct_sms.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:seizure_deck/database/seizureDB.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:seizure_deck/services/notification_services.dart';
 
 const int SEIZURE_DETECTION_ALARM_ID = 0;
 
-final _streamSubscriptions = <StreamSubscription<dynamic>>[];
-
+final streamSubscriptions = <StreamSubscription<dynamic>>[];
+final StreamController sub = StreamController();
 
 late tfl.Interpreter _interpreter;
 late tfl.Interpreter rfInterpreter;
@@ -37,8 +39,15 @@ late Timer printTimer;
 
 // late SharedPreferences prefs;
 
+// cancelSubscription() {
+//   sub.cancel();
+// }
+
 @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 Future<void> _startListening() async {
+
+
+
   // prefs = await SharedPreferences.getInstance();
   // int? uid = prefs.getInt("uid");
   // print("user id is : $uid");
@@ -60,9 +69,8 @@ Future<void> _startListening() async {
   double modifyY = 0.5;
   double modifyZ = 0.5;
   double gravity = 9.80665;
-  Duration dd = const Duration(milliseconds: 60);
-  _streamSubscriptions.add(
-
+  Duration dd = const Duration(milliseconds: 65);
+  streamSubscriptions.add(
   accelerometerEventStream().debounceTime(dd).listen((event) {
   // accelerometerEvents
   //     .throttleTime(const Duration(
@@ -119,6 +127,7 @@ Future<void> _startListening() async {
   //   subscription.cancel();
   // }
 }
+
 
 Future<void> _makePrediction() async {
 
@@ -177,7 +186,7 @@ Future<void> _makePrediction() async {
       output[0][0] > output[0][2] &&
       output[0][0] > output[0][3]) {
     print("Seizure Detected!");
-    // SeizureService.storeSeizureData(uid.toString());
+    SeizureService.storeSeizureData();
     // SeizureService.storeSeizureData(uid!, DateTime.now().toString(),
     //     position.longitude.toString(), position.latitude.toString());
     _sendSms();
@@ -192,7 +201,7 @@ Future<void> _makePrediction() async {
       output2[0][0] > output2[0][2] &&
       output2[0][0] > output2[0][3]) {
     print("Seizure Detected!");
-    // SeizureService.storeSeizureData(uid.toString());
+    SeizureService.storeSeizureData();
     // SeizureService.storeSeizureData(uid!, DateTime.now().toString(),
     //     position.longitude.toString(), position.latitude.toString());
     _sendSms();
@@ -207,7 +216,7 @@ Future<void> _makePrediction() async {
       output3[0][0] > output3[0][2] &&
       output3[0][0] > output3[0][3]) {
     print("Seizure Detected!");
-    // SeizureService.storeSeizureData(uid.toString());
+    SeizureService.storeSeizureData();
     _sendSms();
     _callNumber();
     NotificationService().showNotification(
@@ -221,9 +230,10 @@ Future<void> _makePrediction() async {
   inputArray3 = [];
   _interpreter.close();
 
-  for (final subscription in _streamSubscriptions) {
-    subscription.cancel();
-  }
+  // for (final subscription in _streamSubscriptions) {
+  //   subscription.cancel();
+  // }
+
   print("CANCEL +++ ");
   AndroidAlarmManager.cancel(0);
   AndroidAlarmManager.oneShot(
@@ -251,14 +261,26 @@ Future<void> _makePrediction() async {
 }
 
 _callNumber() async {
-  const number = '0333123123'; //set the number here
-  bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // String? number = prefs.getString('number');
+  // print("NUMBER IS: $number");//set the number here
+  // bool? res = await FlutterPhoneDirectCaller.callNumber(number!);
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? number = prefs.getString('number');
+  print("NUMBER IS: $number");//set the number here
+  bool? res = await FlutterPhoneDirectCaller.callNumber(number!);
 }
 
 _sendSms() async {
-  const number = '0333333333';
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? number = prefs.getString('number');
+  print("NUMBER IS: $number");//set the number here
   Position position = await Geolocator.getCurrentPosition(
   desiredAccuracy: LocationAccuracy.high);
+  if(number!.isEmpty){
+    number = '911';
+  }
 
   // final permission = Permission.sms.request();
   // if (await permission.isGranted) {
@@ -287,6 +309,19 @@ Future<void> startSeizureDetection() async {
     0,
     // SEIZURE_DETECTION_ALARM_ID,
     _startListening,
+    exact: true,
+    wakeup: true,
+    // allowWhileIdle: true,
+  );
+}
+@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+Future<void> startSeizureDetectionDelayed() async {
+  // _startListening();
+  await AndroidAlarmManager.periodic(
+    const Duration(minutes: 30), // Set the interval as needed
+    1,
+    // SEIZURE_DETECTION_ALARM_ID,
+    startSeizureDetection,
     exact: true,
     wakeup: true,
     // allowWhileIdle: true,

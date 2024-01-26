@@ -35,6 +35,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         children: [
           Expanded(
             child: ListView.builder(
+              reverse: true,
               itemCount: comments.length,
               itemBuilder: (context, index) {
                 final message = comments[index];

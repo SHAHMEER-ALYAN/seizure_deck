@@ -1,26 +1,30 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SeizureService {
   static const String apiUrl = 'https://seizuredeck.000webhostapp.com/seizure.php';
 
 
-  static Future<void> storeSeizureData(String uid) async {
+  // static Future<void> storeSeizureData(String uid) async {
+    static Future<void> storeSeizureData() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? storedID = prefs.getInt("uid");
     // UserProvider userProvider = Provider.of(context,listen: false);
     // int? uid = userProvider.uid;
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     try {
-      print("UID is : ${uid.toString()}");
+      print("UID is : ${storedID.toString()}");
       // Uri.parse('$apiUrl?uid=$uid');
       String date = DateTime.now().toString();
       print(date.substring(0,19));
       final response = await http.post(
         Uri.parse(apiUrl),
         body: {
-          'uid': uid,
+          'uid': storedID.toString(),
           // 'type': type,
           'date': date.substring(0,19),
           'longitude': position.longitude.toString(),

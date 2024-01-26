@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:seizure_deck/Views/create_account.dart';
 import 'package:seizure_deck/data/theme.dart';
@@ -30,7 +32,9 @@ class _LoginState extends State<Login>  {
     super.initState();
     email = TextEditingController();
     password = TextEditingController();
+    requestPermissions();
     checkRememberMe();
+    initialization();
   }
 
   late bool logincheck;
@@ -43,6 +47,7 @@ class _LoginState extends State<Login>  {
     prefs = await SharedPreferences.getInstance();
     int? storedID = prefs.getInt("RememberMe");
     if(storedID!=null){
+      prefs.setInt("uid", storedID);
       User user = User(uid: storedID);
       Provider.of<UserProvider>(context, listen: false).setUser(user);
       _navigateToHome(context);
@@ -252,4 +257,31 @@ class _LoginState extends State<Login>  {
       },
     );
   }
+}
+void initialization() async {
+  // This is where you can initialize the resources needed by your app while
+  // the splash screen is displayed.  Remove the following example because
+  // delaying the user experience is a bad design practice!
+  // ignore_for_file: avoid_print
+  print('ready in 3...');
+  await Future.delayed(const Duration(seconds: 1));
+  print('ready in 2...');
+  await Future.delayed(const Duration(seconds: 1));
+  print('ready in 1...');
+  await Future.delayed(const Duration(seconds: 1));
+  print('go!');
+  FlutterNativeSplash.remove();
+}
+Future<void> requestPermissions() async {
+  // Ask for location permission
+  await Permission.location.request();
+
+  // Ask for notification permission
+  await Permission.notification.request();
+
+  // Ask for phone permission
+  await Permission.phone.request();
+
+  // Ask for SMS permission
+  await Permission.sms.request();
 }

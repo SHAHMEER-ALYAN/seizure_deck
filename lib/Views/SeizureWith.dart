@@ -7,6 +7,7 @@ import 'package:seizure_deck/database/seizureDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'dart:async';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
@@ -185,7 +186,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output[0][0] > output[0][2] &&
         output[0][0] > output[0][3]) {
       print("Seizure Detected!");
-      SeizureService.storeSeizureData(uid.toString());
+      // SeizureService.storeSeizureData(uid.toString());
       _sendSms();
       _callNumber();
       NotificationService().showNotification(
@@ -197,7 +198,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output2[0][0] > output2[0][2] &&
         output2[0][0] > output2[0][3]) {
       print("Seizure Detected!");
-      SeizureService.storeSeizureData(uid.toString());
+      // SeizureService.storeSeizureData(uid.toString());
       _sendSms();
       _callNumber();
       NotificationService().showNotification(
@@ -209,7 +210,7 @@ class _SeizureNewWith extends State<SeizureNewWith> {
         output3[0][0] > output3[0][2] &&
         output3[0][0] > output3[0][3]) {
       print("Seizure Detected!");
-      SeizureService.storeSeizureData(uid.toString());
+      // SeizureService.storeSeizureData(uid.toString());
       _sendSms();
       _callNumber();
       NotificationService().showNotification(
@@ -275,9 +276,11 @@ class _SeizureNewWith extends State<SeizureNewWith> {
                   NotificationService().showNotification(
                       title: "SHAKE DETECTED",
                       body: "You might be experiencing Seizure");
+                  _callNumber();
+                  _sendSms();
                   UserProvider userProvider = Provider.of(context,listen: false);
                   uid = userProvider.uid;
-                  SeizureService.storeSeizureData(uid.toString());
+                  // SeizureService.storeSeizureData(uid.toString());
                 },
                 child: const Text("Notification")),
           ],
@@ -286,12 +289,19 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     );
   }
   _callNumber() async{
-    const number = '0333333333'; 
-    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? number = prefs.getString('number');
+    print("NUMBER IS: $number");//set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number!);
   }
 
   _sendSms() async {
-    const number = '0333333333';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? number = prefs.getString('number');
+    print("NUMBER IS: $number");
+    if(number!.isEmpty){
+      number = '911';
+    }
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       DirectSms().sendSms(phone: number, message: "Latitude: ${position.latitude} Longitude: ${position.longitude}");
   }

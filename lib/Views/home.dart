@@ -6,6 +6,7 @@ import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/login.dart';
 import 'package:seizure_deck/Views/medicationHomepage.dart';
 import 'package:seizure_deck/Views/seizureList.dart';
+import 'package:seizure_deck/Views/settingsScreen.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SeizureWith.dart';
@@ -203,6 +204,21 @@ class _HomeState extends State<Home> {
               "Homepage",
               style: TextStyle(color: Colors.white),
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  print("DOING SOMETHING");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const settingscreen()));
+                },
+              )
+            ],
           ),
           body: Center(
               child: SingleChildScrollView(

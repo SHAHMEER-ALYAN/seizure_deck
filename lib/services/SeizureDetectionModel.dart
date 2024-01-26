@@ -5,7 +5,6 @@ import 'package:direct_sms/direct_sms.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:seizure_deck/database/seizureDB.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:seizure_deck/services/notification_services.dart';
@@ -61,7 +60,7 @@ Future<void> _startListening() async {
   double modifyY = 0.5;
   double modifyZ = 0.5;
   double gravity = 9.80665;
-  Duration dd = const Duration(milliseconds: 50);
+  Duration dd = const Duration(milliseconds: 60);
   _streamSubscriptions.add(
 
   accelerometerEventStream().debounceTime(dd).listen((event) {
@@ -178,7 +177,7 @@ Future<void> _makePrediction() async {
       output[0][0] > output[0][2] &&
       output[0][0] > output[0][3]) {
     print("Seizure Detected!");
-    SeizureService.storeSeizureData();
+    // SeizureService.storeSeizureData(uid.toString());
     // SeizureService.storeSeizureData(uid!, DateTime.now().toString(),
     //     position.longitude.toString(), position.latitude.toString());
     _sendSms();
@@ -193,7 +192,7 @@ Future<void> _makePrediction() async {
       output2[0][0] > output2[0][2] &&
       output2[0][0] > output2[0][3]) {
     print("Seizure Detected!");
-    SeizureService.storeSeizureData();
+    // SeizureService.storeSeizureData(uid.toString());
     // SeizureService.storeSeizureData(uid!, DateTime.now().toString(),
     //     position.longitude.toString(), position.latitude.toString());
     _sendSms();
@@ -208,7 +207,7 @@ Future<void> _makePrediction() async {
       output3[0][0] > output3[0][2] &&
       output3[0][0] > output3[0][3]) {
     print("Seizure Detected!");
-    SeizureService.storeSeizureData();
+    // SeizureService.storeSeizureData(uid.toString());
     _sendSms();
     _callNumber();
     NotificationService().showNotification(
@@ -294,13 +293,13 @@ Future<void> startSeizureDetection() async {
   );
 }
 @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-Future<void> startSeizureDetectionDelayed() async {
+Future<void> startSeizureDetectionPred() async {
   // _startListening();
   await AndroidAlarmManager.periodic(
     const Duration(minutes: 30), // Set the interval as needed
-    1,
+    0,
     // SEIZURE_DETECTION_ALARM_ID,
-    _startListening,
+    startSeizureDetection,
     exact: true,
     wakeup: true,
     // allowWhileIdle: true,

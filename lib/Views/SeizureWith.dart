@@ -7,7 +7,6 @@ import 'package:seizure_deck/database/seizureDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'dart:async';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
@@ -277,7 +276,6 @@ class _SeizureNewWith extends State<SeizureNewWith> {
                       title: "SHAKE DETECTED",
                       body: "You might be experiencing Seizure");
                   _callNumber();
-                  _sendSms();
                   UserProvider userProvider = Provider.of(context,listen: false);
                   uid = userProvider.uid;
                   // SeizureService.storeSeizureData(uid.toString());
@@ -289,19 +287,12 @@ class _SeizureNewWith extends State<SeizureNewWith> {
     );
   }
   _callNumber() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? number = prefs.getString('number');
-    print("NUMBER IS: $number");//set the number here
-    bool? res = await FlutterPhoneDirectCaller.callNumber(number!);
+    const number = '0333333333'; 
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
   _sendSms() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? number = prefs.getString('number');
-    print("NUMBER IS: $number");
-    if(number!.isEmpty){
-      number = '911';
-    }
+    const number = '0333333333';
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       DirectSms().sendSms(phone: number, message: "Latitude: ${position.latitude} Longitude: ${position.longitude}");
   }

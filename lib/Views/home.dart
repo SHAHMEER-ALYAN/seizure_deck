@@ -1,12 +1,15 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:seizure_deck/Views/Community.dart';
 
 import 'package:seizure_deck/Views/exercise.dart';
 import 'package:seizure_deck/Views/login.dart';
 import 'package:seizure_deck/Views/medicationHomepage.dart';
+import 'package:seizure_deck/Views/nearbyhospitals.dart';
 import 'package:seizure_deck/Views/seizureList.dart';
 import 'package:seizure_deck/Views/settingsScreen.dart';
+import 'package:seizure_deck/Views/video_page.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SeizureWith.dart';
@@ -93,10 +96,10 @@ class _HomeState extends State<Home> {
                   MaterialPageRoute(
                       builder: (context) => const medicationHomePage()));
             },
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.medication, size: 40, color: Color(0xFF00C8DD)),
+                Icon(MdiIcons.pill, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
                 Text("Medication")
               ],
@@ -153,14 +156,21 @@ class _HomeState extends State<Home> {
         width: buttonWidth,
         height: buttonHeight + 5,
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NearbyHospitalsPage()));
+
+            },
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.local_hospital, size: 40, color: Color(0xFF00C8DD)),
                 SizedBox(height: 5),
                 Text(
-                  "Popular Hospitals",
+                  "Nearby Hospitals",
                   textAlign: TextAlign.center,
                 )
               ],
@@ -173,7 +183,10 @@ class _HomeState extends State<Home> {
         width: buttonWidth,
         height: buttonHeight + 5,
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPage()));
+
+            },
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

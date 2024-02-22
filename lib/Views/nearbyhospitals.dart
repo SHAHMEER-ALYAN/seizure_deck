@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map_math/flutter_geo_math.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:map_launcher/map_launcher.dart';
+
 import '../data/hospitals.dart';
 import '../data/theme.dart';
 
@@ -50,10 +52,36 @@ class _NearbyHospitalsPageState extends State<NearbyHospitalsPage> {
       'X-Goog-Api-Key': 'AIzaSyD9aYD2LXsWn_Zx8rCSQ_DUPAjfoavM4lE',
       'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location,places.rating'
     };
-
+    // position = await Geolocator.getCurrentPosition(
+    //     desiredAccuracy: LocationAccuracy.high);
+    //
     var url = 'https://places.googleapis.com/v1/places:searchNearby';
     print("lati = ${position.latitude} and long = ${position.longitude}");
+    //
+    // http.Request request;
+    // try {
+    //   request = http.Request('POST',
+    //       Uri.parse('https://places.googleapis.com/v1/places:searchNearby'));
+    //   request.body = json.encode({
+    //     "includedTypes": ["hospital"],
+    //     "locationRestriction": {
+    //       "circle": {
+    //         "center": {
+    //           "latitude": '${position.latitude.toString()}',
+    //           "longitude": '${position.longitude.toString()}'
+    //         },
+    //         "radius": 1000.0
+    //       }
+    //     }
+    //   });
+    //
+    // } on Exception catch (e) {
+    //   print(e);
+    // }
 
+    // request.headers.addAll(headers);
+
+    // http.StreamedResponse responseNew = await request.send();
 
     final dio = Dio();
 

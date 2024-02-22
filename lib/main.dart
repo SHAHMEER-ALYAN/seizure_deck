@@ -13,9 +13,9 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await AndroidAlarmManager.initialize();
-  await startSeizureDetection();
-  await startSeizureDetectionPred();
-  // FlutterNativeSplash.remove();
+  // await startSeizureDetection();
+  // await startSeizureDetectionPred();
+  FlutterNativeSplash.remove();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => UserProvider()),

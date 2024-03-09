@@ -67,6 +67,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_map_math: ^0.1.7
   webview_flutter: ^4.7.0
+  system_alert_window: ^2.0.0
 
 #  flutter_isolate: ^2.0.4
 #  tflite_flutter: ^0.10.3

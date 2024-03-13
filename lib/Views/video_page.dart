@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -9,7 +8,6 @@ import 'package:seizure_deck/Views/webpage.dart';
 import 'package:seizure_deck/data/instructions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 import '../database/instructionDB.dart';
 
 class VideoPage extends StatefulWidget {
@@ -50,34 +48,7 @@ class _VideoPageState extends State<VideoPage> {
           child: FirstAidList()),
     );
   }
-// ListView.builder(
-//         itemCount: resourceLinks.length,
-//         itemBuilder: (BuildContext context, int index) {
-//           String link = resourceLinks[index];
-//             Uri url = Uri.parse(link);
-//             return
-//               Card(
-//                 elevation: 40,
-//                   shadowColor: Color(0xFF454587),
-//                   child: Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: YoutubePlayer(
-//                   controller: YoutubePlayerController(
-//                     initialVideoId: YoutubePlayer.convertUrlToId(link) ?? '',
-//                     flags: const YoutubePlayerFlags(
-//                       autoPlay: false,
-//                       mute: false,
-//                     ),
-//                   ),
-//                   showVideoProgressIndicator: true,
-//                   progressIndicatorColor: Colors.blueAccent,
-//                   aspectRatio: 16 / 9,
-//                 ),
-//               )
-//
-//               );
-//         },
-//       ),
+
 }
 
 Widget FirstAidList() {

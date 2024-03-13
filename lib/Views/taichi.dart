@@ -67,7 +67,7 @@ class _Taichi extends State<Taichi> {
               } ,
                   child: loading
                       ? const CircularProgressIndicator()
-                      : const Text("Generate Yoga Plan"),
+                      : const Text("Generate Tai Chi Plan"),
               )
             ],
           ),

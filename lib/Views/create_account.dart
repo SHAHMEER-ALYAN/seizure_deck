@@ -128,7 +128,7 @@ class _create_accountState extends State<create_account> {
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF454587)),
-                    child: const Text("Date of Birth")),
+                    child: const Text("Date of Birth",style: TextStyle(color: Colors.white),)),
                 const SizedBox(height: 20,),
                 const Text(
                   "Enter Email",
@@ -195,7 +195,7 @@ class _create_accountState extends State<create_account> {
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF454587)),
-                    child: const Text("Create Account")
+                    child: const Text("Create Account",style: TextStyle(color: Colors.white),)
                 )
               ],
             ),

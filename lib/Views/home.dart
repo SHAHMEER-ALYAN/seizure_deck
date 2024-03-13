@@ -12,7 +12,6 @@ import 'package:seizure_deck/Views/settingsScreen.dart';
 import 'package:seizure_deck/Views/video_page.dart';
 import 'package:seizure_deck/data/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'SeizureWith.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

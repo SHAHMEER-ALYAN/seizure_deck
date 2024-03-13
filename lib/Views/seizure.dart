@@ -16,27 +16,6 @@ class _SeizureState extends State<Seizure> {
   @override
   void initState() {
     super.initState();
-
-
-
-    // accelerometerEvents.listen((AccelerometerEvent event) {
-    //   if (event.x.abs() > 12 || event.y.abs() > 12 || event.z.abs() > 12) {
-    //     setState(() {
-    //       isShaking = true;
-    //     });
-    //   } else {
-    //     setState(() {
-    //       isShaking = false;
-    //     });
-    //   }
-    // });
-
-    // ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () {
-    //   NotificationService().showNotification(
-    //       title: "SHAKE DETECTED", body: "You might be experiencing Seizure");
-    // }
-    // );
-    // detector.mShakeCount = 1;
   }
 
   @override

@@ -9,7 +9,6 @@ import 'package:seizure_deck/data/user_data.dart';
 import 'package:seizure_deck/database/loginDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:system_alert_window/system_alert_window.dart';
 
 import 'home.dart';
 
@@ -35,8 +34,9 @@ class _LoginState extends State<Login>  {
     password = TextEditingController();
     requestPermissions();
     checkRememberMe();
-    initialization();
-    OverAlerawaittWin();
+    // initialization();
+    // OverAlerawaittWin();
+    // OverAlerawaittWin();
   }
 
   late bool logincheck;
@@ -260,19 +260,19 @@ class _LoginState extends State<Login>  {
     );
   }
 }
-
-@pragma("vm:entry-point")
-void overlayMain() {
-  runApp(const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Material(child: Text("My overlay"))
-  ));
-}
-
-OverAlerawaittWin() async {
-  await SystemAlertWindow.showSystemWindow();
-
-}
+//
+// @pragma("vm:entry-point")
+// void overlayMain() {
+//   runApp(const MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Material(child: Text("My overlay"))
+//   ));
+// }
+//
+// OverAlerawaittWin() async {
+//   await SystemAlertWindow.showSystemWindow();
+//
+// }
 
 
 void initialization() async {
@@ -291,7 +291,7 @@ void initialization() async {
 }
 Future<void> requestPermissions() async {
 
-  await SystemAlertWindow.requestPermissions;
+  // await SystemAlertWindow.requestPermissions;
 
   // Ask for location permission
   await Permission.location.request();

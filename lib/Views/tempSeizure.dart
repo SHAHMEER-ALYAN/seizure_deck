@@ -64,16 +64,16 @@ class _SeizureNewWith extends State<SeizureNewWith> {
   Future<void> _startBackgroundDetection() async {
     // await Workmanager().initialize(callbackDispatcher);
   }
-
-  @pragma('vm:entry-point')
-  void callbackDispatcher() {
-    // Workmanager().registerPeriodicTask(
-    //   'seizure_detection_task',
-    //   'seizureDetectionTask',
-    //   initialDelay: Duration(seconds: 1),
-    //   frequency: Duration(seconds: 1),
-    // );
-  }
+  //
+  // @pragma('vm:entry-point')
+  // void callbackDispatcher() {
+  //   // Workmanager().registerPeriodicTask(
+  //   //   'seizure_detection_task',
+  //   //   'seizureDetectionTask',
+  //   //   initialDelay: Duration(seconds: 1),
+  //   //   frequency: Duration(seconds: 1),
+  //   // );
+  // }
 
   // void seizureDetectionTask() async {
   //   // _isolate ??= await FlutterIsolate.spawn(_accelerometerIsolate, _processAccelerometerData);

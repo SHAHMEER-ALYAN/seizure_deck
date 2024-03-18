@@ -37,8 +37,8 @@ late Timer printTimer;
 
 // late SharedPreferences prefs;
 
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-Future<void> _startListening() async {
+// @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+Future<void> startListening() async {
   // prefs = await SharedPreferences.getInstance();
   // int? uid = prefs.getInt("uid");
   // print("user id is : $uid");
@@ -230,7 +230,7 @@ Future<void> _makePrediction() async {
     const Duration(minutes: 0), // Set the interval as needed
     0,
     // SEIZURE_DETECTION_ALARM_ID,
-    _startListening,
+    startListening,
     // startAt: Added,
     exact: true,
     wakeup: true,
@@ -279,32 +279,32 @@ Future<void> _loadModel() async {
       options: tfl.InterpreterOptions());
 }
 
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-Future<void> startSeizureDetection() async {
-  // _startListening();
-  await AndroidAlarmManager.oneShot(
-    const Duration(seconds: 0), // Set the interval as needed
-    0,
-    // SEIZURE_DETECTION_ALARM_ID,
-    _startListening,
-    exact: true,
-    wakeup: true,
-    // allowWhileIdle: true,
-  );
-}
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-Future<void> startSeizureDetectionPred() async {
-  // _startListening();
-  await AndroidAlarmManager.periodic(
-    const Duration(minutes: 30), // Set the interval as needed
-    0,
-    // SEIZURE_DETECTION_ALARM_ID,
-    startSeizureDetection,
-    exact: true,
-    wakeup: true,
-    // allowWhileIdle: true,
-  );
-}
+// @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+// Future<void> startSeizureDetection() async {
+//   // _startListening();
+//   await AndroidAlarmManager.oneShot(
+//     const Duration(seconds: 0), // Set the interval as needed
+//     0,
+//     // SEIZURE_DETECTION_ALARM_ID,
+//     _startListening,
+//     exact: true,
+//     wakeup: true,
+//     // allowWhileIdle: true,
+//   );
+// }
+// @pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+// Future<void> startSeizureDetectionPred() async {
+//   // _startListening();
+//   await AndroidAlarmManager.periodic(
+//     const Duration(minutes: 30), // Set the interval as needed
+//     0,
+//     // SEIZURE_DETECTION_ALARM_ID,
+//     startSeizureDetection,
+//     exact: true,
+//     wakeup: true,
+//     // allowWhileIdle: true,
+//   );
+// }
 
 // @pragma('vm:entry-point')
 // void callbackDispatcher() {

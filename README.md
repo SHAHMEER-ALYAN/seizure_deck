@@ -1,16 +1,25 @@
-# seizure_deck
+**Seizure Deck:**
+Seizure Deck is a mobile application designed to empower individuals with epilepsy to manage their condition effectively. It offers a comprehensive suite of features to promote well-being and provide support.
 
-A new Flutter project.
+**Key Features:**
 
-## Getting Started
+**Real-Time Seizure Detection:** 
+Utilizes your phone's accelerometer to potentially detect seizures and alert emergency contacts.
 
-This project is a starting point for a Flutter application.
+**Medication Reminders: **
+Never miss a dose with customizable reminders for all your medications.
 
-A few resources to get you started if this is your first Flutter project:
+**Seizure Diary: **
+Track your seizures for better self-management and informed discussions with healthcare providers.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Exercise Plans: **
+Find Cardio, Yoga or Tai Chi exercise plans tailored to your needs and preferences, promoting overall well-being.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Supportive Community: **
+Connect with others managing epilepsy in a safe online space, share experiences, and offer encouragement.
+
+**Locate Nearby Hospitals: **
+Easily find nearby hospitals in case of emergencies.
+
+**First Aid Instructions: **
+Access clear and concise first-aid instructions/articles/video to assist someone experiencing a seizure.

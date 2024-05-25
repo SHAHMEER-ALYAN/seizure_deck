@@ -35,7 +35,7 @@ class _LoginState extends State<Login>  {
     requestPermissions();
     checkRememberMe();
     initialization();
-    OverlaytWindow();
+    // OverlaytWindow();
   }
 
   late bool logincheck;
@@ -268,10 +268,10 @@ void overlayMain() {
   ));
 }
 
-OverlaytWindow() async {
-  await SystemAlertWindow.showSystemWindow();
-
-}
+// OverlaytWindow() async {
+//   await SystemAlertWindow.showSystemWindow();
+//
+// }
 
 
 void initialization() async {
@@ -290,7 +290,7 @@ void initialization() async {
 }
 Future<void> requestPermissions() async {
 
-  await SystemAlertWindow.requestPermissions;
+  // await SystemAlertWindow.requestPermissions;
 
   // Ask for location permission
   await Permission.location.request();

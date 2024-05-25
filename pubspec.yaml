@@ -67,6 +67,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_map_math: ^0.1.7
   webview_flutter: ^4.7.0
+  alarm: ^3.1.4
+  platform: ^3.1.4
 #  system_alert_window: ^2.0.0
 
 #  flutter_isolate: ^2.0.4
@@ -115,6 +117,7 @@ flutter:
     - assets/legs.png
     - assets/arms_left.png
     - assets/arms_right.png
+    - assets/alarm.mp3
 #    - assets/model_X.tflite
 #    - assets/model_y.tflite
 #    - assets/model_z.tflite

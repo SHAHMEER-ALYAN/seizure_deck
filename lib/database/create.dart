@@ -10,7 +10,7 @@ Future<void> addUserToDatabase(
     TextEditingController email,
     TextEditingController location) async {
   const url =
-      'https://seizure-deck.000webhostapp.com/create.php'; // Replace with your server URL
+      'https://seizuredeck.000webhostapp.com/create.php'; // Replace with your server URL
 
   final httpClient = HttpClient()
     ..badCertificateCallback = (cert, host, port) => true;

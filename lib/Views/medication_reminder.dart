@@ -1,3 +1,5 @@
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:seizure_deck/services/notification_services.dart';
@@ -7,6 +9,7 @@ import 'package:intl/intl.dart';
 import '/services/AlarmSetupPage.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:platform/platform.dart';
 
 enum MedicineType { Syrup, Tablets, Syringe }
 
@@ -510,7 +513,25 @@ class _medicationReminderWidgetState extends State<medicationReminder> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        final alarmSettings = AlarmSettings(
+                          id: 42,
+                          dateTime: datePicked1!,
+                          assetAudioPath: 'assets/alarm.mp3',
+                          loopAudio: true,
+                          vibrate: true,
+                          volume: 0.8,
+                          fadeDuration: 3.0,
+                          notificationTitle: 'Alarm for ${medicineController.text}',
+                          notificationBody: 'Dosage is ${dosageController.text}',
+                          enableNotificationOnKill: true,
+                        );
+                        await Alarm.set(alarmSettings: alarmSettings);
+                        Navigator.pop(context);
+                        Future.delayed(Duration(seconds: 15)).then((value) => Alarm.stop(42));
+                        // Alarm.stop(42);
+
+
                       },
                       child: const Text('Save'),
                     ),

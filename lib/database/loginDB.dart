@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<dynamic> loginDBCheck(TextEditingController email,TextEditingController password) async {
   bool check;
-  const url = 'https://seizure-deck.000webhostapp.com/login.php'; // Replace with your server URL
+  const url = 'https://seizuredeck.000webhostapp.com/login.php'; // Replace with your server URL
 
   final response = await http.post(
     Uri.parse(url),

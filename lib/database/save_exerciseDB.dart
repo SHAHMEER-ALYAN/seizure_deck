@@ -5,7 +5,7 @@ Future<void> addToExercisePlan(int? uid, int? eid) async {
   if(uid == null || eid == null){
     return;
   }
-  const url = 'https://seizure-deck.000webhostapp.com/save_exercise_plan.php';
+  const url = 'https://seizuredeck.000webhostapp.com/save_exercise_plan.php';
 
   final response = await http.post(
     Uri.parse(url),

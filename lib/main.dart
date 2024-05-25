@@ -7,12 +7,14 @@ import 'package:seizure_deck/providers/exercise_provider.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:seizure_deck/Views/login.dart';
 import 'package:seizure_deck/services/SeizureDetectionModel.dart';
+import 'package:alarm/alarm.dart';
 
 void main() async {
   // WidgetsBinding widgetsBinding WidgetsFlutterBinding.ensureInitialized();
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   WidgetsFlutterBinding.ensureInitialized();
   await AndroidAlarmManager.initialize();
+  await Alarm.init();
   await startSeizureDetection();
   // await startSeizureDetectionPred();
   // FlutterNativeSplash.remove();

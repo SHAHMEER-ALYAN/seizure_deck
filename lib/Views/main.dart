@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:seizure_deck/home.dart';
+import 'package:seizure_deck/Views/home.dart';
 import 'package:seizure_deck/services/notification_services.dart';
 import 'package:shake/shake.dart';
-import 'package:seizure_deck/seizure.dart';
+import 'package:seizure_deck/Views//seizure.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late ShakeDetector checker;

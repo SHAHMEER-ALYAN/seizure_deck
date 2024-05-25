@@ -9,7 +9,7 @@ import 'package:seizure_deck/data/user_data.dart';
 import 'package:seizure_deck/database/loginDB.dart';
 import 'package:seizure_deck/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:system_alert_window/system_alert_window.dart';
+// import 'package:system_alert_window/system_alert_window.dart';
 import 'home.dart';
 
 class Login extends StatefulWidget {
